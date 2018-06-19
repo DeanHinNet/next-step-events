@@ -20,6 +20,6 @@ app.post('/events', (req, res)=>{
     });
 });
 
-app.listen(process.env.PORT || 7777, ()=>{
+app.listen(process.env.PORT || 8080, ()=>{
     console.log(`Next Step Events is running`);
 });
