@@ -1,12 +1,12 @@
 var express = require('express');
-var bodyParser = require('bodyParser');
+var bodyParser = require('body-parser');
 
-var model = require('./../models/index.js');
+var model = require('./../database/models/index.js');
 
 var app = express();
 
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/../client/dist'));
+app.use(express.static(__dirname + '/../client-react/dist/'));
 
 app.get('/events', (req, res)=>{
     model.events.get((data)=>{

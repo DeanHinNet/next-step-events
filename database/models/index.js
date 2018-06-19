@@ -1,4 +1,4 @@
-var db = require('./../database/index.js');
+var db = require('./../../database/index.js');
 var axios = require('axios');
 
 db.connect();
