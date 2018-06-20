@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import AddEvent from './components/AddEvent.jsx';
-import AllEvents from './components/AllEvents.jsx';
+import ShowEvents from './components/ShowEvents.jsx';
 
 class App extends React.Component {
     constructor(props){
@@ -15,7 +15,7 @@ class App extends React.Component {
         return(
             <div>
                 <AddEvent />
-                <AllEvents />
+                <ShowEvents />
             </div>
         )
     }
