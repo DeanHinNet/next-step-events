@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter} from 'react-router-dom';
 
-import AddEvent from './components/AddEvent.jsx';
-import ShowEvents from './components/ShowEvents.jsx';
+import Navigation from './components/Navigation.jsx';
+import Main from './components/main.jsx';
 
 class App extends React.Component {
     constructor(props){
@@ -14,11 +15,15 @@ class App extends React.Component {
     render(){
         return(
             <div>
-                <AddEvent />
-                <ShowEvents />
+                <Navigation />
+                <Main />
             </div>
         )
     }
 }
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+ReactDOM.render((
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
+), document.getElementById('app'));

@@ -7,7 +7,6 @@ class ShowEvents extends React.Component {
         this.state = {
             events: []
         }
-        this.formatDate = this.formatDate.bind(this);
     }
     componentDidMount(){
         axios.get('/events')
@@ -21,14 +20,6 @@ class ShowEvents extends React.Component {
             console.error(err);
         })  
     }
-    formatDate(date){
-        var day = date.getDate();
-        var month = date.getMonth();
-        var year = date.getYear();
-
-        return `${month}/${day}/${year}`;
-    }
-
     render(){
         return (
             <div>
