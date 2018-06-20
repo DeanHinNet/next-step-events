@@ -37,6 +37,7 @@ class AddEvent extends React.Component {
     render(){
         return(
             <div>
+                <h3>Add an Event!</h3>
                 <form onSubmit={(e)=>this.handleSubmit(e, this.state)}>
                     <div>
                         <label htmlFor='name'>Event Name</label>
