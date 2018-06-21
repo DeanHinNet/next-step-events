@@ -4,4 +4,5 @@ LOGS
 [x] Add routes for CR for events
 [x] Add webpack file for react
 [x] Add Client Side CR for events
-
+    [] 
+   

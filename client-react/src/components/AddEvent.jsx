@@ -26,7 +26,7 @@ class AddEvent extends React.Component {
         eventData.userId = 3;
         eventData.roomId = 3;
         
-        axios.post('/events', eventData)
+        axios.post('/api/events', eventData)
             .then((err, data)=>{
                 console.log('successfully created event');
             })
