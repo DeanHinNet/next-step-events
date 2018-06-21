@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 
-class ShowRooms extends React.Component {
+class ShowRoom extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -10,7 +10,7 @@ class ShowRooms extends React.Component {
         }
     }
     componentDidMount(){
-        axios.get('/api/rooms')
+        axios.get(`/api/room/${this.props.match.params.id}`)
         .then((results)=>{
             console.log('did mount get', results.data);
             this.setState({
@@ -24,18 +24,10 @@ class ShowRooms extends React.Component {
     render(){
         return (
             <div>
-            <h2>All Rooms!</h2>
-            {this.state.rooms.map((room, index)=>{
-                return (
-                    <div key={index} className='room-item'>
-                        <div>Name: <Link to={`/room/${room.id}`}>{room.name}</Link></div>
-
-                    </div>
-                )
-            })}
-        </div>
+                <h2>Single Room</h2>
+            </div>
         )
     }
 }
 
-export default ShowRooms;
+export default ShowRoom;

@@ -20,7 +20,6 @@ class AddEvent extends React.Component {
         })
     }
     handleSubmit(e, eventData){
-        console.log('hello');
         e.preventDefault();
 
         eventData.userId = 3;

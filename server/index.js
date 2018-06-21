@@ -21,7 +21,7 @@ app.post('/api/events', (req, res)=>{
 });
 
 //GET for a single event
-app.get('/api/event/:id', (req, res)=>{
+app.get('/api/events/:id', (req, res)=>{
    model.event.get(req.params, (data)=>{
         res.status(201).send(data);
    });
@@ -42,7 +42,9 @@ app.post('/api/rooms', (req, res)=>{
 });
 
 //Returns the functionality for a particular room 
-app.get('/api/room/:number');
+app.get('/api/rooms/:number', (req, res)=>{
+    model.room
+});
 
 app.listen(process.env.PORT || 8080, ()=>{
     console.log(`Next Step Events is running`);

@@ -14,16 +14,16 @@ class App extends React.Component {
         }
     }
     componentDidMount(){
-        axios.get('/api/events')
-        .then((results)=>{
-            console.log('did mount get', results.data);
-            this.setState({
-                events: results.data
-            });  
-        })
-        .catch((err)=>{
-            console.error(err);
-        })  
+        // axios.get('/api/events')
+        // .then((results)=>{
+        //     console.log('did mount get', results.data);
+        //     this.setState({
+        //         events: results.data
+        //     });  
+        // })
+        // .catch((err)=>{
+        //     console.error(err);
+        // })  
     }
     render(){
         console.log('index props', this.state.events);
