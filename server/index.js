@@ -1,5 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var fallback = require('express-history-api-fallback');
 
 var model = require('./../database/models/index.js');
 
@@ -7,6 +8,7 @@ var app = express();
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client-react/dist/'));
+// app.use(fallback('index.html', __dirname + '/../client-react/dist/'));
 
 app.get('/api/events', (req, res)=>{
     model.events.get((data)=>{
@@ -42,8 +44,11 @@ app.post('/api/rooms', (req, res)=>{
 });
 
 //Returns the functionality for a particular room 
-app.get('/api/rooms/:number', (req, res)=>{
-    model.room
+app.get('/api/room/:id', (req, res)=>{
+    console.log('getting single room');
+    model.room.get(req.params,(data)=>{
+        res.status(201).send(data);
+    });
 });
 
 app.listen(process.env.PORT || 8080, ()=>{

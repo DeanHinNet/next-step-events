@@ -41,9 +41,61 @@ module.exports = {
                 if(err) throw err;
                 callback(data);
             });
+        },
+        post: (params, callback)=>{
+            var queryStr =`INSERT INTO rooms (name, event_id) VALUES (${params.name}, ${params.event_id})`;
+            db.query(queryStr, (err, data)=>{
+                if(err) throw err;
+                callback(data);
+            })
         }
     },
     room: {
+        get: (params, callback)=>{
+            console.log('params', params);
+            var queryStr = `SELECT * FROM rooms WHERE id=${params.id}`;
+            var result = {};
+            console.log('room query', queryStr);
+            db.query(queryStr, (err, data)=>{
+                if(err) throw err;
+                result.room = data[0];
+
+                queryStr = `SELECT * FROM threads WHERE room_id=${params.id}`;
+                console.log('room data', data);
+
+                db.query(queryStr, (err, data)=>{
+                    if(err) throw err;
+                    result.threads = data;
+
+                    // queryStr = `SELECT * FROM rooms_has_users WHERE room_id=${params.id}`;
+                    queryStr = `SELECT users.name FROM rooms_has_users JOIN users ON rooms_has_users.user_id=users.id JOIN rooms ON rooms_has_users.room_id=rooms.id WHERE rooms.id=${result.room.id}`;
+                    console.log('members', queryStr);
+
+                    db.query(queryStr, (err, data)=>{
+                        if(err) throw err;
+                        result.members = data;
+                        
+                        console.log('room event_id', JSON.stringify(result.room.event_id));
+                        queryStr = `SELECT * FROM events WHERE id=${result.room.event_id}`;
+                       
+                        db.query(queryStr, (err, data)=>{
+                           
+                            if(err) throw err;  
+                            result.event = data[0];
+
+                            callback(result);
+                        });
+                    });
+                });
+            });
+
+
+            // db.query(queryStr, (err, data)=>{
+            //     console.log('query data', data);
+            //     if(err) throw err;
+            //     callback(data);
+            // });
+        },
 
     },
     thread: {
