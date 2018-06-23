@@ -51,6 +51,23 @@ app.get('/api/room/:id', (req, res)=>{
     });
 });
 
+//Bundled get, returns the information for that thread along with all the messages in the thread
+app.get('/api/thread/:id', (req, res)=>{
+    model.thread.get(req.params, (data)=>{
+        res.status(201).send(data);
+    });
+});
+
+app.post('', ()=>{
+
+});
+app.get('/api/messages/room/:id/', ()=>{
+    console.log('all ', req.params);
+    model.messages.get(req.params, (data)=>{
+        res.status(201).send(data);
+    });
+});
+
 app.listen(process.env.PORT || 8080, ()=>{
     console.log(`Next Step Events is running`);
 });

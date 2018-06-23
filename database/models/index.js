@@ -99,10 +99,43 @@ module.exports = {
 
     },
     thread: {
+        get: (params, callback)=>{
+            console.log('params', params.id);
+            var queryStr = `SELECT * FROM threads WHERE id=${params.id}`;
+            var result = {};
 
+            console.log('threads query', queryStr);
+            db.query(queryStr, (err, data)=>{
+                if(err) throw err;
+                console.log('threads results)', data);
+
+                result.thread = data;
+                queryStr = `SELECT * FROM messages WHERE thread_id=${params.id}`;
+
+                db.query(queryStr, (err, data)=>{
+                    if(err) throw data;
+                    console.log('messages results', data);
+                    result.messages = data;
+
+                    callback(result);
+                });
+            });
+        },
+        post: ()=>{
+
+        }
     },
     message: {
+        get: (params, callback)=>{
+            //collect all the threads for the room
+            //add the messages to each room
+            var queryStr = `SELECT`;
 
+            db.query(queryStr, (err, data)=>{
+                if(err) throw err;
+                callback(data);
+            });
+        }
     },
     user: {
         get: (params, callback)=>{

@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 class ShowThread extends React.Component {
     constructor(props){
@@ -7,14 +8,29 @@ class ShowThread extends React.Component {
             messages: []
         }
     }
+    componentDidMount(){
+        console.log('/api/thread/${this.props.match.params}', `/api/thread/${this.props.match.params.id}`);
+        axios.get(`/api/thread/${this.props.match.params.id}`)
+        .then((results)=>{
+            console.log('results', results);
+            this.setState({
+                thread: results.data.thread,
+                messages: results.data.messages
+            });
+        })
+        .catch((err)=>{
+            console.error(err);
+        });
+    }
     render(){
-        console.log('threads', this.props.threads);
+        console.log('threads', this.props);
+        console.log('id', this.props.match.params);
         return (
             <div>
-                <h3>Discussion Thread</h3>
+                <h3>Discussion{}</h3>
                 <ul>
-                    {this.props.threads.map((thread, index)=>{
-                        return <li key={index}>{thread.description}</li>
+                    {this.state.messages.map((message, index)=>{
+                        return <li key={index}>{message.content}</li>
                     })}
                 </ul>
             </div>
