@@ -142,7 +142,17 @@ module.exports = {
 
         },
         post: (params, callback)=>{
+            //check if user is in the database
+            //if yes, check if the password matches
 
+            var queryStr = `SELECT password FROM users WHERE email=${params.email}`;
+
+            console.log('login query for email', queryStr);
+
+            db.query(queryStr, (err, data)=>{
+                if(err) throw err;
+                
+            });
         }
     },
 }
