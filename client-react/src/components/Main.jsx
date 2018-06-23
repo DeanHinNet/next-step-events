@@ -30,7 +30,7 @@ const Main = (props) => {
             <Route path='/room/:id' render={(routeProps) =>          
                 <ShowRoom {...routeProps} {...props}/>}
             />
-            <Route path="*" render={() => (<Redirect to="/" />)} />
+            
         </Switch>
     </main>
 )}
@@ -39,3 +39,5 @@ export default Main;
 //<Route exact path='/events' component={ShowEvents}/>
 // <Route exact path='/rooms' component={ShowRooms}/>
 // <Route exact path='/rooms/add' component={AddRoom}/>
+
+//<Route path="*" render={() => (<Redirect to="/" />)} />

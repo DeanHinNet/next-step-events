@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 
 import ShowMembers from './room/ShowMembers.jsx';
 import ShowThreads from './room/ShowThreads.jsx';
@@ -42,7 +43,8 @@ class ShowRoom extends React.Component {
                     <li>{this.state.event.description}</li>
                 </ul>
                 <ShowMembers members={this.state.members}/>
-                <ShowThreads threads={this.state.threads}/>
+                <ShowThreads room={this.state.room.id} threads={this.state.threads}/>
+               
             </div>
         )
     }
