@@ -10,8 +10,13 @@ class App extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            user: {
+                first_name: '',
+                id: ''
+            },
             events: []
         }
+        this.loginUser = this.loginUser.bind(this);
     }
     componentDidMount(){
         // axios.get('/api/events')
@@ -25,13 +30,18 @@ class App extends React.Component {
         //     console.error(err);
         // })  
     }
+    loginUser(data){
+        console.log('this.loginUser', data);
+        this.setState({
+            user: data
+        });
+    }
     render(){
         console.log('index props', this.state.events);
         return(
-            
             <div>
                 <Navigation />
-                <Main events={this.state.events}/>
+                <Main events={this.state.events} loginUser={this.loginUser} user={this.state.user}/>
             </div>
         )
     }

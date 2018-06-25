@@ -1,6 +1,9 @@
 import React from 'react';
 import {Switch, Route} from 'react-router-dom';
 
+import Login from './authentication/Login.jsx';
+import Register from './authentication/Register.jsx';
+
 import Home from './Home.jsx';
 import AddEvent from './AddEvent.jsx';
 import ShowEvents from './ShowEvents.jsx';
@@ -14,6 +17,11 @@ const Main = (props) => {
     <main>
         <Switch>
             <Route exact path='/' component={Home}/>
+            <Route exact path='/login' component={Login}/>
+            <Route exact path='/register' render={(routeProps) =>   
+                <Register {...routeProps} {...props}/>}
+            />
+
             <Route exact path='/events/add' component={AddEvent}/>
             <Route exact path='/events' render={(routeProps) =>   
                 <ShowEvents {...routeProps} {...props}/>}

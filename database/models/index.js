@@ -141,18 +141,65 @@ module.exports = {
         get: (params, callback)=>{
 
         },
-        post: (params, callback)=>{
+        login: (params, callback)=>{
             //check if user is in the database
             //if yes, check if the password matches
 
-            var queryStr = `SELECT password FROM users WHERE email=${params.email}`;
+            var queryStr = `SELECT * FROM users WHERE email=?`;
 
             console.log('login query for email', queryStr);
 
-            db.query(queryStr, (err, data)=>{
-                if(err) throw err;
+            db.query(queryStr, [params.email], (err, data)=>{
+                if(err){
+                    console.error('error occurred');
+                    callback({'code': 400, 'failed' : 'error ocurred'});
+                } else {
+                    console.log('logged in data', data);
+                    if(data.length>0){
+                        if(data[0].password === params.password){
+                            callback({'code': 200, 'message': 'login successful', 'data': data});
+                        } else {
+                            callback({'code': 204, 'message': 'Email and password does not match.'});
+                        }
+                    } else {
+                        callback({'code': 204, 'message': 'Email does not exist.'});
+                    }
+                }
                 
             });
+        },
+        register: (params, callback)=>{
+            console.log('model.user.registering...', params);
+
+            var today = new Date();
+            var user = {
+                'first_name': params.first_name,
+                'last_name': params.last_name,
+                'email': params.email,
+                'password': params.password,
+                'created_at': today,
+                'updated_at': today
+            };
+            //check if email already exists;
+            var queryStr = `SELECT * FROM users WHERE email=?`;
+            db.query(queryStr, user.email, (err, data)=>{
+                if(err) throw err;
+                if(data.length === 0){
+                    queryStr = `INSERT INTO users SET ?`;
+                    db.query(queryStr, user, (err, data)=>{
+                        console.log('user info after insert', data);
+                        if(err) throw err;
+                        console.log({'code': 200, 'message': 'User has been created!', 'user': {id: data.insertId, 'name': user.first_name}});
+                        callback({'code': 200, 'message': 'User has been created!', 'user': {id: data.insertId, 'name': user.first_name}});
+                    });
+                } else {
+                    callback({'code': 204, 'message': 'Email already exists!'});
+                }
+            });
+
+            //if email doesn't exist, insert into database
+           
         }
-    },
+    }
+   
 }
