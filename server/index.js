@@ -13,15 +13,46 @@ app.use(express.static(__dirname + '/../client-react/dist/'));
 // app.use(fallback('index.html', __dirname + '/../client-react/dist/'));
 app.use(cookieParser());
 app.use(session({
-    key: 'user_id',
+    key: 'user',
     secret: 'not today buddy',
     resave: false,
-    saveUninitialized: true,
-    cookie: {
-        maxAge: 60000
-    }
+    saveUninitialized: true
 }));
 
+var isLoggedIn = (req)=>{
+    console.log('!!req.session.user', !!req.session.user);
+    return req.session ? !!req.session.user : false;
+}
+
+var checkUser = (req, res, next)=>{
+    console.log('checking user');
+    console.log('req.session', req.session);
+    console.log('req.session.user', req.session.user || 'nope');
+    console.log('isLoggedIn', !isLoggedIn(req));
+    if(!isLoggedIn(req)) {
+        res.status(401).send('Please login to continue.');
+    } else {
+        next();
+    }
+}
+
+var createSession = (req, res, user)=>{
+    // return req.session.regenerate(()=>{
+    //     //console.log('inside create user', user);
+    //     req.session.user = user.id;
+    //     //console.log('inside create', user.id);
+    //   }); 
+    return req.session.user = {
+        id: user.id,
+        first_name: user.first_name
+    }
+//    return req.session.regenerate(()=>{
+//         //console.log('inside create user', user);
+//         req.session.user = user.id;
+//         //console.log('inside create', user.id);
+//       });
+    
+}
 app.use((req, res, next)=>{
     if(req.cookies.users_id && !req.session.user){
         res.clearCookie('user_id');
@@ -35,8 +66,8 @@ app.route('/api/events')
             res.status(201).send(data);
         });
     })
-    .post(util.checkUser, (req, res)=>{
-        model.events.post(req.body, (data)=>{
+    .post(checkUser,(req, res)=>{
+        model.events.post(req.body, req.session.user.id, (data)=>{
             res.status(201).send(data);
         });
     });
@@ -61,14 +92,14 @@ app.get('/api/events/:id', (req, res)=>{
 });
 
 //Gets a list of all the rooms
-app.get('/api/rooms', (req, res)=>{
+app.get('/api/rooms', checkUser, (req, res)=>{
     model.rooms.get((data)=>{
         res.status(201).send(data);
     });
 });
 
 //Creates a new room in the collection of rooms
-app.post('/api/rooms', util.checkUser, (req, res)=>{
+app.post('/api/rooms', checkUser, (req, res)=>{
     model.rooms.post(req.body, (data)=>{
         res.status(201).send(data);
     });
@@ -100,10 +131,12 @@ app.get('/api/messages/room/:id/', ()=>{
 app.post('/login',(req, res)=>{
     model.user.login(req.body, (data)=>{
         //check if user exists and if so check if the password matches if so, create a session
+        console.log('app.post ->data', data);
         if(data.code === 200){
-            console.log('user_id, session');
-            util.createSession(req, res, data.user_id);
-            res.status(data.code).send(data.success);
+            console.log('user_id, session', data.user.id);
+            createSession(req, res, data.user);
+            console.log('after create session', req.session);
+            res.status(data.code).send(data);
 
             //the user has been checked, the session has been created and the cookie has been delivered to the user's browser
 
@@ -117,16 +150,34 @@ app.post('/login',(req, res)=>{
 app.post('/register', (req, res)=>{
     console.log('registering...', JSON.stringify(req.body));
     model.user.register(req.body, (data)=>{
-        res.status(data.code).send(data);
+        console.log('after mysql data', data);
+        if(data.code === 200){
+            console.log('register mysql data', data);
+            createSession(req, res, data.user);
+            // req.session.user = {
+            //     id: data.user.id,
+            //     name: data.user.name
+            // }
+            console.log('after create', req.session);
+            console.log(req.session.user);
+            console.log('session id', req.session.id);
+            res.status(data.code).send(data);
+
+            //the user has been checked, the session has been created and the cookie has been delivered to the user's browser
+
+        } else {
+            //if not, sendback error message
+            res.status(data.code).send(data);
+        }
+      
     });
 });
 
-
-
 app.get('/logout', (req, res)=>{
+    console.log('session id', req.session.id);
     req.session.destroy((data)=>{
-        res.clearCookie('user_id');
-        res.status(201).send(data);
+        res.clearCookie('user', {path: '/'});
+        res.status(201).send("You have been logged out.");
     });
 });
 

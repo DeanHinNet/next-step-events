@@ -3,6 +3,7 @@ import {Switch, Route} from 'react-router-dom';
 
 import Login from './authentication/Login.jsx';
 import Register from './authentication/Register.jsx';
+import Logout from './authentication/Logout.jsx';
 
 import Home from './Home.jsx';
 import AddEvent from './AddEvent.jsx';
@@ -17,7 +18,12 @@ const Main = (props) => {
     <main>
         <Switch>
             <Route exact path='/' component={Home}/>
-            <Route exact path='/login' component={Login}/>
+          
+            <Route exact path='/logout' component={Logout} />
+      
+            <Route exact path='/login' render={(routeProps) =>   
+                <Login {...routeProps} {...props}/>}
+            />
             <Route exact path='/register' render={(routeProps) =>   
                 <Register {...routeProps} {...props}/>}
             />

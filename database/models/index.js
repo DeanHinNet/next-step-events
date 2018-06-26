@@ -12,11 +12,19 @@ module.exports = {
                 callback(data);
             });
         },
-        post: (params, callback) => {
+        post: (params, userId, callback) => {
             //adding to the 'events' collection a single event
-            var queryStr = `INSERT INTO events (name, start_date, end_date, description, created_at, updated_at, user_id) VALUES ('${params.name}', '${params.startDate}', '${params.endDate}', '${params.description}', NOW(), NOW(), ${params.userId})`;
+            console.log("creating new event", userId);
+            // var queryStr = `INSERT INTO events (name, start_date, end_date, description, created_at, updated_at, user_id) VALUES ('${params.name}', '${params.startDate}', '${params.endDate}', '${params.description}', NOW(), NOW(), ${userId})`;
+            var today = new Date();
+            params.created_at = today;
+            params.updated_at = today;
+            params.user_id = userId;
+            console.log('insert params', params);
 
-            db.query(queryStr, (err, data)=>{
+            var queryStr = `INSERT INTO events SET ?`;
+
+            db.query(queryStr, params, (err, data)=>{
                 if(err) throw err;
                 callback(data);    
             });
@@ -146,18 +154,18 @@ module.exports = {
             //if yes, check if the password matches
 
             var queryStr = `SELECT * FROM users WHERE email=?`;
-
             console.log('login query for email', queryStr);
-
-            db.query(queryStr, [params.email], (err, data)=>{
+            console.log('params.email', params.email);
+            db.query(queryStr, params.email, (err, data)=>{
                 if(err){
                     console.error('error occurred');
                     callback({'code': 400, 'failed' : 'error ocurred'});
                 } else {
                     console.log('logged in data', data);
+                    console.log('data.length', data.length);
                     if(data.length>0){
                         if(data[0].password === params.password){
-                            callback({'code': 200, 'message': 'login successful', 'data': data});
+                            callback({'code': 200, 'message': 'login successful', 'user': data[0]});
                         } else {
                             callback({'code': 204, 'message': 'Email and password does not match.'});
                         }

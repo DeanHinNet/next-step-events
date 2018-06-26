@@ -6,7 +6,8 @@ class ShowRooms extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            rooms: []
+            rooms: [],
+            error: ""
         }
     }
     componentDidMount(){
@@ -18,13 +19,16 @@ class ShowRooms extends React.Component {
             });  
         })
         .catch((err)=>{
-            console.error(err);
+            this.setState({
+                error: err.response.data
+            });
         })  
     }
     render(){
         return (
             <div>
             <h2>All Rooms!</h2>
+            {this.state.error ? this.state.error : ""}
             {this.state.rooms.map((room, index)=>{
                 return (
                     <div key={index} className='room-item'>
