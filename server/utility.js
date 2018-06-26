@@ -1,19 +1,36 @@
 var request = require('request');
 
-
-exports.checkUser = () => {
-    
+var isLoggedIn = (req)=>{
+    return req.session ? !!req.session.user : false;
 }
 
-exports.createSession = (req, res, params)=>{
-    console.log('creating session');
-    console.log('id', params.id);
-    console.log('name', params.name);
-
-    return req.session.regenerate(()=>{
-        req.session.user = {
-            id: params.id,
-            name: params.name
-        }
-    });
+exports.checkUser = (req, res, next)=>{
+    console.log('checking user');
+    if(!isLoggedIn(req)) {
+        res.status(401).send('Please login to continue.');
+    } else {
+        next();
+    }
 }
+
+exports.createSession = (req, res, user)=>{
+    return req.session.user = {
+        id: user.id,
+        first_name: user.first_name
+    }
+}
+
+   // return req.session.regenerate(()=>{
+    //     //console.log('inside create user', user);
+    //     req.session.user = user.id;
+    //     //console.log('inside create', user.id);
+    //   }); 
+
+    // var createSession = (req, res, user)=>{
+//     return req.session.user = {
+//         id: user.id,
+//         first_name: user.first_name
+//     }
+ 
+// }
+

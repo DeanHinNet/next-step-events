@@ -3,8 +3,8 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 import {Switch, Route} from 'react-router-dom';
 
-import ShowMembers from './room/ShowMembers.jsx';
-import ShowThreads from './room/ShowThreads.jsx';
+import ShowMembers from './members/ShowMembers.jsx';
+import ShowThreads from './threads/ShowThreads.jsx';
 
 class ShowRoom extends React.Component {
     constructor(props){

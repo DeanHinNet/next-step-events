@@ -11,19 +11,6 @@ class ShowThreads extends React.Component {
             threads: []
         }
     }
-    // componentDidMount(){
-    //     console.log('/api/thread/all', `/api/thread/${this.props.match.params.id}`);
-    //     axios.get(`/api/messages/room/${this.props.match.params.id}`)
-    //     .then((results)=>{
-    //         console.log('results', results);
-    //         this.setState({
-    //             thread: results.data
-    //         });
-    //     })
-    //     .catch((err)=>{
-    //         console.error(err);
-    //     });
-    // }
     render(){
         return (
             <div>

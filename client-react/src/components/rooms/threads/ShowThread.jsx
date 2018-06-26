@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
+import AddMessage from './messages/AddMessage.jsx';
+
 class ShowThread extends React.Component {
     constructor(props){
         super(props);
@@ -28,6 +30,7 @@ class ShowThread extends React.Component {
         return (
             <div>
                 <h3>Discussion{}</h3>
+                <AddMessage thread={this.props.match.params}/>
                 <ul>
                     {this.state.messages.map((message, index)=>{
                         return <li key={index}>{message.content}</li>
