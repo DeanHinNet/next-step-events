@@ -12,11 +12,21 @@ module.exports = {
                 callback(data);
             });
         },
-        post: (params, callback) => {
+        post: (params, userId, callback) => {
             //adding to the 'events' collection a single event
-            var queryStr = `INSERT INTO events (name, start_date, end_date, description, created_at, updated_at, user_id) VALUES ('${params.name}', '${params.startDate}', '${params.endDate}', '${params.description}', NOW(), NOW(), ${params.userId})`;
+            console.log("creating new event", userId);
+            // var queryStr = `INSERT INTO events (name, start_date, end_date, description, created_at, updated_at, user_id) VALUES ('${params.name}', '${params.startDate}', '${params.endDate}', '${params.description}', NOW(), NOW(), ${userId})`;
+            var today = new Date();
+            params = {
+                created_at: today,
+                updated_at: today,
+                user_id: userId
+            }
+            console.log('insert params', params);
 
-            db.query(queryStr, (err, data)=>{
+            var queryStr = `INSERT INTO events SET ?`;
+
+            db.query(queryStr, params, (err, data)=>{
                 if(err) throw err;
                 callback(data);    
             });
@@ -100,7 +110,7 @@ module.exports = {
     },
     thread: {
         get: (params, callback)=>{
-            console.log('params', params.id);
+            console.log('thread get params', params);
             var queryStr = `SELECT * FROM threads WHERE id=${params.id}`;
             var result = {};
 
@@ -110,11 +120,12 @@ module.exports = {
                 console.log('threads results)', data);
 
                 result.thread = data;
-                queryStr = `SELECT * FROM messages WHERE thread_id=${params.id}`;
+                // queryStr = `SELECT * FROM messages WHERE thread_id=${params.id}`;
+                queryStr = `SELECT messages.id, messages.user_id, messages.content, messages.thread_id, messages.parent_id, messages.created_at, users.username FROM messages JOIN users ON messages.user_id=users.id WHERE messages.thread_id = ?`;
 
-                db.query(queryStr, (err, data)=>{
+                db.query(queryStr, params.id, (err, data)=>{
                     if(err) throw data;
-                    console.log('messages results', data);
+                    console.log('thread->messages results', data);
                     result.messages = data;
 
                     callback(result);
@@ -125,7 +136,7 @@ module.exports = {
 
         }
     },
-    message: {
+    messages: {
         get: (params, callback)=>{
             //collect all the threads for the room
             //add the messages to each room
@@ -135,24 +146,100 @@ module.exports = {
                 if(err) throw err;
                 callback(data);
             });
+        },
+        post: (params, userId, callback)=>{
+            var queryStr = `INSERT INTO messages SET ?`;
+            var result = {};
+            var today = new Date();
+           
+            params.created_at = today;
+            params.updated_at = today;
+            params.user_id = userId;
+            delete params.error;
+            console.log('messages post params', params);
+            db.query(queryStr, params, (err, data)=>{
+                console.log('messages data', data);
+                console.log('thread id', params.thread_id);
+                console.log('messages:', );
+                if(err) throw err;
+
+                module.exports.thread.get({id: params.thread_id}, (data)=>{
+                    console.log('here are the new messages:', data);
+                    result = {
+                        messages: data.messages,
+                        message: 'You message has been added.',
+                        code: 201,
+
+                    }
+                    callback(result);
+                })
+                
+            })
         }
     },
     user: {
         get: (params, callback)=>{
 
         },
-        post: (params, callback)=>{
+        login: (params, callback)=>{
             //check if user is in the database
             //if yes, check if the password matches
 
-            var queryStr = `SELECT password FROM users WHERE email=${params.email}`;
-
+            var queryStr = `SELECT * FROM users WHERE email=?`;
             console.log('login query for email', queryStr);
-
-            db.query(queryStr, (err, data)=>{
-                if(err) throw err;
+            console.log('params.email', params.email);
+            db.query(queryStr, params.email, (err, data)=>{
+                if(err){
+                    console.error('error occurred');
+                    callback({'code': 400, 'failed' : 'error ocurred'});
+                } else {
+                    console.log('logged in data', data);
+                    console.log('data.length', data.length);
+                    if(data.length>0){
+                        if(data[0].password === params.password){
+                            callback({'code': 200, 'message': 'login successful', 'user': data[0]});
+                        } else {
+                            callback({'code': 204, 'message': 'Email and password does not match.'});
+                        }
+                    } else {
+                        callback({'code': 204, 'message': 'Email does not exist.'});
+                    }
+                }
                 
             });
+        },
+        register: (params, callback)=>{
+            console.log('model.user.registering...', params);
+
+            var today = new Date();
+            var user = {
+                'first_name': params.first_name,
+                'last_name': params.last_name,
+                'email': params.email,
+                'password': params.password,
+                'created_at': today,
+                'updated_at': today
+            };
+            //check if email already exists;
+            var queryStr = `SELECT * FROM users WHERE email=?`;
+            db.query(queryStr, user.email, (err, data)=>{
+                if(err) throw err;
+                if(data.length === 0){
+                    queryStr = `INSERT INTO users SET ?`;
+                    db.query(queryStr, user, (err, data)=>{
+                        console.log('user info after insert', data);
+                        if(err) throw err;
+                        console.log({'code': 200, 'message': 'User has been created!', 'user': {id: data.insertId, 'name': user.first_name}});
+                        callback({'code': 200, 'message': 'User has been created!', 'user': {id: data.insertId, 'name': user.first_name}});
+                    });
+                } else {
+                    callback({'code': 204, 'message': 'Email already exists!'});
+                }
+            });
+
+            //if email doesn't exist, insert into database
+           
         }
-    },
+    }
+   
 }

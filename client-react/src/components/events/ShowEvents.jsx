@@ -24,6 +24,7 @@ class ShowEvents extends React.Component {
         return (
             <div>
             <h2>All Events!</h2>
+            <p>{this.props.user.name ? "Welcome, " + this.props.user.name : ""}</p>
             {this.state.events.reduce((result, event, index)=>{
                 if(Object.keys(this.props.match.params).length === 0){
                     //If the route is '/events' with no parameter, render all events

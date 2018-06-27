@@ -7,12 +7,15 @@ class AddEvent extends React.Component {
         
         this.state = {
             name: '',
-            startDate: '',
-            endDate: '',
+            start_date: '',
+            end_date: '',
             description: '' 
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInput = this.handleInput.bind(this);
+    }
+    componentDidMount(){
+        
     }
     handleInput(e){
         this.setState({
@@ -21,9 +24,6 @@ class AddEvent extends React.Component {
     }
     handleSubmit(e, eventData){
         e.preventDefault();
-
-        eventData.userId = 3;
-        eventData.roomId = 3;
         
         axios.post('/api/events', eventData)
             .then((err, data)=>{
@@ -44,11 +44,11 @@ class AddEvent extends React.Component {
                     </div>
                     <div>
                         <label htmlFor='start-date'>Start Date</label>
-                        <input id='start-date' name='startDate' type='date' value={this.state.startDate} onChange={this.handleInput} />
+                        <input id='start-date' name='start_date' type='date' value={this.state.start_date} onChange={this.handleInput} />
                     </div>
                     <div>
                         <label htmlFor='end-date'>End Date</label>
-                        <input id='end-date' name='endDate' type='date' value={this.state.endDate} placeholder = {this.state.startDate} onChange={this.handleInput} />
+                        <input id='end-date' name='end_date' type='date' value={this.state.end_date} placeholder = {this.state.start_date} onChange={this.handleInput} />
                     </div>
                     <div>
                         <label htmlFor='description'>Description</label>
