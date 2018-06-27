@@ -20,6 +20,7 @@ class ShowRoom extends React.Component {
                 description: ''
             }
         }
+        this.updateThreads = this.updateThreads.bind(this);
     }
     componentDidMount(){
         axios.get(`/api/room/${this.props.match.params.id}`)
@@ -31,8 +32,13 @@ class ShowRoom extends React.Component {
             console.error(err);
         })  
     }
+    updateThreads(results){
+        this.setState({
+            threads: results.data
+        });
+        
+    }
     render(){
-        console.log('state', this.state);
         return (
             <div>
                 <h2>Single Room - {this.state.room.name}</h2>
@@ -43,7 +49,7 @@ class ShowRoom extends React.Component {
                     <li>{this.state.event.description}</li>
                 </ul>
                 <ShowMembers members={this.state.members}/>
-                <ShowThreads room={this.state.room.id} threads={this.state.threads}/>
+                <ShowThreads room={this.state.room.id} threads={this.state.threads} updateThreads={this.updateThreads} />
                
             </div>
         )

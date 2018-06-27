@@ -75,6 +75,12 @@ app.get('/api/thread/:id', (req, res)=>{
         res.status(201).send(data);
     });
 });
+app.post('/api/thread', util.checkUser, (req, res)=>{
+    console.log('new thread being created');
+    model.thread.post(req.body, req.session.user.id, (data)=>{
+        res.status(201).send(data);
+    });
+});
 
 app.post('/api/messages', util.checkUser, (req, res)=>{
     console.log('server posting');
