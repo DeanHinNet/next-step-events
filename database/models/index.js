@@ -132,8 +132,21 @@ module.exports = {
                 });
             });
         },
-        post: ()=>{
-
+        post: (params, userId, callback)=>{
+            var queryStr = `INSERT INTO threads SET ?`;
+         
+            params.user_id = userId;
+            console.log('thread post query', queryStr);
+            console.log('params', params);
+            db.query(queryStr, params, (err, data)=>{
+                if(err) throw err;
+                queryStr = `SELECT * FROM threads WHERE room_id=?`;
+                console.log('getting new threads');            
+                db.query(queryStr, params.room_id, (err, data)=>{
+                    if(err) throw err;
+                   callback(data);
+                });
+            });
         }
     },
     messages: {
