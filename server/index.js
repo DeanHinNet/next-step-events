@@ -76,6 +76,17 @@ app.get('/api/thread/:id', (req, res)=>{
     });
 });
 
+app.post('/api/messages', util.checkUser, (req, res)=>{
+    console.log('server posting');
+    model.messages.post(req.body, req.session.user.id, (data)=>{
+        if(data.code === 201){
+
+        }
+        res.status(data.code).send(data);
+    });
+});
+
+
 app.get('/api/messages/room/:id/', ()=>{
     model.messages.get(req.params, (data)=>{
         res.status(201).send(data);

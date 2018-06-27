@@ -5,8 +5,10 @@ class AddMessage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            thread: this.props.thread,
-            message: ''
+            thread_id: this.props.thread.id,
+            parent_id: '',
+            content: '',
+            error: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInput = this.handleInput.bind(this);
@@ -16,38 +18,33 @@ class AddMessage extends React.Component {
             [e.target.name]: e.target.value
         })
     }
-    handleSubmit(e, eventData){
+    handleSubmit(e){
         e.preventDefault();
-        axios.post('/api/events', eventData)
-            .then((err, data)=>{
-                console.log('successfully created event');
+        console.log(this.state);
+        axios.post('/api/messages', this.state)
+            .then((results)=>{
+                console.log('messages post udata', results.data.messages);
+                this.props.updateThread(results.data.messages);
             })
             .catch((err)=>{
                 console.error(err);
+                console.log('error', err.response);
+                this.setState({
+                    error: err.response.data
+                });
             });
     }
     render(){
         return(
             <div>
-                <h3>Add an Event!</h3>
+                <h3>Add an Message!</h3>
+                <p> {this.state.error ? this.state.error : ""}</p>
                 <form onSubmit={(e)=>this.handleSubmit(e, this.state)}>
                     <div>
-                        <label htmlFor='name'>Event Name</label>
-                        <input id='name' name='name' type='text' value={this.state.name} onChange={this.handleInput} />
+                        <label htmlFor='content'>Message</label>
+                        <input id='content' name='content' type='text' value={this.state.content} onChange={this.handleInput} />
                     </div>
-                    <div>
-                        <label htmlFor='start-date'>Start Date</label>
-                        <input id='start-date' name='start_date' type='date' value={this.state.start_date} onChange={this.handleInput} />
-                    </div>
-                    <div>
-                        <label htmlFor='end-date'>End Date</label>
-                        <input id='end-date' name='end_date' type='date' value={this.state.end_date} placeholder = {this.state.start_date} onChange={this.handleInput} />
-                    </div>
-                    <div>
-                        <label htmlFor='description'>Description</label>
-                        <input id='description' name='description' type='text' value={this.state.description} onChange={this.handleInput} />
-                    </div>
-                    <input type='submit' id='submit' value='Add Event'/>
+                    <input type='submit' id='submit' value='Submit Message'/>
                 </form>
             </div>
         )

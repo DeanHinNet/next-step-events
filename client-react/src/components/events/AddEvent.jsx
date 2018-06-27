@@ -14,6 +14,9 @@ class AddEvent extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInput = this.handleInput.bind(this);
     }
+    componentDidMount(){
+        
+    }
     handleInput(e){
         this.setState({
             [e.target.name]: e.target.value

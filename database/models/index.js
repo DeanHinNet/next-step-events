@@ -17,9 +17,11 @@ module.exports = {
             console.log("creating new event", userId);
             // var queryStr = `INSERT INTO events (name, start_date, end_date, description, created_at, updated_at, user_id) VALUES ('${params.name}', '${params.startDate}', '${params.endDate}', '${params.description}', NOW(), NOW(), ${userId})`;
             var today = new Date();
-            params.created_at = today;
-            params.updated_at = today;
-            params.user_id = userId;
+            params = {
+                created_at: today,
+                updated_at: today,
+                user_id: userId
+            }
             console.log('insert params', params);
 
             var queryStr = `INSERT INTO events SET ?`;
@@ -108,7 +110,7 @@ module.exports = {
     },
     thread: {
         get: (params, callback)=>{
-            console.log('params', params.id);
+            console.log('thread get params', params);
             var queryStr = `SELECT * FROM threads WHERE id=${params.id}`;
             var result = {};
 
@@ -118,11 +120,12 @@ module.exports = {
                 console.log('threads results)', data);
 
                 result.thread = data;
-                queryStr = `SELECT * FROM messages WHERE thread_id=${params.id}`;
+                // queryStr = `SELECT * FROM messages WHERE thread_id=${params.id}`;
+                queryStr = `SELECT messages.id, messages.user_id, messages.content, messages.thread_id, messages.parent_id, messages.created_at, users.username FROM messages JOIN users ON messages.user_id=users.id WHERE messages.thread_id = ?`;
 
-                db.query(queryStr, (err, data)=>{
+                db.query(queryStr, params.id, (err, data)=>{
                     if(err) throw data;
-                    console.log('messages results', data);
+                    console.log('thread->messages results', data);
                     result.messages = data;
 
                     callback(result);
@@ -133,7 +136,7 @@ module.exports = {
 
         }
     },
-    message: {
+    messages: {
         get: (params, callback)=>{
             //collect all the threads for the room
             //add the messages to each room
@@ -143,6 +146,35 @@ module.exports = {
                 if(err) throw err;
                 callback(data);
             });
+        },
+        post: (params, userId, callback)=>{
+            var queryStr = `INSERT INTO messages SET ?`;
+            var result = {};
+            var today = new Date();
+           
+            params.created_at = today;
+            params.updated_at = today;
+            params.user_id = userId;
+            delete params.error;
+            console.log('messages post params', params);
+            db.query(queryStr, params, (err, data)=>{
+                console.log('messages data', data);
+                console.log('thread id', params.thread_id);
+                console.log('messages:', );
+                if(err) throw err;
+
+                module.exports.thread.get({id: params.thread_id}, (data)=>{
+                    console.log('here are the new messages:', data);
+                    result = {
+                        messages: data.messages,
+                        message: 'You message has been added.',
+                        code: 201,
+
+                    }
+                    callback(result);
+                })
+                
+            })
         }
     },
     user: {

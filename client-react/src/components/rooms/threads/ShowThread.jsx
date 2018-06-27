@@ -9,6 +9,7 @@ class ShowThread extends React.Component {
         this.state = {
             messages: []
         }
+        this.updateThread = this.updateThread.bind(this);
     }
     componentDidMount(){
         console.log('/api/thread/${this.props.match.params}', `/api/thread/${this.props.match.params.id}`);
@@ -24,16 +25,26 @@ class ShowThread extends React.Component {
             console.error(err);
         });
     }
+    updateThread(messages){
+        this.setState({
+            messages: messages
+        })
+    }
     render(){
         console.log('threads', this.props);
         console.log('id', this.props.match.params);
         return (
             <div>
                 <h3>Discussion{}</h3>
-                <AddMessage thread={this.props.match.params}/>
+                <AddMessage thread={this.props.match.params} updateThread={this.updateThread}/>
                 <ul>
                     {this.state.messages.map((message, index)=>{
-                        return <li key={index}>{message.content}</li>
+                        return (
+                            <li>
+                            <span className='message-content' key={index}>{message.content}</span>
+                            <span className='message-stats'>User:{message.username}, Parent:{message.parent_id}, Thread: {message.thread_id}, Message: {message.id}</span>
+                            </li>
+                        )
                     })}
                 </ul>
             </div>
