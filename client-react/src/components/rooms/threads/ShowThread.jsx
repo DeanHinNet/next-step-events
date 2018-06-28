@@ -45,8 +45,8 @@ class ShowThread extends React.Component {
                 <ul>
                     {this.state.messages.map((message, index)=>{
                         return (
-                            <li>
-                            <span className='message-content' key={index}>{message.content}</span>
+                            <li key={index}>
+                            <span className='message-content' >{message.content}</span>
                             <span className='message-stats'>User:{message.username}, Parent:{message.parent_id}, Thread: {message.thread_id}, Message: {message.id}</span>
                             </li>
                         )

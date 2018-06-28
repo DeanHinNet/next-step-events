@@ -13,14 +13,17 @@ const Navigation = () => (
                 <li><Link to='/'>Home</Link></li>
                 <li><Link to='/events'>Show All Events</Link></li>
                 <li><Link to='/events/add'>Add Event</Link></li>
-                <li><Link to='/events/13'>Event 13</Link></li>
+               
 
-                <li><Link to='/rooms'>Show All Rooms</Link></li>
-                <li><Link to='/rooms/add'>Add Room</Link></li>
-                <li><Link to='/room/2'>Room 2</Link></li>
+            
             </ul>
         </nav>
     </div>
 )
 
 export default Navigation;
+
+{/* <li><Link to='/rooms'>Show All Rooms</Link></li>
+<li><Link to='/rooms/add'>Add Room</Link></li>
+<li><Link to='/room/2'>Room 2</Link></li>
+ <li><Link to='/events/13'>Event 13</Link></li> */}

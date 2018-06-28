@@ -40,6 +40,7 @@ app.route('/api/events')
         });
     });
 
+
 app.route('/api/rooms')
     .get((req, res)=>{
             //Gets a list of all the rooms
@@ -60,7 +61,12 @@ app.get('/api/events/:id', (req, res)=>{
         res.status(201).send(data);
    });
 });
-
+//GETS the info for all the rooms of a particular event
+app.get('/api/event/:id/rooms', (req, res)=>{
+    model.event.rooms.get(req.params, (data)=>{
+        res.status(201).send(data);
+    });
+})
 
 //Returns the functionality for a particular room 
 app.get('/api/room/:id', (req, res)=>{
