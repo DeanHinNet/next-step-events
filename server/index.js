@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client-react/dist/'));
 // app.use(fallback('index.html', __dirname + '/../client-react/dist/'));
 app.use(cookieParser());
+
 app.use(session({
     key: 'user',
     secret: 'not today buddy',

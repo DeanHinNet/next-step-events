@@ -6,7 +6,8 @@ class AddRoom extends React.Component {
         super(props);
         this.state = {
             name: '',
-            event_id: ''
+            event_id: '',
+            error: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -27,13 +28,19 @@ class AddRoom extends React.Component {
             this.props.updateRooms(results);
         })
         .catch((err)=>{
-            console.log(err);
+            console.log('error', err.response.data);
+            this.setState({
+                error: err.response.data
+            });
+            console.log(this.state.error);
         });
     }
     render(){
+        console.log(typeof this.state.error);
         return(
             <div>
                 <h3>Add a Room</h3>
+                <p className='error-message'>{this.state.error ? this.state.error : ''}</p>
                 <form onSubmit={this.handleSubmit}>
                     <label htmlFor='name'>Discussion Topic</label>
                     <input id='name' name='name' type='text' onChange={this.handleChange}/>

@@ -9,8 +9,7 @@ class ShowRooms extends React.Component {
         super(props);
         this.state = {
             rooms: [],
-            event: {},
-            error: ""
+            event: {}
         }
         this.updateRooms = this.updateRooms.bind(this);
     }
@@ -23,7 +22,7 @@ class ShowRooms extends React.Component {
                 console.log('did mount get', results.data);
                 this.setState({
                     rooms: results.data.rooms,
-                    event: results.data.event
+                    event: results.data.event[0]
                 });  
             })
             .catch((err)=>{
@@ -52,13 +51,13 @@ class ShowRooms extends React.Component {
         console.log("update room results", results);
         this.setState({
             event: results.data.event,
-            rooms: results.data.room
+            rooms: results.data.rooms
         });
     }   
     render(){
         return (
             <div>
-            <h2>All Rooms!</h2>
+            <h2>Room for {this.state.event.name} EventID:{this.state.event.id}</h2>
             <AddRoom event={this.props.match.params} updateRooms={this.updateRooms}/>
             {this.state.error ? this.state.error : ""}
             {this.state.rooms.map((room, index)=>{

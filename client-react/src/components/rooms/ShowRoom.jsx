@@ -48,7 +48,7 @@ class ShowRoom extends React.Component {
                     <li>{this.state.event.end_date}</li>
                     <li>{this.state.event.description}</li>
                 </ul>
-                <ShowMembers members={this.state.members}/>
+              
                 <ShowThreads room={this.state.room.id} threads={this.state.threads} updateThreads={this.updateThreads} />
                
             </div>
@@ -57,3 +57,5 @@ class ShowRoom extends React.Component {
 }
 
 export default ShowRoom;
+
+//<ShowMembers members={this.state.members}/>

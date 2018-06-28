@@ -78,12 +78,13 @@ module.exports = {
             });
         },
         post: (params, callback)=>{
-            // var queryStr =`INSERT INTO rooms (name, event_id) VALUES ('${params.name}', ${params.event_id})`;
+            var queryStr =`INSERT INTO rooms (name, event_id) VALUES ('${params.name}', ${params.event_id})`;
             
-            var queryStr =`INSERT INTO rooms SET ?`;
+            // var queryStr =`INSERT INTO rooms SET ?`;
+        
             console.log('rooms post', queryStr);
             console.log('params', params)
-            db.query(queryStr, params, (err, data)=>{
+            db.query(queryStr, (err, data)=>{
                 if(err) throw err;
                 // queryStr = `SELECT * FROM rooms WHERE event_id=${params.event_id}`;
                 // console.log('rooms post params,', params);
@@ -93,8 +94,8 @@ module.exports = {
                 //     callback(data);
                 // });
                 console.log("fiished insert room, getting event/rooms");
-                console.log('heres the id', data);
-                module.exports.event.rooms.get({id: params.id}, (result)=>{
+                console.log('heres the id', params);
+                module.exports.event.rooms.get({id: params.event_id}, (result)=>{
                     callback(result);
                 });
             })
