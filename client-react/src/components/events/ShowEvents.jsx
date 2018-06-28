@@ -1,5 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
+
+import AddEvent from './AddEvent.jsx';
 
 class ShowEvents extends React.Component {
     constructor(props){
@@ -33,6 +36,7 @@ class ShowEvents extends React.Component {
                         <div>Description: {event.description}</div>
                         <div>Start Date: {event.start_date.substring(0,10)}</div>
                         <div>End Date: {event.end_date.substring(0,10)}</div>
+                        <div><Link to={`/event/${event.id}/rooms`}>ShowRooms</Link></div>
                     </div>);
                 } else if(event.id === Number(this.props.match.params.id)){
                     //If the route is '/events/:id' with a parameter, render only the selected event
@@ -41,6 +45,7 @@ class ShowEvents extends React.Component {
                         <div>Description: {event.description}</div>
                         <div>Start Date: {event.start_date.substring(0,10)}</div>
                         <div>End Date: {event.end_date.substring(0,10)}</div>
+                        <div><Link to={`/event/${event.id}/rooms`}>ShowRooms </Link></div>
                     </div>);
                 }
                 return result;

@@ -35,13 +35,38 @@ module.exports = {
     event: {
         get: (params, callback) => {
             var queryStr = `SELECT * FROM events WHERE id=${params.id}`;
+            console.log('event.get', queryStr);
             db.query(queryStr, (err, data)=>{
+                console.log('error', err);
                 if(err) throw err;
-                callback(data);
+                console.log('no error?');
+                callback(err, data);
             });
         },
         post: () => {
 
+        },
+        //returns a list of all the rooms for the event
+        rooms: {
+            get: (params, callback)=>{
+                console.log("getting api/event/:id/rooms");
+                console.log('params', params);
+                var queryStr = `SELECT * FROM rooms WHERE event_id=${params.id}`;
+                var result = {};
+                console.log('queryStr', queryStr);
+                db.query(queryStr, (err, data)=>{
+                    if(err) throw err;
+                    result.rooms = data;
+                    console.log('before module', params);
+                    module.exports.event.get(params, (err, data)=>{
+                        if(err) throw err;
+                        result.event = data;
+                        console.log('result', result);
+                        callback(result);
+                    })
+                    
+                });
+            }
         }
     },
     rooms: {
@@ -53,10 +78,26 @@ module.exports = {
             });
         },
         post: (params, callback)=>{
-            var queryStr =`INSERT INTO rooms (name, event_id) VALUES (${params.name}, ${params.event_id})`;
+            var queryStr =`INSERT INTO rooms (name, event_id) VALUES ('${params.name}', ${params.event_id})`;
+            
+            // var queryStr =`INSERT INTO rooms SET ?`;
+        
+            console.log('rooms post', queryStr);
+            console.log('params', params)
             db.query(queryStr, (err, data)=>{
                 if(err) throw err;
-                callback(data);
+                // queryStr = `SELECT * FROM rooms WHERE event_id=${params.event_id}`;
+                // console.log('rooms post params,', params);
+                // console.log(queryStr);
+                // db.query(queryStr, (err, data)=>{
+                //     if(err) throw err;
+                //     callback(data);
+                // });
+                console.log("fiished insert room, getting event/rooms");
+                console.log('heres the id', params);
+                module.exports.event.rooms.get({id: params.event_id}, (result)=>{
+                    callback(result);
+                });
             })
         }
     },

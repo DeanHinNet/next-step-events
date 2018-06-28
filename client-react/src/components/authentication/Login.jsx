@@ -45,7 +45,7 @@ class Login extends React.Component {
     }
     render(){
         if(this.state.toDashboard === true){
-            return <Redirect to='/rooms' />;
+            return <Redirect to='/events' />;
         }
 
         return(
