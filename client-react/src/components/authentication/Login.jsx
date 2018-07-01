@@ -49,19 +49,21 @@ class Login extends React.Component {
         }
 
         return(
-            <form className='user-form' onSubmit={this.handleSubmit}>
-                <h3>Please enter info below to login.</h3>
-                <p>{this.state.failure ? this.state.failure.success: ''}</p>
-                <section>
-                    <label htmlFor='email'>Email:</label>
-                    <input id='email' name='email' type='email' placeholder='bob@smith.com' onChange={this.handleChange} value={this.state.email}/>
-                </section>
-                <section>
-                    <label htmlFor='password'>Password:</label>
-                    <input id='password' name='password' type='password' onChange={this.handleChange} value={this.state.password}/>
-                </section>
-                <button type='submit' onSubmit={this.handleSubmit}>Login</button>
-           </form>
+            <div className='column has-text-centered'>
+                <form className='user-form container has-text-centered input-box' onSubmit={this.handleSubmit}>
+                    <h3>Please enter info below to login.</h3>
+                    <p>{this.state.failure ? this.state.failure.success: ''}</p>
+                    <section>
+                        <label htmlFor='email'>Email:</label>
+                        <input id='email' name='email' type='email' placeholder='bob@smith.com' onChange={this.handleChange} value={this.state.email}/>
+                    </section>
+                    <section>
+                        <label htmlFor='password'>Password:</label>
+                        <input id='password' name='password' type='password' onChange={this.handleChange} value={this.state.password}/>
+                    </section>
+                    <button type='submit' onSubmit={this.handleSubmit}>Login</button>
+            </form>
+           </div>
         )
     }
 }

@@ -1,0 +1,67 @@
+//MIXIN
+$red: #f93943;
+$red-light: #fcb0b3;
+$blue: #445e93;
+$blue-light: #7eb2dd;
+$yellow: #fcecc9;
+$grey-light: #fafafa;
+
+
+$bg: $grey-light;
+$grey-dark: #dcdcdc;
+.hero-body {
+    padding: 0;
+  }
+
+@mixin border-radius($radius){
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
+}
+@function em($target, $context: 16px){
+    @if $target == 0 {@return 0}
+    @return $target / $context + 0em;
+  
+}
+@mixin test($c){
+    border: 1px solid $c;
+}
+@media only screen and (max-width: 1100px) {
+    #header:hover #navMenu {
+        display: block;
+    }
+}
+
+li {
+    list-style-type: none;
+}
+
+.show-burger {
+    float:right;
+    clear:both;
+    z-index: 100;
+    color: black;
+    margin-top: -55px;
+}
+#navMenu div a:hover {
+    background-color: $yellow;
+    color: $blue;
+}
+
+// .show-burger:hover ~ #navMenu{
+  
+// }
+.input-box {
+    border: 1px solid $grey-dark;
+    border-radius: em(2px);
+    background-color: white;
+    width: 33%;
+}
+@import 'header';
+@import 'footer';
+@import 'main';
+
+@import 'home';
+@import 'events';
+@import 'rooms';

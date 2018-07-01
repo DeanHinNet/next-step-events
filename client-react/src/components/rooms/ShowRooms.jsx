@@ -14,9 +14,7 @@ class ShowRooms extends React.Component {
         this.updateRooms = this.updateRooms.bind(this);
     }
     componentDidMount(){
-        console.log('getting events?',this.props.match.params);
         if(Object.keys(this.props.match.params).length > 0){
-            console.log('getting rooms for event');
             axios.get(`/api/event/${this.props.match.params.id}/rooms`)
             .then((results)=>{
                 console.log('did mount get', results.data);
@@ -56,19 +54,19 @@ class ShowRooms extends React.Component {
     }   
     render(){
         return (
-            <div>
-            <h2>Room for {this.state.event.name} EventID:{this.state.event.id}</h2>
-            <AddRoom event={this.props.match.params} updateRooms={this.updateRooms}/>
-            {this.state.error ? this.state.error : ""}
-            {this.state.rooms.map((room, index)=>{
-                return (
-                    <div key={index} className='room-item'>
-                        <div>Name: <Link to={`/room/${room.id}`}>{room.name}</Link></div>
+            <div id='rooms-show' className='column'>
+                <h2 className='room-event-name' data-event-id={this.state.event.id}>{this.state.event.name}</h2>
+                <AddRoom event={this.props.match.params} updateRooms={this.updateRooms}/>
 
-                    </div>
-                )
-            })}
-        </div>
+                {this.state.error ? this.state.error : ""}
+                {this.state.rooms.map((room, index)=>{
+                    return (
+                        <div key={index} className='room-item'>
+                            <div className='room-name'><Link to={`/room/${room.id}`}>{room.name}</Link></div>
+                        </div>
+                    )
+                })}
+            </div>
         )
     }
 }

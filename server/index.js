@@ -51,7 +51,7 @@ app.route('/api/rooms')
     })
     .post(util.checkUser, (req, res)=>{
         //Creates a new room in the collection of rooms
-        model.rooms.post(req.body, (data)=>{
+        model.rooms.post(req.body, req.session.user.id, (data)=>{
             res.status(201).send(data);
         });
     });

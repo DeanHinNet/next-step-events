@@ -1,0 +1,74 @@
+
+#home {
+    background-color: $grey-light;
+    padding: 0;
+    #banner {
+        width: 100%;
+        height: em(250px);
+        text-align: center;
+        margin: 0 0 em(15px) 0;
+        background-color: $grey-light;
+        #banner-container {
+            background-color: $blue-light;
+            height: em(200px);
+            #search-container {
+                display: inline-block;
+                border: 1px solid $grey-dark;
+                border-radius: em(3px);
+                box-shadow: 0 1px 3px 0 rgba(0,0,0,.25);
+                position: relative;
+                top: 75%;
+                height: em(100px);
+                background-color: white;
+                color: $red;
+                width: 80%;
+                vertical-align: text-bottom;
+                #search-bar {
+                    display: inline-block;
+                    margin: 0 auto;
+                    vertical-align: text-bottom;
+                    position: relative;
+                    top: 10%;
+                    width: 60%;
+                    p {
+                        font-size: em(28px);
+                    }
+                    #search-input{
+                     
+                        input {
+                            height: em(45px);
+                            width: 80%;
+                            padding-left: 10px;
+                        }
+                    }
+                 
+                }
+            }
+        }
+    }
+
+    #content {
+        width: 80%;
+        margin: 0 auto;
+        background-color: $grey-light;
+        #events-show {
+            width: 60%;
+            display: inline-block;
+           
+            .event-item {
+                background-color: white;
+                border: 1px solid $grey-dark;
+                padding: em(10px);
+            .event-link a {
+                    font-weight: bold;
+                    font-size: em(16px); 
+            }
+                .event-start, .event-end {
+                    display: inline-block;
+                    margin-right: em(5px);
+                }
+            }
+            
+        }
+    }
+}

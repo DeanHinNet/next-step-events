@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import axios from 'axios';
 
-import Navigation from './components/Navigation.jsx';
+import './preprocessor/style.scss';
+
+import Header from './components/Header.jsx';
 import Main from './components/main.jsx';
+import Footer from './components/footer.jsx';
 
 class App extends React.Component {
     constructor(props){
@@ -37,11 +40,11 @@ class App extends React.Component {
         });
     }
     render(){
-        console.log('index props', this.state.events);
         return(
-            <div>
-                <Navigation />
+            <div className='hero is-fullheight'>
+                <Header/>
                 <Main events={this.state.events} loginUser={this.loginUser} user={this.state.user}/>
+                <Footer/>
             </div>
         )
     }

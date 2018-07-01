@@ -5,7 +5,7 @@ import Login from './authentication/Login.jsx';
 import Register from './authentication/Register.jsx';
 import Logout from './authentication/Logout.jsx';
 
-import Home from './Home.jsx';
+import Home from './home/Home.jsx';
 import AddEvent from './events/AddEvent.jsx';
 import ShowEvents from './events/ShowEvents.jsx';
 
@@ -15,7 +15,7 @@ import ShowRoom from './rooms/ShowRoom.jsx';
 
 const Main = (props) => {
     return (
-    <main>
+    <main className='hero-body is-large'>
         <Switch>
             <Route exact path='/' component={Home}/>
           

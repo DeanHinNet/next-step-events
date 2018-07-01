@@ -38,7 +38,7 @@ class AddRoom extends React.Component {
     render(){
         console.log(typeof this.state.error);
         return(
-            <div>
+            <div id='room-add'>
                 <h3>Add a Room</h3>
                 <p className='error-message'>{this.state.error ? this.state.error : ''}</p>
                 <form onSubmit={this.handleSubmit}>

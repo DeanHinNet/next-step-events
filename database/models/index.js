@@ -55,6 +55,7 @@ module.exports = {
                 var result = {};
                 console.log('queryStr', queryStr);
                 db.query(queryStr, (err, data)=>{
+                    console.log('rooms data join', data);
                     if(err) throw err;
                     result.rooms = data;
                     console.log('before module', params);
@@ -77,11 +78,12 @@ module.exports = {
                 callback(data);
             });
         },
-        post: (params, callback)=>{
-            var queryStr =`INSERT INTO rooms (name, event_id) VALUES ('${params.name}', ${params.event_id})`;
+        post: (params, userId, callback)=>{
+            var now = new Date();
+            var queryStr =`INSERT INTO rooms (name, event_id, user_id, created_at, updated_at) VALUES ('${params.name}', ${params.event_id}, ${userId}, NOW(), NOW())`;
             
             // var queryStr =`INSERT INTO rooms SET ?`;
-        
+            
             console.log('rooms post', queryStr);
             console.log('params', params)
             db.query(queryStr, (err, data)=>{
@@ -175,8 +177,10 @@ module.exports = {
         },
         post: (params, userId, callback)=>{
             var queryStr = `INSERT INTO threads SET ?`;
-         
+            var today = new Date();
             params.user_id = userId;
+            params.created_at = today;
+            params.updated_at = today;
             console.log('thread post query', queryStr);
             console.log('params', params);
             db.query(queryStr, params, (err, data)=>{
@@ -269,6 +273,7 @@ module.exports = {
             var user = {
                 'first_name': params.first_name,
                 'last_name': params.last_name,
+                'username': params.username,
                 'email': params.email,
                 'password': params.password,
                 'created_at': today,
