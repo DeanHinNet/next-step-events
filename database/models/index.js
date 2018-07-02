@@ -1,9 +1,47 @@
 var db = require('./../../database/index.js');
 var axios = require('axios');
-
+var credentials = process.env.credentials || require('./../../config.js');
 db.connect();
 
 module.exports = {
+    eventBrite: {
+        event: {
+            get: (params, callback)=>{
+                axios.get(`https://www.eventbriteapi.com/v3/events/${params.id}/?token=${credentials.event_brite_key}
+                `)
+                .then((data)=>{
+                    callback(data);
+                })
+                .catch((err)=>{
+                    console.log('there has been an error', err);
+                });
+            }
+        },
+        get: (callback)=>{
+            axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${credentials.event_brite_key}&location.address=new%20york%20city&categories=101`)
+            .then((data)=>{
+                var results = [];
+                var entry = {};
+                //get only info I need to reduce load on request
+                data.data.events.slice(0, 10).map((event)=>{
+        
+                    entry = {
+                        id: event.id,
+                        name: event.name.text,
+                        description: event.description.text,
+                        start_date: event.start.local,
+                        end_date: event.end.local,
+                        logo: event.logo
+                    }
+                    results.push(entry);
+                });
+                callback(results);
+            })
+            .catch((err)=>{
+                console.log(err);
+            });
+        }
+    },
     events: {
         get: (callback) => {
             var queryStr = `SELECT * FROM events`;
@@ -56,14 +94,36 @@ module.exports = {
                 console.log('queryStr', queryStr);
                 db.query(queryStr, (err, data)=>{
                     console.log('rooms data join', data);
+                    if(data.length === 0){
+
+                    }
                     if(err) throw err;
                     result.rooms = data;
                     console.log('before module', params);
                     module.exports.event.get(params, (err, data)=>{
                         if(err) throw err;
-                        result.event = data;
-                        console.log('result', result);
-                        callback(result);
+                        console.log('getting events data from database', data);
+                        //when no event in the database is found, search eventbrite for the event with id
+                        console.log('pre-eventbrite', params);
+                        if(data.length === 0){
+                            module.exports.eventBrite.event.get(params,(data)=>{
+                                console.log('eventbrite data', data.data);
+                                result.event = {
+                                    id: data.data.id,
+                                    name: data.data.name.text,
+                                    description: data.data.description.text,
+                                    start_date: data.data.start.local,
+                                    end_date: data.data.end.local
+
+                                }
+                                callback(result);
+                            });
+                        } else {
+                            result.event = data;
+                            console.log('result', result);
+                            callback(result);
+                        }
+                     
                     })
                     
                 });
@@ -179,8 +239,8 @@ module.exports = {
             var queryStr = `INSERT INTO threads SET ?`;
             var today = new Date();
             params.user_id = userId;
-            params.created_at = today;
-            params.updated_at = today;
+            params.created_at = 'NOW()';
+            params.updated_at = 'NOW()';
             console.log('thread post query', queryStr);
             console.log('params', params);
             db.query(queryStr, params, (err, data)=>{

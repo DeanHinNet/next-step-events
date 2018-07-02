@@ -100,8 +100,16 @@ app.post('/api/messages', util.checkUser, (req, res)=>{
 });
 
 
-app.get('/api/messages/room/:id/', ()=>{
+app.get('/api/messages/room/:id/', (req, res)=>{
     model.messages.get(req.params, (data)=>{
+        res.status(201).send(data);
+    });
+});
+
+//External APIS
+app.get('/api/eventbrite/', (req, res)=>{
+    model.eventBrite.get((data)=>{
+        console.log('eventbrite', data);
         res.status(201).send(data);
     });
 });

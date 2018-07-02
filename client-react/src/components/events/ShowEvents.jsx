@@ -12,12 +12,14 @@ class ShowEvents extends React.Component {
         }
     }
     componentDidMount(){
-        axios.get('/api/events')
+        axios.get('/api/eventbrite')
         .then((results)=>{
-            console.log('did mount get', results.data);
+            console.log('did mount get eventbrite');
             this.setState({
                 events: results.data
             });  
+        
+           
         })
         .catch((err)=>{
             console.error(err);
@@ -32,7 +34,7 @@ class ShowEvents extends React.Component {
                     result.push(
                         <div key={index} className='event-item'>
                             <div className='event-link'><Link to={`/event/${event.id}/rooms`}>{event.name}</Link></div>
-                            <div className='event-description'>{event.description}</div>
+                            <div className='event-description'>{event.description.substring(0,200)}...</div>
                             <div className='event-start'>{event.start_date.substring(5,10)}</div>
                             <div className='event-end'>to {event.end_date.substring(5,10)}</div>
                         </div>

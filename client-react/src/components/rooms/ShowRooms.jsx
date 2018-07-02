@@ -9,7 +9,11 @@ class ShowRooms extends React.Component {
         super(props);
         this.state = {
             rooms: [],
-            event: {}
+            event: {
+                id: '',
+                name: ''
+            },
+            status: ''
         }
         this.updateRooms = this.updateRooms.bind(this);
     }
@@ -18,10 +22,29 @@ class ShowRooms extends React.Component {
             axios.get(`/api/event/${this.props.match.params.id}/rooms`)
             .then((results)=>{
                 console.log('did mount get', results.data);
-                this.setState({
-                    rooms: results.data.rooms,
-                    event: results.data.event[0]
-                });  
+                console.log(results.data.rooms.length);
+                if(results.data.rooms.length === 0){
+                    console.log('inside results', results.data);
+                    console.log('this.state', this.state); 
+                    this.setState({
+                        rooms: [{
+                            id: '',
+                            description: '',
+                            start_date: '',
+                            end_date: ''
+                        }],
+                        event: results.data.event,
+                        status: 'No rooms yet for this event!'
+                    }); 
+                 
+                } else {
+                    console.log('inside results with rooms', this.state); 
+                    this.setState({
+                        rooms: results.data.rooms,
+                        event: results.data.event
+                    });  
+                }
+               
             })
             .catch((err)=>{
                 this.setState({
@@ -53,16 +76,19 @@ class ShowRooms extends React.Component {
         });
     }   
     render(){
+        console.log('this is state', this.state); 
+
         return (
             <div id='rooms-show' className='column'>
-                <h2 className='room-event-name' data-event-id={this.state.event.id}>{this.state.event.name}</h2>
+                <h2 className='room-event-name' data-event-id={this.state.event.id}>Showing rooms for {this.state.event.name}</h2>
                 <AddRoom event={this.props.match.params} updateRooms={this.updateRooms}/>
 
-                {this.state.error ? this.state.error : ""}
+                {this.state.status ? this.state.status : ""}
                 {this.state.rooms.map((room, index)=>{
                     return (
                         <div key={index} className='room-item'>
                             <div className='room-name'><Link to={`/room/${room.id}`}>{room.name}</Link></div>
+                            <div className='room-info'>{this.state.status ? 'by' : ""} </div>
                         </div>
                     )
                 })}

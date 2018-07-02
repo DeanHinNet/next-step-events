@@ -9,7 +9,9 @@ class Login extends React.Component {
             email: '',
             password: '',
             failure: {},
-            toDashboard: false
+            toDashboard: false,
+            username: '',
+            isLoggedIn: false
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,9 +30,14 @@ class Login extends React.Component {
                 console.log(results);
                 if(results.status === 200){
                     //user should be logged in and redirected to the main with all the eventsn
-                    this.props.loginUser(results.data.user);
-                    this.setState({
-                        toDashboard: true
+                    // this.setState({
+                    //     toDashboard: true,
+                    //     isLoggedIn: true,
+                    //     username: 'username'
+                    // });
+                    this.props.loginUser({
+                        user: 'username-logic',
+                        isLoggedIn: true
                     });
                 } else {
                     //send status code and failure
@@ -45,7 +52,7 @@ class Login extends React.Component {
     }
     render(){
         if(this.state.toDashboard === true){
-            return <Redirect to='/events' />;
+            return <Redirect to='/' />;
         }
 
         return(
