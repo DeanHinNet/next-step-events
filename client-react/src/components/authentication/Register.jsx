@@ -8,6 +8,7 @@ class Register extends React.Component {
         this.state = {
             first_name: '',
             last_name: '',
+            username: '',
             email: '',
             password: '',
             failure: {},
@@ -50,27 +51,33 @@ class Register extends React.Component {
         }
 
         return(
-            <form className='user-form' onSubmit={this.handleSubmit}>
-                <h3>Please enter info below to create an account.</h3>
-                <p>{this.state.failure ? this.state.failure.success: ''} </p>
-                <section>
-                    <label htmlFor='first-name'>First Name:</label>
-                    <input id='first-name' name='first_name' type='text' placeholder='Bob' onChange={this.handleChange} value={this.state.first_name}/>
-                </section>
-                <section>
-                    <label htmlFor='last-name'>Last Name:</label>
-                    <input id='last-name' name='last_name' type='text' placeholder='Smith' onChange={this.handleChange} value={this.state.last_name}/>
-                </section>
-                <section>
-                    <label htmlFor='email'>Email:</label>
-                    <input id='email' name='email' type='email' placeholder='bob@smith.com' onChange={this.handleChange} value={this.state.email}/>
-                </section>
-                <section>
-                    <label htmlFor='password'>Password:</label>
-                    <input id='password' name='password' type='password' onChange={this.handleChange} value={this.state.password}/>
-                </section>
-                <button type='submit' onSubmit={this.handleSubmit}>Submit</button>
-           </form>
+            <div className='column has-text-centered'>
+                <form className='user-form container has-text-centered input-box' onSubmit={this.handleSubmit}>
+                    <h3>Please create an account below.</h3>
+                    <p>{this.state.failure ? this.state.failure.success: ''} </p>
+                    <section>
+                        <label htmlFor='first-name'>First Name:</label>
+                        <input id='first-name' name='first_name' type='text' placeholder='Bob' onChange={this.handleChange} value={this.state.first_name}/>
+                    </section>
+                    <section>
+                        <label htmlFor='last-name'>Last Name:</label>
+                        <input id='last-name' name='last_name' type='text' placeholder='Smith' onChange={this.handleChange} value={this.state.last_name}/>
+                    </section>
+                    <section>
+                        <label htmlFor='username'>Username:</label>
+                        <input id='username' name='username' type='text' placeholder='bobxxor' onChange={this.handleChange} value={this.state.username}/>
+                    </section>
+                    <section>
+                        <label htmlFor='email'>Email:</label>
+                        <input id='email' name='email' type='email' placeholder='bob@smith.com' onChange={this.handleChange} value={this.state.email}/>
+                    </section>
+                    <section>
+                        <label htmlFor='password'>Password:</label>
+                        <input id='password' name='password' type='password' onChange={this.handleChange} value={this.state.password}/>
+                    </section>
+                    <button type='submit' onSubmit={this.handleSubmit}>Submit</button>
+            </form>
+           </div>
         )
     }
 }

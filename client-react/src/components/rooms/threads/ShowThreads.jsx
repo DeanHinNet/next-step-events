@@ -19,23 +19,32 @@ class ShowThreads extends React.Component {
     }
     render(){
         console.log('show threads -> room', this.props.room);
+        var noThreads = true;
+        if(this.props.threads.length != 0){
+            noThreads = false;
+        }
         return (
-            <div>
+            <div id='threads-show'>
                 <h3>Threads</h3>
+                <h4>Add a New Thread</h4>
                 <AddThread room={this.props.room} updateThreads={this.updateThreads}/>
+                {noThreads ? "No threads yet, please add one!" : ""}
                 <ul>
                 {this.props.threads.map((thread, index)=>{
-                    return <li key={index}><Link to={`/room/${this.props.room}/thread/${thread.id}`}>{thread.description}</Link></li>
+                    return <li key={index}><Link to={`/room/${this.props.room}/${thread.id}`}>{thread.description}</Link>
+                    <span className='meta-info'>by Bob</span></li>
                 })}
                 </ul>
-                <Switch>
-                    <Route path={`/room/${this.props.room}/thread/:id`} render={(routeProps) =>   
-                        <ShowThread key={routeProps.match.params.id} {...routeProps}/>}
-                    />
-                </Switch>
+             
             </div>
         )
     }
 }
 
 export default ShowThreads;
+
+{/* <Switch>
+<Route path={`/room/${this.props.room}/thread/:id`} render={(routeProps) =>   
+    <ShowThread key={routeProps.match.params.id} {...routeProps}/>}
+/>
+</Switch> */}

@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import axios from 'axios';
 
-import Navigation from './components/Navigation.jsx';
+import './preprocessor/style.scss';
+
+import Header from './components/Header.jsx';
 import Main from './components/main.jsx';
+import Footer from './components/footer.jsx';
 
 class App extends React.Component {
     constructor(props){
@@ -14,6 +17,7 @@ class App extends React.Component {
                 first_name: '',
                 id: ''
             },
+            isLoggedIn: false,
             events: []
         }
         this.loginUser = this.loginUser.bind(this);
@@ -31,17 +35,19 @@ class App extends React.Component {
         // })  
     }
     loginUser(data){
-        console.log('this.loginUser', data);
+        //Sets the state for 'isLoggedIn' once the user is authenticated
+        console.log('setting this.state.isLoggedIn', data);
         this.setState({
-            user: data
+            user: data.user,
+            isLoggedIn: data.isLoggedIn
         });
     }
     render(){
-        console.log('index props', this.state.events);
         return(
-            <div>
-                <Navigation />
-                <Main events={this.state.events} loginUser={this.loginUser} user={this.state.user}/>
+            <div className='hero is-fullheight'>
+                <Header/>
+                <Main events={this.state.events} loginUser={this.loginUser} user={this.state.user} isLoggedIn={this.state.isLoggedIn}/>
+                <Footer/>
             </div>
         )
     }

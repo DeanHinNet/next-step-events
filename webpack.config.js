@@ -17,7 +17,35 @@ module.exports = {
                 query: {
                     presets: ['react', 'es2015']
                 }   
+            },
+            {
+                test: /\.scss$/,
+                exclude: /node_modules/,
+                use: [{
+                    loader: 'style-loader'
+                }, {
+                    loader: 'css-loader'
+                }, {
+                    loader: 'sass-loader',
+                    options: {
+                        includePaths: ['/client-react/dist/assets']
+                    }
+                }]
             }
         ]
     }
 }
+
+// {
+//     test: /\.scss$/,
+//     use: [{
+//         loader: 'style-loader'
+//     }, {
+//         loader: 'css-loader'
+//     }, {
+//         loader: 'sass-loader',
+//         options: {
+//             includePaths: ['/client-react/dist/assets']
+//         }
+//     }]
+// }

@@ -7,24 +7,37 @@ class ShowThread extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            messages: []
+            messages: [],
+            thread: {
+                description: ''
+            }
         }
         this.updateThread = this.updateThread.bind(this);
         this.showAddMessage = this.showAddMessage.bind(this);
     }
     componentDidMount(){
-        console.log('/api/thread/${this.props.match.params}', `/api/thread/${this.props.match.params.id}`);
-        axios.get(`/api/thread/${this.props.match.params.id}`)
-        .then((results)=>{
-            console.log('results', results);
-            this.setState({
-                thread: results.data.thread,
-                messages: results.data.messages
+        if(this.props.thread_id != 0){
+            console.log('this.props.match.params.thread_id', this.props.thread_id);
+            console.log('match params', this.props);
+            axios.get(`/api/thread/${this.props.thread_id}`)
+            .then((results)=>{
+                console.log('results', results);
+                this.setState({
+                    thread: results.data.thread[0],
+                    messages: results.data.messages
+                });
+            })
+            .catch((err)=>{
+                console.error(err);
             });
-        })
-        .catch((err)=>{
-            console.error(err);
-        });
+        } else {
+            this.setState({
+                thread: {
+                    description: 'No threads have been created yet! Add one!',
+                }
+            });
+        }
+     
     }
     updateThread(messages){
         this.setState({
@@ -37,9 +50,10 @@ class ShowThread extends React.Component {
         });
     }
     render(){
+        console.log('ShowThread state', this.state);
         return (
-            <div>
-                <h3>Discussion{}</h3>
+            <div id='thread-current'>
+                <h3>Discussion - {this.state.thread.description || ""}</h3>
 
                 <AddMessage thread={this.props.match.params} updateThread={this.updateThread}/>
                 <ul>

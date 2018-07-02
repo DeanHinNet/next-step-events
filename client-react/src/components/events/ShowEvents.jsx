@@ -12,12 +12,14 @@ class ShowEvents extends React.Component {
         }
     }
     componentDidMount(){
-        axios.get('/api/events')
+        axios.get('/api/eventbrite')
         .then((results)=>{
-            console.log('did mount get', results.data);
+            console.log('did mount get eventbrite');
             this.setState({
                 events: results.data
             });  
+        
+           
         })
         .catch((err)=>{
             console.error(err);
@@ -25,32 +27,22 @@ class ShowEvents extends React.Component {
     }
     render(){
         return (
-            <div>
-            <h2>All Events!</h2>
-            <p>{this.props.user.name ? "Welcome, " + this.props.user.name : ""}</p>
-            {this.state.events.reduce((result, event, index)=>{
-                if(Object.keys(this.props.match.params).length === 0){
-                    //If the route is '/events' with no parameter, render all events
-                    result.push(<div key={index} className='event-item'>
-                        <div>Name: {event.name}</div>
-                        <div>Description: {event.description}</div>
-                        <div>Start Date: {event.start_date.substring(0,10)}</div>
-                        <div>End Date: {event.end_date.substring(0,10)}</div>
-                        <div><Link to={`/event/${event.id}/rooms`}>ShowRooms</Link></div>
-                    </div>);
-                } else if(event.id === Number(this.props.match.params.id)){
-                    //If the route is '/events/:id' with a parameter, render only the selected event
-                    result.push(<div key={index} className='event-item'>
-                        <div>Name: {event.name}</div>
-                        <div>Description: {event.description}</div>
-                        <div>Start Date: {event.start_date.substring(0,10)}</div>
-                        <div>End Date: {event.end_date.substring(0,10)}</div>
-                        <div><Link to={`/event/${event.id}/rooms`}>ShowRooms </Link></div>
-                    </div>);
-                }
-                return result;
-            }, [])}
-        </div>
+            <div id='events-show' className='column'>
+                <h2>Upcoming Events!</h2>
+                <div id='events-entries'>
+                {this.state.events.reduce((result, event, index)=>{
+                    result.push(
+                        <div key={index} className='event-item'>
+                            <div className='event-link'><Link to={`/event/${event.id}/rooms`}>{event.name}</Link></div>
+                            <div className='event-description'>{event.description.substring(0,200)}...</div>
+                            <div className='event-start'>{event.start_date.substring(5,10)}</div>
+                            <div className='event-end'>to {event.end_date.substring(5,10)}</div>
+                        </div>
+                    );
+                    return result;
+                }, [])}
+                </div>
+            </div>
         )
     }
 }
