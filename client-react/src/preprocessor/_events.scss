@@ -5,7 +5,10 @@
     margin: 5px;
 }
 
-
+#event-add {
+    // background: url('/assets/pics/bg-add-01.jpg');
+    // background-size: cover;
+}
 
 #show-events {
 
@@ -18,3 +21,20 @@
     margin: 0 auto;
     text-align: center;
 }    
+
+@media only screen and (max-width: 605px) {
+    .input-box {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 605px) {
+    .input-box {
+        width: 33%;
+    }
+ }
+ @media only screen and (min-width: 1024px) {
+    .input-box {
+        width: 33%;
+    }
+ }

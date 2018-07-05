@@ -28,3 +28,16 @@
     background-color: white;
     margin: em(5px);
 }
+#login {
+    form {
+        width: 100%;
+    }
+    section, div, button {
+        display: inline-block;
+        margin-left: em(10px);
+    }
+}
+#threads-empty {
+    margin: em(5px);
+
+}
