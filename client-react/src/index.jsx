@@ -45,7 +45,7 @@ class App extends React.Component {
     render(){
         return(
             <div className='hero is-fullheight'>
-                <Header/>
+                <Header isLoggedIn={this.state.isLoggedIn}/>
                 <Main events={this.state.events} loginUser={this.loginUser} user={this.state.user} isLoggedIn={this.state.isLoggedIn}/>
                 <Footer/>
             </div>

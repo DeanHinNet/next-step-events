@@ -14,9 +14,6 @@ class AddEvent extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInput = this.handleInput.bind(this);
     }
-    componentDidMount(){
-        
-    }
     handleInput(e){
         this.setState({
             [e.target.name]: e.target.value
@@ -35,7 +32,7 @@ class AddEvent extends React.Component {
     }
     render(){
         return(
-            <div className='column'>
+            <div id='event-add' className='column'>
                 <div className='container has-text-centered input-box'>
                     <h3>Add an Event!</h3>
                     <form onSubmit={(e)=>this.handleSubmit(e, this.state)}>

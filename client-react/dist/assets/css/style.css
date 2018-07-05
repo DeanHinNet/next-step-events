@@ -64,20 +64,22 @@ main {
   background-color: #fafafa;
   padding-bottom: 1.25em; }
 
-#home {
+.home {
   background-color: #fafafa;
   padding: 0;
   min-height: 850px; }
-  #home #banner {
+  .home #banner {
     width: 100%;
     height: 15.625em;
     text-align: center;
     margin: 0 0 0.9375em 0;
     background-color: #fafafa; }
-    #home #banner #banner-container {
+    .home #banner #banner-container {
       background-color: #7eb2dd;
+      background: url("/assets/pics/bg-01.jpg");
+      background-size: cover;
       height: 12.5em; }
-      #home #banner #banner-container #search-container {
+      .home #banner #banner-container #search-container {
         display: inline-block;
         border: 1px solid #dcdcdc;
         border-radius: 0.1875em;
@@ -89,36 +91,73 @@ main {
         color: #f93943;
         width: 80%;
         vertical-align: text-bottom; }
-        #home #banner #banner-container #search-container #search-bar {
+        .home #banner #banner-container #search-container #search-bar {
           display: inline-block;
           margin: 0 auto;
           vertical-align: text-bottom;
           position: relative;
           top: 10%;
           width: 60%; }
-          #home #banner #banner-container #search-container #search-bar p {
+          .home #banner #banner-container #search-container #search-bar p {
             font-size: 1.75em; }
-          #home #banner #banner-container #search-container #search-bar #search-input input {
+          .home #banner #banner-container #search-container #search-bar #search-input input {
             height: 2.8125em;
             width: 80%;
             padding-left: 10px; }
-  #home #content {
+  .home .home-content {
     width: 80%;
     margin: 0 auto;
     background-color: #fafafa; }
-    #home #content #events-show {
+    .home .home-content #events-show {
       width: 60%;
       display: inline-block; }
-      #home #content #events-show .event-item {
+      .home .home-content #events-show .event-item {
         background-color: white;
         border: 1px solid #dcdcdc;
         padding: 0.625em; }
-        #home #content #events-show .event-item .event-link a {
+        .home .home-content #events-show .event-item .logo img {
+          display: block;
+          margin: 0 auto; }
+        .home .home-content #events-show .event-item .event-link a {
           font-weight: bold;
           font-size: 1em; }
-        #home #content #events-show .event-item .event-start, #home #content #events-show .event-item .event-end {
+        .home .home-content #events-show .event-item .event-start, .home .home-content #events-show .event-item .event-end {
           display: inline-block;
           margin-right: 0.3125em; }
+
+.home-landing {
+  background-color: #fcecc9; }
+  .home-landing #banner #banner-container {
+    background-color: #7eb2dd;
+    background: url("/assets/pics/bg-02.jpg");
+    background-size: cover;
+    height: 12.5em; }
+  .home-landing .home-content #events-show {
+    width: 100%; }
+    .home-landing .home-content #events-show .event-item {
+      display: inline-block;
+      height: 400px;
+      vertical-align: top; }
+    @media only screen and (max-width: 789px) {
+      .home-landing .home-content #events-show .event-item {
+        width: 100%; } }
+    @media only screen and (min-width: 789px) {
+      .home-landing .home-content #events-show .event-item {
+        width: 48%; } }
+    @media only screen and (min-width: 1024px) {
+      .home-landing .home-content #events-show .event-item {
+        width: 32%; } }
+    .home-landing .home-content #events-show .logo img {
+      height: 35%; }
+    .home-landing .home-content #events-show .event-link {
+      max-height: 20%;
+      height: 10%;
+      overflow: hidden;
+      text-overflow: ellipsis; }
+    .home-landing .home-content #events-show .event-description {
+      height: 32%;
+      overflow: hidden;
+      text-overflow: ellipsis; }
 
 .event-item {
   border: 1px solid black;
@@ -133,6 +172,15 @@ main {
   margin: 0 auto;
   text-align: center; }
 
+@media only screen and (max-width: 605px) {
+  .input-box {
+    width: 100%; } }
+@media only screen and (min-width: 605px) {
+  .input-box {
+    width: 33%; } }
+@media only screen and (min-width: 1024px) {
+  .input-box {
+    width: 33%; } }
 #room-add {
   margin: 0.625em; }
 
@@ -155,6 +203,15 @@ main {
 #threads-show, #thread-current, #event-info {
   border: 1px solid black;
   background-color: white;
+  margin: 0.3125em; }
+
+#login form {
+  width: 100%; }
+#login section, #login div, #login button {
+  display: inline-block;
+  margin-left: 0.625em; }
+
+#threads-empty {
   margin: 0.3125em; }
 
 /*# sourceMappingURL=style.css.map */

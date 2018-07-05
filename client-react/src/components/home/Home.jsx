@@ -3,9 +3,9 @@ import SearchBar from './SearchBar.jsx';
 import ShowEvents from './../events/ShowEvents.jsx';
 
 const Home = () => (
-    <div id='home' className='column'>
+    <div className='column home'>
         <SearchBar />
-        <div id='content'>
+        <div className='home-content'>
             <ShowEvents />
         </div>
     </div>

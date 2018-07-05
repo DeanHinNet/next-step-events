@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 
-const Header = () => (
+const Header = (props) => (
     <div className='hero-head navbar is-primary' id='header' >
         <div className='container'>
             <div className='navbar-brand'>
@@ -18,8 +18,8 @@ const Header = () => (
                     <Link className='navbar-item' to='/'>Home</Link>
                     <Link className='navbar-item' to='/events'>Browse events</Link>
                     <Link className='navbar-item' to='/events/add'>Create new event</Link>
-                    <Link className='navbar-item' to='/login'>Login</Link>
-                    <Link className='navbar-item' to='/register'>Register</Link>
+                    {props.isLoggedIn ? <Link className='navbar-item' to='/settings'>Settings</Link>:<Link className='navbar-item' to='/login'>Login</Link>}
+                    {props.isLoggedIn ? "": <Link className='navbar-item' to='/register'>Register</Link>}
                 </div>
             </div>
         </div>

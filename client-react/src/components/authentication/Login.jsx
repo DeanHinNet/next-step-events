@@ -11,7 +11,8 @@ class Login extends React.Component {
             failure: {},
             toDashboard: false,
             username: '',
-            isLoggedIn: false
+            isLoggedIn: false,
+            message: 'Please login below.'
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,6 +40,9 @@ class Login extends React.Component {
                         user: 'username-logic',
                         isLoggedIn: true
                     });
+                    this.setState({
+                        toDashboard: true
+                    });
                 } else {
                     //send status code and failure
                     this.setState({
@@ -51,26 +55,27 @@ class Login extends React.Component {
             });
     }
     render(){
-        if(this.state.toDashboard === true){
+        if(this.state.toDashboard){
+            console.log('redirecting to dasboard');
             return <Redirect to='/' />;
         }
 
         return(
-            <div className='column has-text-centered'>
+            <div id='login' className='column has-text-centered'>
                 <form className='user-form container has-text-centered input-box' onSubmit={this.handleSubmit}>
-                    <h3>Please enter info below to login.</h3>
-                    <p>{this.state.failure ? this.state.failure.success: ''}</p>
-                    <section>
-                        <label htmlFor='email'>Email:</label>
-                        <input id='email' name='email' type='email' placeholder='bob@smith.com' onChange={this.handleChange} value={this.state.email}/>
-                    </section>
-                    <section>
-                        <label htmlFor='password'>Password:</label>
-                        <input id='password' name='password' type='password' onChange={this.handleChange} value={this.state.password}/>
-                    </section>
+                    <h3>{this.props.message ? this.props.message: this.state.message} {this.state.failure ? this.state.failure.success: ''}</h3>
+                    <div>
+                        <section>
+                            <input id='email' name='email' type='email' placeholder='Email: bob@smith.com' onChange={this.handleChange} value={this.state.email}/>
+                        </section>
+                        <section>
+                            
+                            <input id='password' name='password' type='password' onChange={this.handleChange} value={this.state.password} placeholder='password ******'/>
+                        </section>
+                    </div>
                     <button type='submit' onSubmit={this.handleSubmit}>Login</button>
-            </form>
-           </div>
+                </form>
+             </div>
         )
     }
 }
@@ -95,3 +100,5 @@ export default Login;
 //     "password": "cheese",
 //     "failure": {}
 // }
+//<label htmlFor='email'>Email:</label>
+//<label htmlFor='password'>Password:</label>
