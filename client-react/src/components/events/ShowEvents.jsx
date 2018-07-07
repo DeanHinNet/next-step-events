@@ -37,8 +37,28 @@ class ShowEvents extends React.Component {
                     if(event.logo != null){
                         logo = event.logo.url;
                     }
+                    if(index === 0){
+                        result.push(
+                            <div key={69+index} className='event-item'>
+                            <Link to={`/event/4361188432/rooms`}> <div className='logo'><img src={logo ? logo : '/assets/event-default.jpg'}/></div>
+                             <div className='event-link'>DEFAULT</div></Link>
+                             <div className='event-description'>{event.description.substring(0,200)}...</div>
+                             <div className='event-start'>{event.start_date.substring(5,10)}</div>
+                             <div className='event-end'>to {event.end_date.substring(5,10)}</div>
+                         </div>
+                        );
+                        result.push(
+                            <div key={58+index} className='event-item'>
+                            <Link to={`/event/2147483647/rooms`}> <div className='logo'><img src={logo ? logo : '/assets/event-default.jpg'}/></div>
+                             <div className='event-link'>DEFAULT2</div></Link>
+                             <div className='event-description'>{event.description.substring(0,200)}...</div>
+                             <div className='event-start'>{event.start_date.substring(5,10)}</div>
+                             <div className='event-end'>to {event.end_date.substring(5,10)}</div>
+                         </div>
+                        );
+                    }
                     result.push(
-                        <div key={index} className='event-item'>
+                        <div key={event.id+index} className='event-item'>
                            <Link to={`/event/${event.id}/rooms`}> <div className='logo'><img src={logo ? logo : '/assets/event-default.jpg'}/></div>
                             <div className='event-link'>{event.name}</div></Link>
                             <div className='event-description'>{event.description.substring(0,200)}...</div>

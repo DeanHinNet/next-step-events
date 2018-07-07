@@ -14,9 +14,11 @@ class ShowThreads extends React.Component {
     }
     updateThreads(threads){
         console.log('update threads in show threads');
+    
         this.props.updateThreads(threads);
     }
     render(){
+        console.log('show threads', this.props);
         console.log('show threads -> room', this.props.room);
         const isLoggedIn = this.props.isLoggedIn;
         var noThreads = true;
@@ -26,17 +28,15 @@ class ShowThreads extends React.Component {
        
         return (
             <div id='threads-show'>
-                <h3>Threads</h3>
-                {isLoggedIn ? <AddThread room={this.props.room} updateThreads={this.updateThreads}/>: <p>Please <Link to='/login'>login</Link> to add a new thread!</p>}
-
-                <p id='threads-empty'>{noThreads ? "No threads yet, please add one!" : ""}</p>
+                <h3>Discussion Threads</h3>
                 <ul>
+                    <li id='threads-empty'>{noThreads ? "No threads yet, please add one!" : ""}</li>
                 {this.props.threads.map((thread, index)=>{
-                    return <li key={index}><Link to={`/room/${this.props.room}/${thread.id}`}>{thread.description}</Link>
-                    <span className='meta-info'>by Bob</span></li>
+                    return <li key={this.props.room+thread.id+index}><Link to={`/room/${this.props.room}/${thread.id}`}>{thread.description}</Link>
+                    <span className='thread-info'> by {thread.username}</span></li>
                 })}
                 </ul>
-             
+                {isLoggedIn ? <AddThread room={this.props.room} updateThreads={this.updateThreads}/>: ""}
             </div>
         )
     }
@@ -48,4 +48,6 @@ export default ShowThreads;
 <Route path={`/room/${this.props.room}/thread/:id`} render={(routeProps) =>   
     <ShowThread key={routeProps.match.params.id} {...routeProps}/>}
 />
-</Switch> */}
+</Switch> 
+<p>Please <Link to='/login'>login</Link> to add a new thread!</p>
+*/}

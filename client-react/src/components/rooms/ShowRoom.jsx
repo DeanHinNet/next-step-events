@@ -22,13 +22,21 @@ class ShowRoom extends React.Component {
         }
         this.updateThreads = this.updateThreads.bind(this);
     }
-    componentDidMount(){
+    componentWillMount(){
+        console.log('show room-component will mount');
+        console.log('match',this.props);
+        console.log('url',`/api/room/${this.props.match.params.id}`);
         axios.get(`/api/room/${this.props.match.params.id}`)
         .then((results)=>{
             console.log('room results data', results);
-            this.setState(results.data);  
+            this.setState({
+                event: results.data.event,
+                threads: results.data.threads,
+                room: results.data.room
+            });  
         })
         .catch((err)=>{
+            console.log('room results err', err);
             console.error(err);
         })  
     }
@@ -41,31 +49,37 @@ class ShowRoom extends React.Component {
     render(){
         console.log('showroom');
         console.log('isLoggedIn', this.props.isLoggedIn);
-        console.log('user', this.props.user);
+        console.log('props', this.props);
         console.log('threads', this.state.threads);
         console.log('throwing down threads', this.state.threads[0]);
         return (
             <div id='room-show' className='columns is-fullheight is-vtop'>
                 <div id='room-contents' className='column is-three-quarters'>
-                    <h2>{this.state.room.name}</h2>
+                    <div id='event-info'>
+                        <div id='event-name'>{this.state.event.name}</div>
+                        <div className='content-title'>Description: </div>
+                        <div id='event-desc-show' tabindex='1'>Show</div>
+                        <div id='event-desc-hide' tabindex='2'>Hide,</div>
+                        <div className='content-title'>Dates: </div>
+                        <div id='event-dates'>{this.state.event.start_date} to {this.state.event.end_date}</div>
+                        
+                        <div id='event-description'>{this.state.event.description}</div>
+                       
+                    </div>
+         
+                    <h2 id='room-name'>{this.state.room.name}</h2>
                    
                     <Switch>
                         <Route path='/room/:id/:thread_id' render={(routeProps) =>
-                            <ShowThread {...routeProps} {...this.props} key={routeProps.match.params.thread_id} thread_id={routeProps.match.params.thread_id} isLoggedIn={this.props.isLoggedIn} user={this.props.user}/>
+                            <ShowThread {...routeProps} {...this.props} key={routeProps.match.params.id+routeProps.match.params.thread_id} thread_id={routeProps.match.params.thread_id} isLoggedIn={this.props.isLoggedIn} user={this.props.user} loginUser={this.props.loginUser}/>
                         }
                         />
                     </Switch>
                </div>
-               <div id='room-info'className='column'>
-                    <ul id='event-info'>
-                        <li>Event Info</li>
-                        <li>Name: {this.state.event.name}</li>
-                        <li>Description: {this.state.event.description}</li>
-                        <li>Start: {this.state.event.start_date}</li>
-                        <li>End: {this.state.event.end_date}</li>
-                    </ul>
-                    <ShowThreads room={this.state.room.id} threads={this.state.threads} updateThreads={this.updateThreads} isLoggedIn={this.props.isLoggedIn} user={this.props.user}/>
+               <div id='side-bar' className='column'>
+                    <ShowThreads room={this.state.room.id} threads={this.state.threads} updateThreads={this.updateThreads} isLoggedIn={this.props.isLoggedIn} user={this.props.user} loginUser={this.props.loginUser}/>
                </div>
+            
             </div>
         )
     }

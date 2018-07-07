@@ -5,11 +5,10 @@ class Logout extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            response: ""
+            response: ''
         }
     }
     componentDidMount(){
-        console.log('logout-did mount');
         axios.get('/logout')
         .then((results)=>{
             this.setState({
@@ -20,7 +19,6 @@ class Logout extends React.Component {
             console.log(err);
         });
     }
-
     render(){
         return (
             <div>

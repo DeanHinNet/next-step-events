@@ -1,0 +1,21 @@
+.threads-display {
+    background-color: $bg;
+}
+
+#event-info li {
+    margin: 5px 0;
+}
+.message-box {
+    border: 1px solid $bg-border;
+    margin: 5px 0;
+    .message-content {
+        background-color: $bg-content;
+        
+    }
+    .message-stats {
+        background-color: $bg-content;
+        font-size: 10px;
+        font-weight: bold;
+        color: lightgrey;
+    }
+}

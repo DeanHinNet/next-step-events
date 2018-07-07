@@ -83,22 +83,3 @@ class Register extends React.Component {
 }
 
 export default Register;
-
-// <section>
-//                     <label htmlFor='title'>Title</label>
-//                     <input id='title' type='text' placeholder='Google Home' onChange={(e) => this.handleChange('title', e)} value={this.state.link.title}/>
-//                 </section>
-            
-//                 <section>
-//                     <label htmlFor='description'>Description/Note</label>
-//                     <input id='description' type='text' placeholder='How to land the software development job of your DREAMS!' onChange={(e) => this.handleChange('description', e)} value={this.state.link.description}/>
-//                 </section>
-//<button onClick={()=>this.addLink(this.state.link)}>Add</button>
-
-// {
-//     "first_name": "donkey",
-//     "last_name": "kong",
-//     "email": "help@home.com",
-//     "password": "cheese",
-//     "failure": {}
-// }

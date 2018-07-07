@@ -61,7 +61,7 @@ li {
   color: white; }
 
 main {
-  background-color: #fafafa;
+  background-color: yellow;
   padding-bottom: 1.25em; }
 
 .home {
@@ -181,19 +181,52 @@ main {
 @media only screen and (min-width: 1024px) {
   .input-box {
     width: 33%; } }
+#event-info div {
+  margin: 5px 0; }
+
 #room-add {
   margin: 0.625em; }
 
 #room-show {
   border: 1px solid red;
-  width: 80%;
+  width: 95%;
   min-height: 800px;
   margin: 0 auto;
   position: relative;
-  top: -100%; }
+  top: -100%;
+  background-color: yellow; }
+  #room-show #room-contents {
+    border: 1px solid blue; }
+    #room-show #room-contents #room-name {
+      font-weight: bold;
+      font-size: 28px;
+      text-transform: uppercase; }
+    #room-show #room-contents #event-info #event-name {
+      font-weight: bold; }
 
-#room-contents {
-  border: 1px solid blue; }
+#event-dates, #event-desc-show, #event-desc-hide {
+  display: inline-block;
+  padding-right: 5px; }
+
+#event-description {
+  height: 1.3em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+#event-description:hover {
+  color: #363636; }
+
+#event-desc-show:focus ~ #event-description {
+  overflow: visible;
+  height: 100%;
+  white-space: normal; }
+
+#event-desc-hide:focus ~ #event-description {
+  height: 1.3em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
 
 #room-info {
   border: 1px solid green; }
@@ -213,5 +246,48 @@ main {
 
 #threads-empty {
   margin: 0.3125em; }
+
+#threads-show h3 {
+  font-weight: bold; }
+#threads-show ul {
+  margin-bottom: 10px; }
+  #threads-show ul li {
+    font-size: 1em; }
+
+#message-add {
+  border: 1px solid green;
+  width: 80%;
+  margin: 0 auto; }
+  #message-add #message-input {
+    width: 70%;
+    height: 60px; }
+  #message-add #message-submit {
+    width: 25%;
+    margin-left: 10px; }
+
+.content-title {
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 5px; }
+
+.thread-info {
+  font-size: 12px; }
+
+.threads-display {
+  background-color: yellow; }
+
+#event-info li {
+  margin: 5px 0; }
+
+.message-box {
+  border: 1px solid darkgrey;
+  margin: 5px 0; }
+  .message-box .message-content {
+    background-color: white; }
+  .message-box .message-stats {
+    background-color: white;
+    font-size: 10px;
+    font-weight: bold;
+    color: lightgrey; }
 
 /*# sourceMappingURL=style.css.map */

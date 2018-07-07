@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter} from 'react-router-dom';
-import axios from 'axios';
+import {BrowserRouter, browserHistory} from 'react-router-dom';
 
 import './preprocessor/style.scss';
 
@@ -15,28 +14,15 @@ class App extends React.Component {
         this.state = {
             user: {
                 first_name: '',
+                username: '',
                 id: ''
             },
-            isLoggedIn: false,
-            events: []
+            isLoggedIn: false
         }
         this.loginUser = this.loginUser.bind(this);
     }
-    componentDidMount(){
-        // axios.get('/api/events')
-        // .then((results)=>{
-        //     console.log('did mount get', results.data);
-        //     this.setState({
-        //         events: results.data
-        //     });  
-        // })
-        // .catch((err)=>{
-        //     console.error(err);
-        // })  
-    }
     loginUser(data){
         //Sets the state for 'isLoggedIn' once the user is authenticated
-        console.log('setting this.state.isLoggedIn', data);
         this.setState({
             user: data.user,
             isLoggedIn: data.isLoggedIn
@@ -54,7 +40,7 @@ class App extends React.Component {
 }
 
 ReactDOM.render((
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
         <App />
     </BrowserRouter>
 ), document.getElementById('app'));

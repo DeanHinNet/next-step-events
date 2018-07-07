@@ -89,9 +89,11 @@ module.exports = {
             get: (params, callback)=>{
                 console.log("getting api/event/:id/rooms");
                 console.log('params', params);
-                var queryStr = `SELECT * FROM rooms WHERE event_id=${params.id}`;
+                //var queryStr = `SELECT * FROM rooms WHERE event_id=${params.id}`;
+                //returns the list of rooms with the default thread if available
+                var queryStr = `SELECT rooms.id, rooms.name, rooms.user_id, rooms.event_id, rooms.created_at, rooms.updated_at, threads.id AS thread_id FROM rooms LEFT OUTER JOIN threads ON rooms.id = threads.room_id WHERE event_id = ${params.id} GROUP BY rooms.id`;
                 var result = {};
-                console.log('queryStr', queryStr);
+                console.log('queryStr rooms + default thread', queryStr);
                 db.query(queryStr, (err, data)=>{
                     console.log('rooms data join', data);
                     if(data.length === 0){
@@ -99,6 +101,7 @@ module.exports = {
                     }
                     if(err) throw err;
                     result.rooms = data;
+                    
                     console.log('before module', params);
                     module.exports.event.get(params, (err, data)=>{
                         if(err) throw err;
@@ -107,7 +110,6 @@ module.exports = {
                         console.log('pre-eventbrite', params);
                         if(data.length === 0){
                             module.exports.eventBrite.event.get(params,(data)=>{
-                                console.log('eventbrite data', data.data);
                                 result.event = {
                                     id: data.data.id,
                                     name: data.data.name.text,
@@ -133,6 +135,7 @@ module.exports = {
     rooms: {
         get: (callback) => {
             var queryStr = `SELECT * FROM rooms`;
+            var result = {};
             db.query(queryStr, (err, data)=>{
                 if(err) throw err;
                 callback(data);
@@ -165,39 +168,70 @@ module.exports = {
     },
     room: {
         get: (params, callback)=>{
-            console.log('params', params);
+            console.log('ROOM GET params', params);
             var queryStr = `SELECT * FROM rooms WHERE id=${params.id}`;
             var result = {};
-            console.log('room query', queryStr);
+            var params;
+            console.log('ROOM GET query', queryStr);
             db.query(queryStr, (err, data)=>{
                 if(err) throw err;
+                console.log('room data returned', data);
                 result.room = data[0];
-
-                queryStr = `SELECT * FROM threads WHERE room_id=${params.id}`;
-                console.log('room data', data);
-
+                //queryStr = `SELECT * FROM threads WHERE room_id=${result.room.id}`;
+                queryStr = `SELECT threads.id, threads.description, threads.created_at, users.username FROM threads JOIN users ON threads.user_id=users.id WHERE room_id=${result.room.id};`;
                 db.query(queryStr, (err, data)=>{
                     if(err) throw err;
                     result.threads = data;
 
-                    // queryStr = `SELECT * FROM rooms_has_users WHERE room_id=${params.id}`;
-                    queryStr = `SELECT users.name FROM rooms_has_users JOIN users ON rooms_has_users.user_id=users.id JOIN rooms ON rooms_has_users.room_id=rooms.id WHERE rooms.id=${result.room.id}`;
+                    queryStr = `SELECT users.username FROM rooms_has_users JOIN users ON rooms_has_users.user_id=users.id JOIN rooms ON rooms_has_users.room_id=rooms.id WHERE rooms.id=${result.room.id}`;
                     console.log('members', queryStr);
 
                     db.query(queryStr, (err, data)=>{
                         if(err) throw err;
                         result.members = data;
-                        
+                        console.log('results currently', result);
                         console.log('room event_id', JSON.stringify(result.room.event_id));
-                        queryStr = `SELECT * FROM events WHERE id=${result.room.event_id}`;
-                       
-                        db.query(queryStr, (err, data)=>{
+                        params = {
+                            id: result.room.event_id
+                        }
+                        //need to split for eventbrite and for user-created...
+                        
+                        if(true){
                            
-                            if(err) throw err;  
-                            result.event = data[0];
-
-                            callback(result);
-                        });
+                            // db.query(queryStr, (err, data)=>{
+                            //     console.log('room->>> event data', data.data);
+                            //      if(err) throw err;  
+                            //      result.event = data[0];
+     
+                            //      callback(result);
+                            //  });
+                            module.exports.event.get(params, (err, data)=>{
+                                if(err) throw err;
+                                console.log('getting events data from database', data);
+                                //when no event in the database is found, search eventbrite for the event with id
+                                console.log('pre-eventbrite', params);
+                                if(data.length === 0){
+                                    module.exports.eventBrite.event.get(params,(data)=>{
+                                        result.event = {
+                                            id: data.data.id,
+                                            name: data.data.name.text,
+                                            description: data.data.description.text,
+                                            start_date: data.data.start.local,
+                                            end_date: data.data.end.local
+                            
+                                        }
+                                        callback(result);
+                                    });
+                                } else {
+                                    result.event = data;
+                                    console.log('result', result);
+                                    callback(result);
+                                }
+                            })
+                        } else {
+                            //queryStr = `SELECT * FROM events WHERE id=${result.room.event_id}`;
+                        }
+                        
                     });
                 });
             });
@@ -214,11 +248,11 @@ module.exports = {
     thread: {
         get: (params, callback)=>{
             console.log('thread get params', params);
-            var queryStr = `SELECT * FROM threads WHERE id=${params.id}`;
+            var queryStr = `SELECT * FROM threads WHERE id=?`;
             var result = {};
 
             console.log('threads query', queryStr);
-            db.query(queryStr, (err, data)=>{
+            db.query(queryStr, params.id, (err, data)=>{
                 if(err) throw err;
                 console.log('threads results)', data);
 
@@ -303,7 +337,8 @@ module.exports = {
             //check if user is in the database
             //if yes, check if the password matches
 
-            var queryStr = `SELECT * FROM users WHERE email=?`;
+            var queryStr = `SELECT id, first_name, username, password FROM users WHERE email=?`;
+            var result = {};
             console.log('login query for email', queryStr);
             console.log('params.email', params.email);
             db.query(queryStr, params.email, (err, data)=>{
@@ -313,9 +348,15 @@ module.exports = {
                 } else {
                     console.log('logged in data', data);
                     console.log('data.length', data.length);
+                 
                     if(data.length>0){
                         if(data[0].password === params.password){
-                            callback({'code': 200, 'message': 'login successful', 'user': data[0]});
+                            result = {
+                                first_name: data[0].first_name,
+                                username: data[0].username,
+                                id: data[0].id
+                            }
+                            callback({'code': 200, 'message': 'login successful', 'user': result});
                         } else {
                             callback({'code': 204, 'message': 'Email and password does not match.'});
                         }
@@ -343,7 +384,10 @@ module.exports = {
             var queryStr = `SELECT * FROM users WHERE email=?`;
             db.query(queryStr, user.email, (err, data)=>{
                 if(err) throw err;
+                console.log('email check data', data);
                 if(data.length === 0){
+                    console.log('no other email found');
+                    console.log('params', user);
                     queryStr = `INSERT INTO users SET ?`;
                     db.query(queryStr, user, (err, data)=>{
                         console.log('user info after insert', data);
@@ -362,3 +406,5 @@ module.exports = {
     }
    
 }
+
+

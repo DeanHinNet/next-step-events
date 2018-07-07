@@ -8,6 +8,11 @@ $grey-light: #fafafa;
 
 
 $bg: $grey-light;
+$bg-content: white;
+$bg-border: darkgrey;
+
+$font-size: em(14px);
+$bg: yellow;
 $grey-dark: #dcdcdc;
 .hero-body {
     padding: 0;
@@ -67,3 +72,4 @@ li {
 @import 'landing-page';
 @import 'events';
 @import 'rooms';
+@import 'messages';

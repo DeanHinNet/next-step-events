@@ -12,7 +12,6 @@ class MyParticipation extends React.Component {
             <div id='my-participation'>
                 <p>My Threads ones I've saved, or added messages in</p>
                 <p>My Events ones I've saved or created</p>
-                
             </div>
         )
     }

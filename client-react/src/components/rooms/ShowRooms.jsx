@@ -93,9 +93,10 @@ class ShowRooms extends React.Component {
 
                 {this.state.status ? this.state.status : ""}
                 {this.state.rooms.map((room, index)=>{
+                   
                     return (
-                        <div key={index} className='room-item'>
-                            <div className='room-name'><Link to={`/room/${room.id}/0`}>{room.name}</Link></div>
+                        <div key={room.id} className='room-item'>
+                            <div className='room-name'><Link to={`/room/${room.id}/${ room.thread_id ? room.thread_id: 0}`}>{room.name}</Link></div>
                             <div className='room-info'>{this.state.status ? 'by' : ""} </div>
                         </div>
                     )
