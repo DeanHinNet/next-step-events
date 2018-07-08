@@ -1,6 +1,19 @@
 var db = require('./../../database/index.js');
 var axios = require('axios');
-var credentials = process.env.credentials || require('./../../config.js');
+var credentials = process.env.host;
+var bcrypt = require('bcryptjs');
+const saltRounds = 6;
+
+if(credentials === undefined) {
+    credentials = require('./../../config.js');
+} else {
+    credentials = {
+        host: process.env.host,
+        user: process.env.user,
+        password: process.env.password,
+        database: process.env.database
+    }
+}
 db.connect();
 
 module.exports = {
@@ -242,14 +255,12 @@ module.exports = {
             //collect all the threads for the room
             //add the messages to each room
             var queryStr = `SELECT`;
-
             db.query(queryStr, (err, data)=>{
                 if(err) throw err;
                 callback(data);
             });
         },
         post: (params, userId, callback)=>{
-            console.log('creating a message', params);
             var queryStr = `INSERT INTO messages SET ?`;
             var today = new Date();
             var updatedParams = {
@@ -262,11 +273,7 @@ module.exports = {
             }
             var result = {};
             db.query(queryStr, updatedParams, (err, data)=>{
-                console.log('messages data', data);
-                console.log('thread id', params.thread_id);
-                console.log('messages:', );
                 if(err) throw err;
-
                 module.exports.thread.get({id: params.thread_id}, (data)=>{
                     console.log('here are the new messages:', data);
                     result = {
@@ -282,31 +289,25 @@ module.exports = {
         }
     },
     user: {
-        get: (params, callback)=>{
-
-        },
         login: (params, callback)=>{
             //check if user is in the database
             //if yes, check if the password matches
-
             var queryStr = `SELECT id, first_name, username, password FROM users WHERE email=?`;
             var result = {};
             db.query(queryStr, params.email, (err, data)=>{
                 if(err){
-                    console.error('error occurred');
                     callback({'code': 400, 'failed' : 'error ocurred'});
                 } else {
                     if(data.length>0){
-                        if(data[0].password === params.password){
-                            result = {
-                                first_name: data[0].first_name,
-                                username: data[0].username,
-                                id: data[0].id
-                            }
-                            callback({'code': 200, 'message': 'login successful', 'user': result});
-                        } else {
-                            callback({'code': 204, 'message': 'Email and password does not match.'});
+                        result = {
+                            first_name: data[0].first_name,
+                            username: data[0].username,
+                            id: data[0].id
                         }
+                        bcrypt.compare(params.password, data[0].password, (err, res)=>{
+                            if(err) throw err;
+                            callback({'code': 200, 'message': 'login successful', 'user': result});
+                        });
                     } else {
                         callback({'code': 204, 'message': 'Email does not exist.'});
                     }
@@ -315,7 +316,7 @@ module.exports = {
             });
         },
         register: (params, callback)=>{
-            console.log('model.user.registering...', params);
+            var queryStr = `SELECT * FROM users WHERE email=?`;
             var today = new Date();
             var user = {
                 first_name: params.first_name,
@@ -326,27 +327,29 @@ module.exports = {
                 created_at: today,
                 updated_at: today
             };
+
             //check if email already exists;
-            var queryStr = `SELECT * FROM users WHERE email=?`;
             db.query(queryStr, user.email, (err, data)=>{
                 if(err) throw err;
-                console.log('email check data', data);
                 if(data.length === 0){
-                    console.log('no other email found');
-                    console.log('params', user);
-                    queryStr = `INSERT INTO users SET ?`;
-                    db.query(queryStr, user, (err, data)=>{
-                        console.log('user info after insert', data);
+                     //if email doesn't exist, insert into database
+                    bcrypt.genSalt(saltRounds, (err, salt)=>{
                         if(err) throw err;
-                        console.log({'code': 200, 'message': 'User has been created!', 'user': {id: data.insertId, 'name': user.first_name}});
-                        callback({'code': 200, 'message': 'User has been created!', 'user': {id: data.insertId, 'name': user.first_name}});
+                        bcrypt.hash(user.password, salt, (err, hash)=>{
+                            if(err) throw err;
+                            user.password = hash;
+                            queryStr = `INSERT INTO users SET ?`;
+                            db.query(queryStr, user, (err, data)=>{
+                                if(err) throw err;
+                                callback({'code': 200, 'message': 'User has been created!', 'user': {id: data.insertId, 'name': user.first_name}});
+                            });
+                        });
                     });
                 } else {
                     callback({'code': 204, 'message': 'Email already exists!'});
                 }
             });
 
-            //if email doesn't exist, insert into database
            
         }
     }

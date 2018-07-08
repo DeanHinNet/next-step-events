@@ -16,5 +16,4 @@ class MyParticipation extends React.Component {
         )
     }
 }
-
 export default MyParticipation;

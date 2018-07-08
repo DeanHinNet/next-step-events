@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-
 import AddRoom from './AddRoom.jsx';
 
 class ShowRooms extends React.Component {
@@ -32,16 +31,15 @@ class ShowRooms extends React.Component {
                         event: results.data.event,
                         status: 'No rooms yet for this event.'
                     }); 
-                 
                 } else {
                     this.setState({
                         rooms: results.data.rooms,
                         event: results.data.event
                     });  
                 }
-               
             })
             .catch((err)=>{
+                console.log('An error has occurred.', err);
                 this.setState({
                     error: err.response
                 });
@@ -59,7 +57,6 @@ class ShowRooms extends React.Component {
                 });
             })  
         }
-      
     }
     updateRooms(results){
         this.setState({
@@ -78,11 +75,12 @@ class ShowRooms extends React.Component {
                 {this.props.isLoggedIn ? <AddRoom event={this.props.match.params} updateRooms={this.updateRooms}/>: "Please login to create a new room."}
                 <div id='rooms-list'>
                     <h2>Current Rooms: {this.state.status ? this.state.status : ""}</h2>
-
                     {this.state.rooms.map((room, index)=>{
                         return (
                             <div key={room.id} className='room-item'>
-                                <div className='room-name'><Link to={`/room/${room.id}/${ room.thread_id ? room.thread_id: 0}`}>{room.name}</Link></div>
+                                <div className='room-name'>
+                                    <Link to={`/room/${room.id}/${ room.thread_id ? room.thread_id: 0}`}>{room.name}</Link>
+                                </div>
                                 <div className='room-info'>{this.state.status ? '' : 'by'} </div>
                             </div>
                         )
@@ -92,9 +90,4 @@ class ShowRooms extends React.Component {
         )
     }
 }
-
 export default ShowRooms;
-
-/*
-  {roomsCreated ? "No threads yet, please add one!" : ""}
-\*/

@@ -4,7 +4,6 @@ import axios from 'axios';
 class AddEvent extends React.Component {
     constructor(props){
         super(props);
-        
         this.state = {
             name: '',
             start_date: '',
@@ -21,7 +20,6 @@ class AddEvent extends React.Component {
     }
     handleSubmit(e, eventData){
         e.preventDefault();
-        
         axios.post('/api/events', eventData)
             .then((err, data)=>{
                 console.log('successfully created event');
@@ -59,5 +57,4 @@ class AddEvent extends React.Component {
         )
     }
 }
-
 export default AddEvent;

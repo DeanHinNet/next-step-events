@@ -24,11 +24,8 @@ class Login extends React.Component {
     }
     handleSubmit(e){
         e.preventDefault();
-        console.log("login info", this.state);
         axios.post('/login', this.state)
             .then((results)=>{
-                console.log('results.code');
-                console.log(results);
                 if(results.status === 200){
                     this.props.loginUser({
                         user: results.data.user,
@@ -52,10 +49,8 @@ class Login extends React.Component {
     }
     render(){
         if(this.state.toDashboard){
-            console.log('redirecting to dasboard');
             return <Redirect to='/' />;
         }
-
         return(
             <div id='login' className='column has-text-centered'>
                 <form className='user-form container has-text-centered input-box' onSubmit={this.handleSubmit}>
@@ -75,5 +70,4 @@ class Login extends React.Component {
         )
     }
 }
-
 export default Login;
