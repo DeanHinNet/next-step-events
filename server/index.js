@@ -109,7 +109,6 @@ app.get('/api/messages/room/:id/', (req, res)=>{
 //External APIS
 app.get('/api/eventbrite/', (req, res)=>{
     model.eventBrite.get((data)=>{
-        console.log('eventbrite', data);
         res.status(201).send(data);
     });
 });
@@ -118,6 +117,7 @@ app.get('/api/eventbrite/', (req, res)=>{
 app.post('/login',(req, res)=>{
     model.user.login(req.body, (data)=>{
         if(data.code === 200){
+            console.log('creating user session', data.user);
             util.createSession(req, res, data.user);
             res.status(data.code).send(data);
             //the user has been checked, the session has been created and the cookie has been delivered to the user's browser

@@ -1,22 +1,59 @@
 
+#event-info div{
+    margin: 5px 0;
+   
+}
 #room-add {
     margin: em(10px);
 }
 #room-show {
-    @include test(red);
-
-    width: 80%;
+    width: 95%;
     min-height: 800px;
     margin: 0 auto;
     position: relative;
     top: -100%;
-}
-#room-contents {
-    @include test(blue);
+    background-color: $bg;
+    #room-contents {
+        #room-name {
+            font-weight: bold;
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+        #event-info {
+            #event-name {
+                font-weight: bold;
+            }
+          
+        }
+    }
 }
 
+#event-dates, #event-desc-show, #event-desc-hide {
+    display: inline-block;
+    padding-right: 5px;
+}
+#event-description {
+    height: 1.3em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#event-description:hover {
+    color: #363636;
+}
+
+#event-desc-show:focus ~ #event-description{
+    overflow: visible;
+    height: 100%;
+    white-space: normal;
+}
+#event-desc-hide:focus ~ #event-description{
+    height: 1.3em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 #room-info {
-    @include test(green);
     .room-event-name {
         font-weight: bold;
     
@@ -24,9 +61,16 @@
 }
 
 #threads-show, #thread-current, #event-info{
-    border: 1px solid black;
-    background-color: white;
+
+    background-color: $bg-content;
+    padding: 5px;
     margin: em(5px);
+    border: 1px solid #dcdcdc;
+    border-radius: 0.1875em;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
+}
+#thread-name {
+    font-weight: bold;
 }
 #login {
     form {
@@ -40,4 +84,65 @@
 #threads-empty {
     margin: em(5px);
 
+}
+#threads-show {
+    h3 {
+        font-weight: bold;
+    }
+    ul {
+        margin-bottom: 10px;
+        li {
+            font-size: em(16px);
+        }
+    }
+}
+
+#message-add {
+    width: 80%;
+    margin: 0 auto;
+   #message-input {
+       width: 70%;
+       height: 60px
+   }
+   #message-submit {
+       width: 25%;
+       margin-left: 10px;
+
+   }
+}
+.content-title {
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.thread-info {
+    font-size: 12px;
+}
+
+#event-pics {
+    width: 95%;
+    margin: 0 auto;
+}
+#event-pics img{
+    border: 1px solid $grey-dark;
+    border-radius: 5px;
+
+}
+
+//ShowRooms Styles
+
+#rooms-show {
+    min-height: 800px;
+}
+#rooms-list {
+    background-color: #ffffff;
+    margin: 5px 0;
+    padding: 5px;
+}
+.room-event-name {
+    font-weight: bold;
+    background-color: white;
+    border: 1px solid $grey-dark;
+    padding: 5px;
 }

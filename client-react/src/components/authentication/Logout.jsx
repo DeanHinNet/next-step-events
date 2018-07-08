@@ -5,13 +5,25 @@ class Logout extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            response: ""
+            response: ''
         }
     }
+
+    loginUser(data){
+        //Sets the state for 'isLoggedIn' once the user is authenticated
+        this.setState({
+            user: data.user,
+            isLoggedIn: data.isLoggedIn
+        });
+    }
+
     componentDidMount(){
-        console.log('logout-did mount');
         axios.get('/logout')
         .then((results)=>{
+            this.props.loginUser({
+                user: '',
+                isLoggedIn: false
+            });
             this.setState({
                 response: results.data
             });
@@ -20,7 +32,6 @@ class Logout extends React.Component {
             console.log(err);
         });
     }
-
     render(){
         return (
             <div>

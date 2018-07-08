@@ -30,19 +30,15 @@ class Login extends React.Component {
                 console.log('results.code');
                 console.log(results);
                 if(results.status === 200){
-                    //user should be logged in and redirected to the main with all the eventsn
-                    // this.setState({
-                    //     toDashboard: true,
-                    //     isLoggedIn: true,
-                    //     username: 'username'
-                    // });
                     this.props.loginUser({
-                        user: 'username-logic',
+                        user: results.data.user,
                         isLoggedIn: true
                     });
-                    this.setState({
-                        toDashboard: true
-                    });
+                    if(this.props.location === undefined){
+                        this.setState({
+                            toDashboard: true
+                        });
+                    }
                 } else {
                     //send status code and failure
                     this.setState({
@@ -81,24 +77,3 @@ class Login extends React.Component {
 }
 
 export default Login;
-
-// <section>
-//                     <label htmlFor='title'>Title</label>
-//                     <input id='title' type='text' placeholder='Google Home' onChange={(e) => this.handleChange('title', e)} value={this.state.link.title}/>
-//                 </section>
-            
-//                 <section>
-//                     <label htmlFor='description'>Description/Note</label>
-//                     <input id='description' type='text' placeholder='How to land the software development job of your DREAMS!' onChange={(e) => this.handleChange('description', e)} value={this.state.link.description}/>
-//                 </section>
-//<button onClick={()=>this.addLink(this.state.link)}>Add</button>
-
-// {
-//     "first_name": "donkey",
-//     "last_name": "kong",
-//     "email": "help@home.com",
-//     "password": "cheese",
-//     "failure": {}
-// }
-//<label htmlFor='email'>Email:</label>
-//<label htmlFor='password'>Password:</label>

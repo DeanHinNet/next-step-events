@@ -14,83 +14,37 @@ class ShowThread extends React.Component {
             }
         }
         this.updateThread = this.updateThread.bind(this);
-        this.showAddMessage = this.showAddMessage.bind(this);
+       
     }
     componentDidMount(){
         console.log('show thread props did mount', this.props);
-       
-
-        //Gets individual thread
-        if(this.props.default === undefined){
-            
+        console.log('default', this.props);
+         if(Number(this.props.thread_id) === 0){
             this.setState({
                 thread: {
-                    description: 'No threads have been created yet! Add one!',
+                    description: 'No discussion threads yet. Please add one!'
                 }
             });
-        } else {
-            console.log('threads props', this.props.default.id );
-            if(this.props.thread_id != 0){
-                console.log('this.props.match.params.thread_id', this.props.thread_id);
-                console.log('match params', this.props);
-                axios.get(`/api/thread/${this.props.thread_id}`)
-                .then((results)=>{
-                    console.log('results', results);
-                    this.setState({
-                        thread: results.data.thread[0],
-                        messages: results.data.messages
-                    });
-                })
-                .catch((err)=>{
-                    console.error(err);
+         } else if(this.props.thread_id != undefined){
+            console.log('this.props.match.params.thread_id', this.props.thread_id);
+            console.log('match params', this.props);
+            axios.get(`/api/thread/${this.props.thread_id}`)
+            .then((results)=>{
+                console.log('results', results);
+                this.setState({
+                    thread: results.data.thread[0],
+                    messages: results.data.messages
                 });
-            } else {
-                axios.get(`/api/thread/${this.props.threads.id}`)
-                .then((results)=>{
-                    console.log('results from thread_id === 0', results);
-                    this.setState({
-                        thread: results.data.thread[0],
-                        messages: results.data.messages
-                    });
-                })
-                .catch((err)=>{
-                    console.error(err);
-                });
-            }
-        }
-        
-        // if(this.props.thread_id != 0){
-        //     console.log('this.props.match.params.thread_id', this.props.thread_id);
-        //     console.log('match params', this.props);
-        //     axios.get(`/api/thread/${this.props.thread_id}`)
-        //     .then((results)=>{
-        //         console.log('results', results);
-        //         this.setState({
-        //             thread: results.data.thread[0],
-        //             messages: results.data.messages
-        //         });
-        //     })
-        //     .catch((err)=>{
-        //         console.error(err);
-        //     });
-        // } else {
-        //     this.setState({
-        //         thread: {
-        //             description: 'No threads have been created yet! Add one!',
-        //         }
-        //     });
-        // }
-     
+            })
+            .catch((err)=>{
+                console.error(err);
+            });   
+         }     
     }
     updateThread(messages){
         this.setState({
             messages: messages
         })
-    }
-    showAddMessage(){
-        this.setState({
-            
-        });
     }
     render(){
         console.log('ShowThread state', this.state);
@@ -100,16 +54,16 @@ class ShowThread extends React.Component {
 
         return (
             <div id='thread-current'>
-                <h3>Discussion - {this.state.thread.description || ""}</h3>
-                {isLoggedIn ? <AddMessage thread={this.props.match.params} updateThread={this.updateThread}/> : <Login message="Please login to add a message." />}
+                <h3>Discussion: <span id='thread-name'>{this.state.thread.description || ""}</span></h3>
+                {isLoggedIn ? <AddMessage thread_id={this.state.thread.id} updateThread={this.updateThread}/> : <Login location='room' loginUser={this.props.loginUser} message="Please login to add a message." />}
                 
                 {this.state.messages.length === 0 ? <p>No messages yet. Please add one!</p> : ""}
-                <ul>
+                <ul className='threads-display'>
                     {this.state.messages.map((message, index)=>{
                         return (
-                            <li key={index}>
-                            <span className='message-content' >{message.content}</span>
-                            <span className='message-stats'>User:{message.username}, Parent:{message.parent_id}, Thread: {message.thread_id}, Message: {message.id}</span>
+                            <li key={message.thread_id+index} className='message-box'>
+                                <div className='message-content' >{message.content}</div>
+                                <div className='message-stats'>by {message.username}</div>
                             </li>
                         )
                     })}

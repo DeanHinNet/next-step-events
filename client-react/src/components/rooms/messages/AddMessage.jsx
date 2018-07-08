@@ -5,7 +5,7 @@ class AddMessage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            thread_id: this.props.thread.id,
+            thread_id: this.props.thread_id,
             parent_id: '',
             content: '',
             error: ''
@@ -25,6 +25,9 @@ class AddMessage extends React.Component {
             .then((results)=>{
                 console.log('messages post udata', results.data.messages);
                 this.props.updateThread(results.data.messages);
+                this.setState({
+                    content: ''
+                });
             })
             .catch((err)=>{
                 console.error(err);
@@ -36,15 +39,14 @@ class AddMessage extends React.Component {
     }
     render(){
         return(
-            <div>
+            <div id='message-add'>
                 <h3>Add an Message!</h3>
                 <p> {this.state.error ? this.state.error : ""}</p>
                 <form onSubmit={(e)=>this.handleSubmit(e, this.state)}>
-                    <div>
-                        <label htmlFor='content'>Message</label>
-                        <input id='content' name='content' type='text' value={this.state.content} onChange={this.handleInput} />
-                    </div>
-                    <input type='submit' id='submit' value='Submit Message'/>
+                    
+                    <textarea id='message-input' name='content' type='textarea' value={this.state.content} onChange={this.handleInput} />
+                    
+                    <input id='message-submit' type='submit' id='submit' value='Submit Message'/>
                 </form>
             </div>
         )

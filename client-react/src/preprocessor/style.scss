@@ -7,6 +7,12 @@ $yellow: #fcecc9;
 $grey-light: #fafafa;
 
 
+
+$bg-content: white;
+$bg-border: darkgrey;
+
+$font-size: em(14px);
+
 $bg: $grey-light;
 $grey-dark: #dcdcdc;
 .hero-body {
@@ -45,7 +51,7 @@ li {
     margin-top: -55px;
 }
 #navMenu div a:hover {
-    background-color: $yellow;
+    background-color: $bg;
     color: $blue;
 }
 
@@ -67,3 +73,4 @@ li {
 @import 'landing-page';
 @import 'events';
 @import 'rooms';
+@import 'messages';
