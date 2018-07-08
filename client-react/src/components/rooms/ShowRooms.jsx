@@ -30,7 +30,7 @@ class ShowRooms extends React.Component {
                             end_date: ''
                         }],
                         event: results.data.event,
-                        status: 'No rooms yet for this event. Please login to create a new room!'
+                        status: 'No rooms yet for this event.'
                     }); 
                  
                 } else {
@@ -75,7 +75,7 @@ class ShowRooms extends React.Component {
         return (
             <div id='rooms-show' className='column'>
                 <h2 className='room-event-name' data-event-id={this.state.event.id}>{this.state.event.name}</h2>
-                {this.props.isLoggedIn ? <AddRoom event={this.props.match.params} updateRooms={this.updateRooms}/>: ""}
+                {this.props.isLoggedIn ? <AddRoom event={this.props.match.params} updateRooms={this.updateRooms}/>: "Please login to create a new room."}
                 <div id='rooms-list'>
                     <h2>Current Rooms: {this.state.status ? this.state.status : ""}</h2>
 
