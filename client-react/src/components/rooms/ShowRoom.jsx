@@ -23,9 +23,6 @@ class ShowRoom extends React.Component {
         this.updateThreads = this.updateThreads.bind(this);
     }
     componentWillMount(){
-        console.log('show room-component will mount');
-        console.log('match',this.props);
-        console.log('url',`/api/room/${this.props.match.params.id}`);
         axios.get(`/api/room/${this.props.match.params.id}`)
         .then((results)=>{
             console.log('room results data', results);
@@ -58,8 +55,8 @@ class ShowRoom extends React.Component {
                     <div id='event-info'>
                         <div id='event-name'>{this.state.event.name}</div>
                         <div className='content-title'>Description: </div>
-                        <div id='event-desc-show' tabindex='1'>Show</div>
-                        <div id='event-desc-hide' tabindex='2'>Hide,</div>
+                        <div id='event-desc-show' tabIndex='1'>Show</div>
+                        <div id='event-desc-hide' tabIndex='2'>Hide,</div>
                         <div className='content-title'>Dates: </div>
                         <div id='event-dates'>{this.state.event.start_date} to {this.state.event.end_date}</div>
                         
@@ -78,8 +75,10 @@ class ShowRoom extends React.Component {
                </div>
                <div id='side-bar' className='column'>
                     <ShowThreads room={this.state.room.id} threads={this.state.threads} updateThreads={this.updateThreads} isLoggedIn={this.props.isLoggedIn} user={this.props.user} loginUser={this.props.loginUser}/>
+                    <div id='event-pics'>
+                        <img src={`${this.state.event.logo_url}`} />
+                    </div>
                </div>
-            
             </div>
         )
     }

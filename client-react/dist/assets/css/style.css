@@ -15,7 +15,7 @@ li {
   margin-top: -55px; }
 
 #navMenu div a:hover {
-  background-color: #fcecc9;
+  background-color: #fafafa;
   color: #445e93; }
 
 .input-box {
@@ -61,7 +61,7 @@ li {
   color: white; }
 
 main {
-  background-color: yellow;
+  background-color: #fafafa;
   padding-bottom: 1.25em; }
 
 .home {
@@ -126,7 +126,7 @@ main {
           margin-right: 0.3125em; }
 
 .home-landing {
-  background-color: #fcecc9; }
+  background-color: #fafafa; }
   .home-landing #banner #banner-container {
     background-color: #7eb2dd;
     background: url("/assets/pics/bg-02.jpg");
@@ -188,21 +188,18 @@ main {
   margin: 0.625em; }
 
 #room-show {
-  border: 1px solid red;
   width: 95%;
   min-height: 800px;
   margin: 0 auto;
   position: relative;
   top: -100%;
-  background-color: yellow; }
-  #room-show #room-contents {
-    border: 1px solid blue; }
-    #room-show #room-contents #room-name {
-      font-weight: bold;
-      font-size: 28px;
-      text-transform: uppercase; }
-    #room-show #room-contents #event-info #event-name {
-      font-weight: bold; }
+  background-color: #fafafa; }
+  #room-show #room-contents #room-name {
+    font-weight: bold;
+    font-size: 28px;
+    text-transform: uppercase; }
+  #room-show #room-contents #event-info #event-name {
+    font-weight: bold; }
 
 #event-dates, #event-desc-show, #event-desc-hide {
   display: inline-block;
@@ -228,15 +225,19 @@ main {
   overflow: hidden;
   text-overflow: ellipsis; }
 
-#room-info {
-  border: 1px solid green; }
-  #room-info .room-event-name {
-    font-weight: bold; }
+#room-info .room-event-name {
+  font-weight: bold; }
 
 #threads-show, #thread-current, #event-info {
-  border: 1px solid black;
   background-color: white;
-  margin: 0.3125em; }
+  padding: 5px;
+  margin: 0.3125em;
+  border: 1px solid #dcdcdc;
+  border-radius: 0.1875em;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25); }
+
+#thread-name {
+  font-weight: bold; }
 
 #login form {
   width: 100%; }
@@ -255,7 +256,6 @@ main {
     font-size: 1em; }
 
 #message-add {
-  border: 1px solid green;
   width: 80%;
   margin: 0 auto; }
   #message-add #message-input {
@@ -273,21 +273,51 @@ main {
 .thread-info {
   font-size: 12px; }
 
+#event-pics {
+  width: 95%;
+  margin: 0 auto; }
+
+#event-pics img {
+  border: 1px solid #dcdcdc;
+  border-radius: 5px; }
+
+#rooms-show {
+  min-height: 800px; }
+
+#rooms-list {
+  background-color: #ffffff;
+  margin: 5px 0;
+  padding: 5px; }
+
+.room-event-name {
+  font-weight: bold;
+  background-color: white;
+  border: 1px solid #dcdcdc;
+  padding: 5px; }
+
 .threads-display {
-  background-color: yellow; }
+  background-color: #fafafa; }
 
 #event-info li {
   margin: 5px 0; }
 
 .message-box {
-  border: 1px solid darkgrey;
-  margin: 5px 0; }
+  margin: 5px;
+  margin-bottom: 0px;
+  border-radius: 5px; }
   .message-box .message-content {
     background-color: white; }
   .message-box .message-stats {
     background-color: white;
     font-size: 10px;
     font-weight: bold;
-    color: lightgrey; }
+    color: lightgrey;
+    padding-left: 2px; }
+
+.message-box:first-child {
+  padding-top: 5px; }
+
+.message-box:last-child {
+  padding-bottom: 5px; }
 
 /*# sourceMappingURL=style.css.map */

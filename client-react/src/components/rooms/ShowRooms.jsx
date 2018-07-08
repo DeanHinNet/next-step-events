@@ -21,11 +21,7 @@ class ShowRooms extends React.Component {
         if(Object.keys(this.props.match.params).length > 0){
             axios.get(`/api/event/${this.props.match.params.id}/rooms`)
             .then((results)=>{
-                console.log('did mount get', results.data);
-                console.log(results.data.rooms.length);
                 if(results.data.rooms.length === 0){
-                    console.log('inside results', results.data);
-                    console.log('this.state', this.state); 
                     this.setState({
                         rooms: [{
                             id: '',
@@ -34,11 +30,10 @@ class ShowRooms extends React.Component {
                             end_date: ''
                         }],
                         event: results.data.event,
-                        status: 'No rooms yet for this event!'
+                        status: 'No rooms yet for this event. Please login to create a new room!'
                     }); 
                  
                 } else {
-                    console.log('inside results with rooms', this.state); 
                     this.setState({
                         rooms: results.data.rooms,
                         event: results.data.event
@@ -52,10 +47,8 @@ class ShowRooms extends React.Component {
                 });
             })  
         } else {
-            console.log('getting all rooms');
             axios.get('/api/rooms')
             .then((results)=>{
-                console.log('did mount get', results.data);
                 this.setState({
                     rooms: results.data
                 });  
@@ -69,41 +62,39 @@ class ShowRooms extends React.Component {
       
     }
     updateRooms(results){
-        console.log("update room results", results);
         this.setState({
             event: results.data.event,
             rooms: results.data.rooms
         });
     }   
     render(){
-        console.log('this is state', this.state); 
-        const isLoggedIn = this.props.isLoggedIn;
         var roomsCreated = true;
-
         if(this.state.rooms.length != 0){
             roomsCreated = false;
         }
         return (
             <div id='rooms-show' className='column'>
-                <h2 className='room-event-name' data-event-id={this.state.event.id}>Showing rooms for {this.state.event.name}</h2>
-                
+                <h2 className='room-event-name' data-event-id={this.state.event.id}>{this.state.event.name}</h2>
+                {this.props.isLoggedIn ? <AddRoom event={this.props.match.params} updateRooms={this.updateRooms}/>: ""}
+                <div id='rooms-list'>
+                    <h2>Current Rooms: {this.state.status ? this.state.status : ""}</h2>
 
-                  {isLoggedIn ? <AddRoom event={this.props.match.params} updateRooms={this.updateRooms}/>: <p>Please <Link to='/login'>login</Link> to add a new room!</p>}
-                {roomsCreated ? "No threads yet, please add one!" : ""}
-
-                {this.state.status ? this.state.status : ""}
-                {this.state.rooms.map((room, index)=>{
-                   
-                    return (
-                        <div key={room.id} className='room-item'>
-                            <div className='room-name'><Link to={`/room/${room.id}/${ room.thread_id ? room.thread_id: 0}`}>{room.name}</Link></div>
-                            <div className='room-info'>{this.state.status ? 'by' : ""} </div>
-                        </div>
-                    )
-                })}
+                    {this.state.rooms.map((room, index)=>{
+                        return (
+                            <div key={room.id} className='room-item'>
+                                <div className='room-name'><Link to={`/room/${room.id}/${ room.thread_id ? room.thread_id: 0}`}>{room.name}</Link></div>
+                                <div className='room-info'>{this.state.status ? '' : 'by'} </div>
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
         )
     }
 }
 
 export default ShowRooms;
+
+/*
+  {roomsCreated ? "No threads yet, please add one!" : ""}
+\*/

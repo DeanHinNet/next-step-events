@@ -4,6 +4,7 @@ import {Switch, Route} from 'react-router-dom';
 import Login from './authentication/Login.jsx';
 import Register from './authentication/Register.jsx';
 import Logout from './authentication/Logout.jsx';
+import Settings from './authentication/Settings.jsx';
 
 import Home from './home/Home.jsx';
 import LandingPage from './home/LandingPage.jsx';
@@ -21,7 +22,10 @@ const Main = (props) => {
             <Route exact path='/' render={()=>
                 props.isLoggedIn ? <Home /> : <LandingPage />}
             />
-            <Route exact path='/logout' component={Logout} />
+            <Route exact path='/settings' component={Settings} />
+            <Route exact path='/logout' render={() =>   
+                <Login loginUser={props.loginUser}/>}
+            />
             <Route exact path='/login' render={(routeProps) =>   
                 <Login {...routeProps} loginUser={props.loginUser}/>}
             />

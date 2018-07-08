@@ -7,12 +7,13 @@ $yellow: #fcecc9;
 $grey-light: #fafafa;
 
 
-$bg: $grey-light;
+
 $bg-content: white;
 $bg-border: darkgrey;
 
 $font-size: em(14px);
-$bg: yellow;
+
+$bg: $grey-light;
 $grey-dark: #dcdcdc;
 .hero-body {
     padding: 0;
@@ -50,7 +51,7 @@ li {
     margin-top: -55px;
 }
 #navMenu div a:hover {
-    background-color: $yellow;
+    background-color: $bg;
     color: $blue;
 }
 
