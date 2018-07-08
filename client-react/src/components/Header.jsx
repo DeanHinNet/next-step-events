@@ -5,8 +5,7 @@ const Header = (props) => (
     <div className='hero-head navbar is-primary' id='header' >
         <div className='container'>
             <div className='navbar-brand'>
-                <Link id='logo' className='navbar-item' to='/'>Next Step Events</Link> 
-              
+                <Link id='logo' className='navbar-item' to='/'>Next Step Events</Link>
             </div>
             <span className="navbar-burger burger show-burger" data-target="navMenu">
                 <span></span>
@@ -25,5 +24,4 @@ const Header = (props) => (
         </div>
     </div>
 )
-
 export default Header;

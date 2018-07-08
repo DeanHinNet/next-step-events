@@ -1,5 +1,5 @@
 var mysql = require('mysql');
-var credentials = process.env.credentials;
+var credentials = process.env.host;
 
 if(credentials === undefined) {
     credentials = require('./../config.js');

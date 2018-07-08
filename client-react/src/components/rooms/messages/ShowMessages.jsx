@@ -13,5 +13,4 @@ class ShowMessages extends React.Component {
         )
     }
 }
-
 export default ShowMessages;

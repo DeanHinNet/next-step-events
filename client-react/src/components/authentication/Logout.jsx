@@ -8,7 +8,6 @@ class Logout extends React.Component {
             response: ''
         }
     }
-
     loginUser(data){
         //Sets the state for 'isLoggedIn' once the user is authenticated
         this.setState({
@@ -16,7 +15,6 @@ class Logout extends React.Component {
             isLoggedIn: data.isLoggedIn
         });
     }
-
     componentDidMount(){
         axios.get('/logout')
         .then((results)=>{
@@ -40,5 +38,4 @@ class Logout extends React.Component {
         )
     }
 }
-
 export default Logout;

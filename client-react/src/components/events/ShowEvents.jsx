@@ -14,12 +14,9 @@ class ShowEvents extends React.Component {
     componentDidMount(){
         axios.get('/api/eventbrite')
         .then((results)=>{
-            console.log('did mount get eventbrite', results.data[0]);
             this.setState({
                 events: results.data
             });  
-        
-           
         })
         .catch((err)=>{
             console.error(err);
@@ -33,7 +30,6 @@ class ShowEvents extends React.Component {
                 <h2>Upcoming Events!</h2>
                 <div id='events-entries'>
                 {this.state.events.reduce((result, event, index)=>{
-          
                     if(event.logo != null){
                         logo = event.logo.url;
                     }
@@ -56,7 +52,6 @@ class ShowEvents extends React.Component {
                              <div className='event-end'>to {event.end_date.substring(5,10)}</div>
                          </div>
                         );
-                    
                     }
                     result.push(
                         <div key={event.id+index} className='event-item'>
@@ -74,5 +69,4 @@ class ShowEvents extends React.Component {
         )
     }
 }
-
 export default ShowEvents;

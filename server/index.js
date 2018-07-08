@@ -1,8 +1,6 @@
 var express = require('express');
-//import express from 'express';
 var session = require('express-session');
 var bodyParser = require('body-parser');
-var fallback = require('express-history-api-fallback');
 var util = require('./utility.js');
 var model = require('./../database/models/index.js');
 var cookieParser = require('cookie-parser');
@@ -11,17 +9,15 @@ var app = express();
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client-react/dist/'));
-// app.use(fallback('index.html', __dirname + '/../client-react/dist/'));
 app.use(cookieParser());
-
 app.use(session({
     key: 'user',
-    secret: 'not today buddy',
+    secret: 'this is only the beginnning',
     resave: false,
     saveUninitialized: true
 }));
-app.use('/', routes);
 
+app.use('/', routes);
 app.use((req, res, next)=>{
     if(req.cookies.users_id && !req.session.user){
         res.clearCookie('user_id');
@@ -44,7 +40,7 @@ app.route('/api/events')
 
 app.route('/api/rooms')
     .get((req, res)=>{
-            //Gets a list of all the rooms
+        //Gets a list of all the rooms
         model.rooms.get((data)=>{
             res.status(201).send(data);
         });

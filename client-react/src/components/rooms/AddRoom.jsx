@@ -13,7 +13,6 @@ class AddRoom extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
     handleChange(e){
-        console.log('event', this.props.event.id);
         this.setState({
             [e.target.name]: e.target.value,
             event_id: this.props.event.id
@@ -21,22 +20,18 @@ class AddRoom extends React.Component {
     }
     handleSubmit(e){
         e.preventDefault();
-        console.log('add room', this.state);
         axios.post(`/api/rooms`, this.state)
         .then((results)=>{
-            console.log("add room results", results);
             this.props.updateRooms(results);
         })
         .catch((err)=>{
-            console.log('error', err.response.data);
+            console.log('An error has occurred.', err);
             this.setState({
                 error: err.response.data
             });
-            console.log(this.state.error);
         });
     }
     render(){
-        console.log(typeof this.state.error);
         return(
             <div id='room-add'>
                 <h3>Add a Room</h3>
@@ -50,5 +45,4 @@ class AddRoom extends React.Component {
         )
     }
 }
-
 export default AddRoom;

@@ -20,16 +20,12 @@ class AddThread extends React.Component {
     }
     handleSubmit(e){
         e.preventDefault();
-       console.log("threads, posting...");
         axios.post('/api/thread', this.state)
             .then((results)=>{
-                console.log('post for thread sent');
-                console.log(results);
                 this.props.updateThreads(results);
             })
             .catch((err)=>{
-                console.log('getting an error');
-                console.log(err);
+                console.log('An error has occurred.', err);
             });
 
     }
