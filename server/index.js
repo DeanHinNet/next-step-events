@@ -6,11 +6,8 @@ var model = require('./../database/models/index.js');
 var cookieParser = require('cookie-parser');
 var routes = require('./routes');
 var {sessionStore} = require('./../database/models/index.js');
-var credentials = process.env.host;
+
 var app = express();
-
-
-console.log('sessionStore', sessionStore);
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client-react/dist/'));
