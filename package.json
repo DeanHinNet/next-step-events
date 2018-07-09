@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server/index.js",
-    "react-dev": "webpack -d --watch --config webpack.config.js"
+    "react-dev": "webpack -d --watch --config webpack.config.js --profile --colors --display-error-details --debug"
   },
   "repository": {
     "type": "git",
