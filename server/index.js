@@ -5,7 +5,12 @@ var util = require('./utility.js');
 var model = require('./../database/models/index.js');
 var cookieParser = require('cookie-parser');
 var routes = require('./routes');
+var {sessionStore} = require('./../database/models/index.js');
+var credentials = process.env.host;
 var app = express();
+
+
+console.log('sessionStore', sessionStore);
 
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client-react/dist/'));
@@ -13,6 +18,7 @@ app.use(cookieParser());
 app.use(session({
     key: 'user',
     secret: 'this is only the beginnning',
+    store: sessionStore,
     resave: false,
     saveUninitialized: true
 }));

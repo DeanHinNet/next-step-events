@@ -3,6 +3,8 @@ var axios = require('axios');
 var credentials = process.env.host;
 var bcrypt = require('bcryptjs');
 const saltRounds = 6;
+var session = require('express-session');
+var MySQLStore = require('express-mysql-session')(session);
 
 if(credentials === undefined) {
     credentials = require('./../../config.js');
@@ -15,9 +17,11 @@ if(credentials === undefined) {
         event_brite_key: process.env.event_brite_key
     }
 }
+
 db.connect();
 
 module.exports = {
+    sessionStore: new MySQLStore({}, db),
     eventBrite: {
         event: {
             get: (params, callback)=>{
