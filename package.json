@@ -4,7 +4,7 @@
   "description": "Next Step Events is a collaboration tool for what happens after a conference, meetup, or any gathering where like minded individuals are trying to connect and capture the details of the event.",
   "main": "index.js",
   "scripts": {
-    "build": "webpack -d --watch --config webpack.config.js",
+    "build": "webpack -d --config webpack.config.js",
     "react-dev": "webpack -d --watch --config webpack.config.js",
     "start": "nodemon server/index.js",
     "postinstall": "npm run build"
@@ -34,7 +34,6 @@
     "mysql": "^2.15.0",
     "mysql-server": "^1.0.5",
     "nodemon": "^1.17.5",
-
     "react": "16.4.0",
     "react-dom": "16.4.0",
     "react-router-dom": "^4.3.1",
