@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/DeanHinNet/next-step-events#readme",
   "dependencies": {
+    "aws-sdk": "^2.270.1",
     "axios": "0.18.0",
     "bcrypt": "^3.0.0",
     "bcryptjs": "^2.4.3",

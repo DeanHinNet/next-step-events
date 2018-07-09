@@ -1,10 +1,12 @@
 var db = require('./../../database/index.js');
 var axios = require('axios');
-var credentials = process.env.host;
+var credentials = process.env;
 var bcrypt = require('bcryptjs');
 const saltRounds = 6;
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
+
+// console.log('process.env', credentials);
 
 if(credentials === undefined) {
     credentials = require('./../../config.js');

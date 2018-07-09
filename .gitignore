@@ -6,3 +6,5 @@ bundle.js
 package-lock.json
 .sass-cache
 API-tests
+AWS-nse
+*.pem

@@ -6,7 +6,7 @@ var model = require('./../database/models/index.js');
 var cookieParser = require('cookie-parser');
 var routes = require('./routes');
 var {sessionStore} = require('./../database/models/index.js');
-
+var AWS = require('aws-sdk');
 var app = express();
 
 app.use(bodyParser.json());
@@ -108,6 +108,7 @@ app.get('/api/messages/room/:id/', (req, res)=>{
 //External APIS
 app.get('/api/eventbrite/', (req, res)=>{
     console.log('GETTING API EVENTBRITE...');
+
     model.eventBrite.get((data)=>{
         res.status(201).send(data);
     });
