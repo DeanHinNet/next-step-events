@@ -66,6 +66,8 @@ module.exports = {
         get: (callback) => {
             var queryStr = `SELECT * FROM events`;
             db.query(queryStr, (err, data)=>{
+                console.log('events/get err', err);
+                console.log('data', data);
                 if(err) throw err;
                 callback(data);
             });
