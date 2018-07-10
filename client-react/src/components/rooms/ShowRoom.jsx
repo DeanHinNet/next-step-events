@@ -44,10 +44,10 @@ class ShowRoom extends React.Component {
                     <div id='event-info'>
                         <div id='event-name'>{this.state.event.name}</div>
                         <div className='content-title'>Description: </div>
-                        <div id='event-desc-show' tabIndex='1'>Show</div>
+                        <div id='event-desc-show' tabIndex='1'>Show All</div>
                         <div id='event-desc-hide' tabIndex='2'>Hide,</div>
-                        <div className='content-title'>Dates: </div>
-                        <div id='event-dates'>{this.state.event.start_date} to {this.state.event.end_date}</div>
+                        <div id='event-dates'>{this.state.event.start_date}-{this.state.event.end_date} <span id='event-times'>{this.state.event.start_time}-{this.state.event.end_time}</span></div>
+                       
                         <div id='event-description'>{this.state.event.description}</div>
                     </div>
                     <h2 id='room-name'>{this.state.room.name}</h2>

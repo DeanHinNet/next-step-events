@@ -5,6 +5,7 @@ var bcrypt = require('bcryptjs');
 const saltRounds = 6;
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
+var moment = require('moment');
 
 db.connect();
 
@@ -24,20 +25,21 @@ module.exports = {
             }
         },
         get: (callback)=>{
-          
-        
             axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${credentials.event_brite_key}&location.address=new%20york%20city&categories=101`)
             .then((data)=>{
                 var results = [];
                 var entry = {};
                 //get only info I need to reduce load on request
-                data.data.events.slice(0, 10).map((event)=>{
+                //2018-07-21T19:00:00
+                data.data.events.slice(0, 12).map((event)=>{
                     entry = {
                         id: event.id,
                         name: event.name.text,
                         description: event.description.text,
-                        start_date: event.start.local,
-                        end_date: event.end.local,
+                        start_date: moment(event.start.local).format('M/D'),
+                        start_time: moment(event.start.local).format('h:mmA'),
+                        end_date: moment(event.end.local).format('M/D'),
+                        end_time: moment(event.end.local).format('h:mmA'),
                         logo: event.logo
                     }
                     results.push(entry);
@@ -158,21 +160,16 @@ module.exports = {
                     db.query(queryStr, result.room.id, (err, data)=>{
                         if(err) throw err;
                         result.members = data;
-                  
                         params = {
                             id: result.room.event_id
                         }
                         //need to split for eventbrite and for user-created...
-                        
                         if(true){
                             module.exports.event.get(params, (err, data)=>{
                                 if(err) throw err;
-                                console.log('getting events data from database', data);
                                 //when no event in the database is found, search eventbrite for the event with id
-                                console.log('pre-eventbrite', params);
                                 if(data.length === 0){
                                     module.exports.eventBrite.event.get(params,(data)=>{
-                                        
                                         var logo;
                                         if(data.data.logo && data.data.logo.url){
                                             logo = data.data.logo.url;
@@ -181,16 +178,16 @@ module.exports = {
                                             id: data.data.id,
                                             name: data.data.name.text,
                                             description: data.data.description.text,
-                                            start_date: data.data.start.local,
-                                            end_date: data.data.end.local,
+                                            start_date: moment(data.data.start.local).format('M/D'),
+                                            start_time: moment(data.data.start.local).format('h:mmA'),
+                                            end_date: moment(data.data.end.local).format('M/D'),
+                                            end_time: moment(data.data.end.local).format('h:mmA'),
                                             logo_url: logo
                                         }
-                                        console.log('eventbrite get', result.event);
                                         callback(result);
                                     });
                                 } else {
                                     result.event = data;
-                                    console.log('result', result);
                                     callback(result);
                                 }
                             })

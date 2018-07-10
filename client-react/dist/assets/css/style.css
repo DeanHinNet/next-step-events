@@ -136,7 +136,7 @@ main {
     width: 100%; }
     .home-landing .home-content #events-show .event-item {
       display: inline-block;
-      height: 400px;
+      height: 300px;
       vertical-align: top; }
     @media only screen and (max-width: 789px) {
       .home-landing .home-content #events-show .event-item {
@@ -148,16 +148,18 @@ main {
       .home-landing .home-content #events-show .event-item {
         width: 32%; } }
     .home-landing .home-content #events-show .logo img {
-      height: 35%; }
+      max-height: 125px; }
     .home-landing .home-content #events-show .event-link {
       max-height: 20%;
-      height: 10%;
+      height: 9%;
       overflow: hidden;
-      text-overflow: ellipsis; }
+      text-overflow: ellipsis;
+      margin-bottom: 5px; }
     .home-landing .home-content #events-show .event-description {
-      height: 32%;
+      height: 35%;
+      line-height: 1.2;
       overflow: hidden;
-      text-overflow: ellipsis; }
+      margin-bottom: 5px; }
 
 .event-item {
   border: 1px solid black;
@@ -189,7 +191,7 @@ main {
 
 #room-show {
   width: 95%;
-  min-height: 800px;
+  min-height: 600px;
   margin: 0 auto;
   position: relative;
   top: -100%;
@@ -204,6 +206,9 @@ main {
 #event-dates, #event-desc-show, #event-desc-hide {
   display: inline-block;
   padding-right: 5px; }
+
+#event-dates {
+  font-weight: bold; }
 
 #event-description {
   height: 1.3em;
@@ -275,14 +280,18 @@ main {
 
 #event-pics {
   width: 95%;
-  margin: 0 auto; }
+  margin: 0 auto;
+  text-align: center; }
 
 #event-pics img {
   border: 1px solid #dcdcdc;
   border-radius: 5px; }
 
+#event-times {
+  font-weight: normal; }
+
 #rooms-show {
-  min-height: 800px; }
+  min-height: 600px; }
 
 #rooms-list {
   background-color: #ffffff;

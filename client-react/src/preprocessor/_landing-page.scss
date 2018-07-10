@@ -14,7 +14,7 @@
             //mobile
             .event-item {
                 display: inline-block;
-                height: 400px;
+                height: 300px;
                 vertical-align: top;
             }
 
@@ -39,22 +39,23 @@
                 
             // }
             .logo img {
-                height: 35%;
+                max-height: 125px;
             }
             .event-link {
                 max-height: 20%;
-                height: 10%;
+                height: 9%;
                 overflow: hidden;
                 text-overflow: ellipsis;
+                margin-bottom: 5px;
             }
             .event-link a {
                
             }
             .event-description {
-                height: 32%;
-           
+                height: 35%;
+                line-height: 1.2;
                 overflow: hidden;
-                text-overflow: ellipsis;
+                margin-bottom: 5px;
             }
         }
     }

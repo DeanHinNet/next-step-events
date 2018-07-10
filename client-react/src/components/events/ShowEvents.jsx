@@ -49,8 +49,17 @@ class ShowEvents extends React.Component {
                             <Link to={`/event/4361188432/rooms`}> <div className='logo'><img src={logo ? logo : '/assets/event-default.jpg'}/></div>
                              <div className='event-link'>DEFAULT</div></Link>
                              <div className='event-description'>description...</div>
-                             <div className='event-start'>{event.start_date.substring(5,10)}</div>
-                             <div className='event-end'>to {event.end_date.substring(5,10)}</div>
+                             <div className='event-start'>{event.start_date}</div>
+                             <div className='event-end'>to {event.end_date}</div>
+                         </div>
+                        );
+                        result.push(
+                            <div key={67+index} className='event-item'>
+                            <Link to={`/event/4361188432/rooms`}> <div className='logo'><img src={logo ? logo : '/assets/event-default.jpg'}/></div>
+                             <div className='event-link'>DEFAULT</div></Link>
+                             <div className='event-description'>description...</div>
+                             <div className='event-start'>{event.start_date}</div>
+                             <div className='event-end'>to {event.end_date}</div>
                          </div>
                         );
                     }
@@ -59,8 +68,7 @@ class ShowEvents extends React.Component {
                            <Link to={`/event/${event.id}/rooms`}> <div className='logo'><img src={logo ? logo : '/assets/event-default.jpg'}/></div>
                             <div className='event-link'>{event.name}</div></Link>
                             <div className='event-description'>{event.description.substring(0,200)}...</div>
-                            <div className='event-start'>{event.start_date.substring(5,10)}</div>
-                            <div className='event-end'>to {event.end_date.substring(5,10)}</div>
+                            <div className='event-start'>{event.start_date} to {event.end_date}, {event.start_time}-{event.end_time}</div>
                         </div>
                     );
                     return result;

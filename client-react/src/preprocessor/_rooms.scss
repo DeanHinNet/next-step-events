@@ -8,7 +8,7 @@
 }
 #room-show {
     width: 95%;
-    min-height: 800px;
+    min-height: 600px;
     margin: 0 auto;
     position: relative;
     top: -100%;
@@ -31,6 +31,9 @@
 #event-dates, #event-desc-show, #event-desc-hide {
     display: inline-block;
     padding-right: 5px;
+}
+#event-dates {
+    font-weight: bold;
 }
 #event-description {
     height: 1.3em;
@@ -123,17 +126,20 @@
 #event-pics {
     width: 95%;
     margin: 0 auto;
+    text-align: center;
 }
 #event-pics img{
     border: 1px solid $grey-dark;
     border-radius: 5px;
 
 }
-
+#event-times {
+    font-weight: normal;
+}
 //ShowRooms Styles
 
 #rooms-show {
-    min-height: 800px;
+    min-height: 600px;
 }
 #rooms-list {
     background-color: #ffffff;

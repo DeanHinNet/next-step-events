@@ -3,6 +3,7 @@ import {Switch, Route} from 'react-router-dom';
 import Register from './authentication/Register.jsx';
 import Login from './authentication/Login.jsx';
 import Settings from './authentication/Settings.jsx';
+import About from './home/About.jsx';
 import Home from './home/Home.jsx';
 import LandingPage from './home/LandingPage.jsx';
 import ShowEvents from './events/ShowEvents.jsx';
@@ -24,6 +25,7 @@ const Main = (props) => {
               <Route exact path='/login' render={(routeProps) =>   
                 <Login {...routeProps} loginUser={props.loginUser}/>}
             />
+            <Route exact path='/about' component={About} />
             <Route exact path='/settings' component={Settings} />
             <Route exact path='/logout' render={() =>   
                 <Login loginUser={props.loginUser}/>}
