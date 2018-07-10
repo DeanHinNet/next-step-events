@@ -36,8 +36,8 @@ module.exports = {
             }
         },
         get: (callback)=>{
-            console.log('credentials', credentials);
-            // console.log('axios.get', credentials);
+          
+        
             axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${credentials.event_brite_key}&location.address=new%20york%20city&categories=101`)
             .then((data)=>{
                 var results = [];
@@ -65,8 +65,7 @@ module.exports = {
         get: (callback) => {
             var queryStr = `SELECT * FROM events`;
             db.query(queryStr, (err, data)=>{
-                console.log('events/get err', err);
-                console.log('data', data);
+        
                 if(err) throw err;
                 callback(data);
             });

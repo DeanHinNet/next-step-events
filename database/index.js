@@ -2,17 +2,6 @@ var mysql = require('mysql');
 var credentials = require('./../config.js');
 var fs = require('fs');
 
-// if(credentials === undefined) {
-    
-// } else {
-//     credentials = {
-//         host: process.env.host,
-//         user: process.env.user,
-//         password: process.env.password,
-//         database: process.env.database
-//     }
-// }
-
 module.exports = connection = mysql.createConnection({
     host: credentials.host,
     user: credentials.user,
