@@ -1,6 +1,6 @@
 var db = require('./../../database/index.js');
 var axios = require('axios');
-var credentials = process.env;
+var credentials = process.env.host;
 var bcrypt = require('bcryptjs');
 const saltRounds = 6;
 var session = require('express-session');
@@ -39,7 +39,8 @@ module.exports = {
             }
         },
         get: (callback)=>{
-            console.log('credentials', event_brite_key);
+            console.log('cerds', credentials);
+            console.log('credentials', credentials.event_brite_key);
             console.log('endpoint', `https://www.eventbriteapi.com/v3/events/${params.id}/?token=${credentials.event_brite_key}
             `);
             // console.log('axios.get', credentials);
