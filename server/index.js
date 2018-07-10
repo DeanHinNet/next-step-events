@@ -108,7 +108,7 @@ app.get('/api/messages/room/:id/', (req, res)=>{
 //External APIS
 app.get('/api/eventbrite/', (req, res)=>{
     console.log('GETTING API EVENTBRITE...');
-    console.log(model.eventBrite.get);
+    console.log(JSON.stringify(model.eventBrite.get));
     model.eventBrite.get((data)=>{
         res.status(201).send(data);
     });

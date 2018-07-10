@@ -27,10 +27,7 @@ module.exports = {
     eventBrite: {
         event: {
             get: (params, callback)=>{
-                console.log('credentials', event_brite_key);
-                console.log('endpoint', `https://www.eventbriteapi.com/v3/events/${params.id}/?token=${credentials.event_brite_key}
-                `);
-                // console.log('axios.get', credentials);
+               
                 axios.get(`https://www.eventbriteapi.com/v3/events/${params.id}/?token=${credentials.event_brite_key}
                 `)
                 .then((data)=>{
@@ -42,6 +39,10 @@ module.exports = {
             }
         },
         get: (callback)=>{
+            console.log('credentials', event_brite_key);
+            console.log('endpoint', `https://www.eventbriteapi.com/v3/events/${params.id}/?token=${credentials.event_brite_key}
+            `);
+            // console.log('axios.get', credentials);
             axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${credentials.event_brite_key}&location.address=new%20york%20city&categories=101`)
             .then((data)=>{
                 var results = [];
