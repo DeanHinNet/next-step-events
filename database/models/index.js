@@ -27,7 +27,10 @@ module.exports = {
     eventBrite: {
         event: {
             get: (params, callback)=>{
-                console.log('axios.get', credentials);
+                console.log('credentials', event_brite_key);
+                console.log('endpoint', `https://www.eventbriteapi.com/v3/events/${params.id}/?token=${credentials.event_brite_key}
+                `);
+                // console.log('axios.get', credentials);
                 axios.get(`https://www.eventbriteapi.com/v3/events/${params.id}/?token=${credentials.event_brite_key}
                 `)
                 .then((data)=>{
