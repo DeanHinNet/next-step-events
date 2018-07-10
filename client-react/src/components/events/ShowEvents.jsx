@@ -12,10 +12,8 @@ class ShowEvents extends React.Component {
         }
     }
     componentDidMount(){
-        console.log('client /api/eventbrite')
         axios.get('/api/eventbrite')
         .then((results)=>{
-            console.log('results');
             this.setState({
                 events: results.data
             });  
