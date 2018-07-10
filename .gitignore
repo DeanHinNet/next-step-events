@@ -8,3 +8,4 @@ package-lock.json
 API-tests
 AWS-nse
 *.pem
+deployment.md

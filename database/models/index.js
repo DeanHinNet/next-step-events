@@ -32,6 +32,8 @@ module.exports = {
                 //get only info I need to reduce load on request
                 //2018-07-21T19:00:00
                 data.data.events.slice(0, 12).map((event)=>{
+                    console.log('moment', moment(event.start.local).format('M/D'));
+                    
                     entry = {
                         id: event.id,
                         name: event.name.text,
@@ -149,6 +151,8 @@ module.exports = {
         get: (params, callback)=>{
             var queryStr = `SELECT * FROM rooms WHERE id=?`;
             var result = {};
+            //hackathon, self-development, 
+            var featured = ['44730911360','46325229007','46644023530'];
             db.query(queryStr, params.id, (err, data)=>{
                 if(err) throw err;
                 result.room = data[0];

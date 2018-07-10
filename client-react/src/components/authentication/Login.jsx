@@ -57,7 +57,7 @@ class Login extends React.Component {
                     <h3>{this.props.message ? this.props.message: this.state.message} {this.state.failure ? this.state.failure.success: ''}</h3>
                     <div>
                         <section>
-                            <input id='email' name='email' type='email' placeholder='Email: bob@smith.com' onChange={this.handleChange} value={this.state.email}/>
+                            <input id='email' name='email' type='email' placeholder='Email: bob@smith.com' onChange={this.handleChange} value={this.state.email} required/>
                         </section>
                         <section>
                             
