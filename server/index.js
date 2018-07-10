@@ -107,10 +107,9 @@ app.get('/api/messages/room/:id/', (req, res)=>{
 //External APIS
 app.get('/api/eventbrite/', (req, res)=>{
     console.log('GETTING API EVENTBRITE...');
-    res.status(201).send('allgood');
-    // model.eventBrite.get((data)=>{
-    //     res.status(201).send(data);
-    // });
+    model.eventBrite.get((data)=>{
+        res.status(201).send(data);
+    });
 });
 
 //Login Routes

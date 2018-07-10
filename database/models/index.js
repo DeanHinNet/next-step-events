@@ -1,22 +1,22 @@
 var db = require('./../../database/index.js');
 var axios = require('axios');
-var credentials = process.env.host;
+var credentials = require('./../../config.js');;
 var bcrypt = require('bcryptjs');
 const saltRounds = 6;
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 
-if(credentials === undefined) {
-    credentials = require('./../../config.js');
-} else {
-    credentials = {
-        host: process.env.host,
-        user: process.env.user,
-        password: process.env.password,
-        database: process.env.database,
-        event_brite_key: process.env.event_brite_key
-    }
-}
+// if(credentials === undefined) {
+//     credentials = require('./../../config.js');
+// } else {
+//     credentials = {
+//         host: process.env.host,
+//         user: process.env.user,
+//         password: process.env.password,
+//         database: process.env.database,
+//         event_brite_key: process.env.event_brite_key
+//     }
+// }
 
 db.connect();
 
@@ -37,8 +37,6 @@ module.exports = {
         },
         get: (callback)=>{
             console.log('credentials', credentials);
-            console.log('endpoint', `https://www.eventbriteapi.com/v3/events/${params.id}/?token=${credentials.event_brite_key}
-            `);
             // console.log('axios.get', credentials);
             axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${credentials.event_brite_key}&location.address=new%20york%20city&categories=101`)
             .then((data)=>{
