@@ -6,18 +6,6 @@ const saltRounds = 6;
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 
-// if(credentials === undefined) {
-//     credentials = require('./../../config.js');
-// } else {
-//     credentials = {
-//         host: process.env.host,
-//         user: process.env.user,
-//         password: process.env.password,
-//         database: process.env.database,
-//         event_brite_key: process.env.event_brite_key
-//     }
-// }
-
 db.connect();
 
 module.exports = {
