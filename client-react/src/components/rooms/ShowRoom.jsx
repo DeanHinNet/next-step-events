@@ -20,19 +20,17 @@ class ShowRoom extends React.Component {
         this.updateThreads = this.updateThreads.bind(this);
     }
     componentWillMount(){
-        if(this.props.match.params.id != undefined){
-            axios.get(`/api/room/${this.props.match.params.id}`)
-            .then((results)=>{
-                this.setState({
-                    event: results.data.event,
-                    threads: results.data.threads,
-                    room: results.data.room
-                });  
-            })
-            .catch((err)=>{
-                console.log('An error has occurred.', err);
-            })  
-        }
+        axios.get(`/api/room/${this.props.match.params.id}`)
+        .then((results)=>{
+            this.setState({
+                event: results.data.event,
+                threads: results.data.threads,
+                room: results.data.room
+            });  
+        })
+        .catch((err)=>{
+            console.log('An error has occurred.', err);
+        })  
     }
     updateThreads(results){
         this.setState({

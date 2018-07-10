@@ -23,8 +23,9 @@ class ShowEvents extends React.Component {
         })  
     }
     render(){
-        const perRow = 3;
+      
         var logo;
+        console.log('rending events...');
         return (
             <div id='events-show' className='column'>
                 <h2>Upcoming Events!</h2>

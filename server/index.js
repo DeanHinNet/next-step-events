@@ -5,6 +5,7 @@ var util = require('./utility.js');
 var model = require('./../database/models/index.js');
 var cookieParser = require('cookie-parser');
 var routes = require('./routes');
+var {sessionStore} = require('./../database/models/index.js');
 var app = express();
 
 app.use(bodyParser.json());
@@ -13,6 +14,7 @@ app.use(cookieParser());
 app.use(session({
     key: 'user',
     secret: 'this is only the beginnning',
+    store: sessionStore,
     resave: false,
     saveUninitialized: true
 }));

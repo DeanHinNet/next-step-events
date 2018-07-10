@@ -1,22 +1,15 @@
 var db = require('./../../database/index.js');
 var axios = require('axios');
-var credentials = process.env.host;
+var credentials = require('./../../config.js');;
 var bcrypt = require('bcryptjs');
 const saltRounds = 6;
+var session = require('express-session');
+var MySQLStore = require('express-mysql-session')(session);
 
-if(credentials === undefined) {
-    credentials = require('./../../config.js');
-} else {
-    credentials = {
-        host: process.env.host,
-        user: process.env.user,
-        password: process.env.password,
-        database: process.env.database
-    }
-}
 db.connect();
 
 module.exports = {
+    sessionStore: new MySQLStore({}, db),
     eventBrite: {
         event: {
             get: (params, callback)=>{
@@ -31,6 +24,8 @@ module.exports = {
             }
         },
         get: (callback)=>{
+          
+        
             axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${credentials.event_brite_key}&location.address=new%20york%20city&categories=101`)
             .then((data)=>{
                 var results = [];
@@ -58,6 +53,7 @@ module.exports = {
         get: (callback) => {
             var queryStr = `SELECT * FROM events`;
             db.query(queryStr, (err, data)=>{
+        
                 if(err) throw err;
                 callback(data);
             });
