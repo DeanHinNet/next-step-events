@@ -2,11 +2,8 @@ var mysql = require('mysql');
 var credentials = process.env.host;
 var fs = require('fs');
 
-console.log('model index credentials', );
 if(credentials === undefined) {
-    
     credentials = require('./../config.js');
-    console.log('getting config file', credentials);
 } else {
     credentials = {
         host: process.env.host,
