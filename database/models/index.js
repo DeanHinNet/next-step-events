@@ -6,8 +6,6 @@ const saltRounds = 6;
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 
-// console.log('process.env', credentials);
-
 if(credentials === undefined) {
     credentials = require('./../../config.js');
 } else {
@@ -27,7 +25,6 @@ module.exports = {
     eventBrite: {
         event: {
             get: (params, callback)=>{
-               
                 axios.get(`https://www.eventbriteapi.com/v3/events/${params.id}/?token=${credentials.event_brite_key}
                 `)
                 .then((data)=>{
@@ -39,8 +36,7 @@ module.exports = {
             }
         },
         get: (callback)=>{
-            console.log('cerds', credentials);
-            console.log('credentials', credentials.event_brite_key);
+            console.log('credentials', credentials);
             console.log('endpoint', `https://www.eventbriteapi.com/v3/events/${params.id}/?token=${credentials.event_brite_key}
             `);
             // console.log('axios.get', credentials);
