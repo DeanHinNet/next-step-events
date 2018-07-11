@@ -40,11 +40,13 @@
     "moment": "^2.22.2",
     "mysql": "^2.15.0",
     "mysql-server": "^1.0.5",
+    "node-pre-gyp": "^0.10.3",
     "nodemon": "^1.17.5",
     "react": "16.4.0",
     "react-dom": "16.4.0",
     "react-router-dom": "^4.3.1",
-    "request": "^2.87.0"
+    "request": "^2.87.0",
+    "yarn": "^1.7.0"
   },
   "devDependencies": {
     "babel-core": "6.26.3",
