@@ -24,14 +24,12 @@ class ShowEvents extends React.Component {
         })  
     }
     render(){
-        var logo;
-        var type;
+      
         console.log('rending events...');
         return (
             <div id='events-show' className='column'>
                 <div id='events-entries'>
                 {this.state.events.map((event, index)=>{
-                    console.log('featured', event.featured);
                     return (
                         <div key={event.id+index} className={event.featured ? 'event-item featured':'event-item'}>
                            <Link to={`/event/${event.id}/rooms`}> <div className='logo'><img src={event.logo.url}/></div>
