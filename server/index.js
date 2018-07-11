@@ -6,13 +6,18 @@ var model = require('./../database/models/index.js');
 var cookieParser = require('cookie-parser');
 var routes = require('./routes');
 var {sessionStore} = require('./../database/models/index.js');
+var compression = require('compression');
 var app = express();
 
-// app.get('*.js',(req, res, next)=> {
-//     req.url = req.url + '.gz';
-//     res.set('Content-Encoding', 'gzip');
-//     next();
-// });
+
+app.use(compression({filter: (req, res)=>{
+    if (req.headers['x-no-compression']) {
+    // don't compress responses with this request header
+    return false
+    }
+    // fallback to standard filter function
+    return compression.filter(req, res)
+}}));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client-react/dist/'));
 app.use(cookieParser());
