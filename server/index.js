@@ -9,7 +9,6 @@ var {sessionStore} = require('./../database/models/index.js');
 var compression = require('compression');
 var app = express();
 
-
 app.use(compression({filter: (req, res)=>{
     if (req.headers['x-no-compression']) {
     // don't compress responses with this request header
@@ -18,6 +17,7 @@ app.use(compression({filter: (req, res)=>{
     // fallback to standard filter function
     return compression.filter(req, res)
 }}));
+
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client-react/dist/'));
 app.use(cookieParser());
