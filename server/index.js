@@ -8,6 +8,11 @@ var routes = require('./routes');
 var {sessionStore} = require('./../database/models/index.js');
 var app = express();
 
+// app.get('*.js',(req, res, next)=> {
+//     req.url = req.url + '.gz';
+//     res.set('Content-Encoding', 'gzip');
+//     next();
+// });
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client-react/dist/'));
 app.use(cookieParser());

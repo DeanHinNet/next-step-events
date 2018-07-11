@@ -4,13 +4,12 @@
   "description": "Next Step Events is a collaboration tool for what happens after a conference, meetup, or any gathering where like minded individuals are trying to connect and capture the details of the event.",
   "main": "index.js",
   "scripts": {
-    "build": "webpack -d --config webpack.config.prod.js",
     "dev": "concurrently \"npm run react-dev\" \" npm run server-dev\" \"npm run scss-dev\"",
-    "react-dev": "webpack -d --watch --config webpack.config.dev.js",
+    "react-dev": "webpack -d -p --watch --config webpack.config.dev.js",
     "server-dev": "nodemon server/index.js",
-    "scss-dev": "sass --watch client-react/src/preprocessor:client-react/dist/assets/css",
-    "start": "forever start server/index.js",
-    "postinstall": "npm run build"
+    "scss-dev": "sass --watch --style compressed client-react/src/preprocessor:client-react/dist/assets/css",
+    "build": "webpack -d -p --config webpack.config.prod.js",
+    "start": "concurrently \"npm run build\" \"forever start server/index.js\" "
   },
   "repository": {
     "type": "git",
@@ -23,7 +22,6 @@
   },
   "homepage": "https://github.com/DeanHinNet/next-step-events#readme",
   "dependencies": {
-    "aws-sdk": "^2.270.1",
     "axios": "0.18.0",
     "bcrypt": "^3.0.0",
     "bcryptjs": "^2.4.3",
@@ -44,21 +42,23 @@
     "react": "16.4.0",
     "react-dom": "16.4.0",
     "react-router-dom": "^4.3.1",
-    "request": "^2.87.0"
+    "request": "^2.87.0",
+    "uglify-js": "^3.4.4"
   },
   "devDependencies": {
     "babel-core": "6.26.3",
     "babel-loader": "7.1.4",
     "babel-preset-es2015": "6.24.1",
     "babel-preset-react": "6.24.1",
+    "compression-webpack-plugin": "^1.1.11",
     "concurrently": "^3.6.0",
     "css-loader": "^0.28.11",
     "node": "8.11.0",
-    "node-sass": "^4.9.2",
     "npm": "6.1.0",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
     "webpack": "^4.10.1",
+    "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "2.1.4"
   }
 }

@@ -34,10 +34,9 @@ class AddRoom extends React.Component {
     render(){
         return(
             <div id='room-add'>
-                <h3>Add a Room</h3>
                 <p className='error-message'>{this.state.error ? this.state.error : ''}</p>
                 <form onSubmit={this.handleSubmit}>
-                    <label htmlFor='name'>Discussion Topic</label>
+                    <label htmlFor='name'>Add Room Topic: </label>
                     <input id='name' name='name' type='text' onChange={this.handleChange}/>
                     <input type='submit' value='submit room'/>
                 </form>
