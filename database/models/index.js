@@ -46,7 +46,8 @@ module.exports = {
                             start_time: moment(event.start.local).format('h:mmA'),
                             end_date: moment(event.end.local).format('M/D'),
                             end_time: moment(event.end.local).format('h:mmA'),
-                            logo: event.logo
+                            logo: event.logo,
+                            featured: true
                         });
                     });
                     console.log('result', result);

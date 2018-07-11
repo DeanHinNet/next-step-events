@@ -24,23 +24,28 @@ class ShowEvents extends React.Component {
         })  
     }
     render(){
+      
         var logo;
         var type;
         console.log('rending events...');
         return (
             <div id='events-show' className='column'>
                 <div id='events-entries'>
-                {this.state.events.map((event, index)=>{
-                    console.log('featured', event.featured);
-                    return (
-                        <div key={event.id+index} className={event.featured ? 'event-item featured':'event-item'}>
-                           <Link to={`/event/${event.id}/rooms`}> <div className='logo'><img src={event.logo.url}/></div>
+                {this.state.events.reduce((result, event, index)=>{
+                    if(event.logo != null){
+                        logo = event.logo.url;
+                    }
+                    type = index < 3 ? 'event-item featured':'event-item';
+                    result.push(
+                        <div key={event.id+index} className={type}>
+                           <Link to={`/event/${event.id}/rooms`}> <div className='logo'><img src={logo ? logo : '/assets/event-default.jpg'}/></div>
                             <div className='event-link'>{event.name}</div></Link>
                             <div className='event-description'>{event.description.substring(0,200)}...</div>
                             <div className='event-start'>{event.start_date} to {event.end_date}, {event.start_time}-{event.end_time}</div>
                         </div>
-                    )
-                })}
+                    );
+                    return result;
+                }, [])}
                 </div>
             </div>
         )
@@ -49,22 +54,6 @@ class ShowEvents extends React.Component {
 export default ShowEvents;
 
 /*
-{this.state.events.reduce((result, event, index)=>{
-                    if(event.logo != null){
-                        logo = event.logo.url;
-                    }
-                    type = index < 3 ? 'event-item featured':'event-item';
-                    result.push(
-                       
-                    );
-                    return result;
-                }, [])}
- <div key={event.id+index} className={type}>
-                           <Link to={`/event/${event.id}/rooms`}> <div className='logo'><img src={logo ? logo : '/assets/event-default.jpg'}/></div>
-                            <div className='event-link'>{event.name}</div></Link>
-                            <div className='event-description'>{event.description.substring(0,200)}...</div>
-                            <div className='event-start'>{event.start_date} to {event.end_date}, {event.start_time}-{event.end_time}</div>
-                        </div>
  if(index === 0){
                         result.push(
                             <div key={68+index} className='event-item'>
