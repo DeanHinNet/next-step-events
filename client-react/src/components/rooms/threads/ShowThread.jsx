@@ -22,6 +22,7 @@ class ShowThread extends React.Component {
                 }
             });
          } else if(this.props.thread_id != undefined){
+             console.log('axios get props.thread_id', this.props.thread_id);
             axios.get(`/api/thread/${this.props.thread_id}`)
             .then((results)=>{
                 this.setState({
@@ -40,6 +41,7 @@ class ShowThread extends React.Component {
         })
     }
     render(){
+        console.log('this.state.thread.id', this.state);
         return (
             <div id='thread-current'>
                 <h3>Discussion: <span id='thread-name'>{this.state.thread.description || ""}</span></h3>

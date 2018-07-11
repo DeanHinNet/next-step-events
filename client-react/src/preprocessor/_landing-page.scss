@@ -9,15 +9,17 @@
         }
     }
     .home-content {
+      
         #events-show {
             width: 100%;
             //mobile
+            
             .event-item {
                 display: inline-block;
                 height: 300px;
                 vertical-align: top;
             }
-
+     
             @media only screen and (max-width: 789px) {
                 .event-item {
                     width: 100%;
@@ -43,19 +45,23 @@
             }
             .event-link {
                 max-height: 20%;
-                height: 9%;
+                height: 17%;
                 overflow: hidden;
-                text-overflow: ellipsis;
                 margin-bottom: 5px;
+                line-height: 1.15;
             }
             .event-link a {
                
             }
             .event-description {
-                height: 35%;
-                line-height: 1.2;
+                height: 29%;
+                line-height: 1;
                 overflow: hidden;
                 margin-bottom: 5px;
+            }
+            .featured {
+                box-shadow: 0 1px 3px 0 $red;
+                border-color: white;
             }
         }
     }

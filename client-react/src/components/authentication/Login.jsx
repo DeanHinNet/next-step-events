@@ -31,7 +31,7 @@ class Login extends React.Component {
                         user: results.data.user,
                         isLoggedIn: true
                     });
-                    if(this.props.location === undefined){
+                    if(this.props.home){
                         this.setState({
                             toDashboard: true
                         });
