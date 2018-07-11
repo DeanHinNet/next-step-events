@@ -6,6 +6,7 @@ const LandingPage = () => (
     <div className='column home home-landing'>
         <SearchBar />
         <div className='home-content'>
+        <h2><span id='title-featured'>Featured</span> Events!</h2>
         <ShowEvents />
         </div>
     </div>

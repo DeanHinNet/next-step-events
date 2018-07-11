@@ -17,18 +17,18 @@ const Main = (props) => {
     <main className='hero-body is-large'>
         <Switch>
             <Route exact path='/' render={()=>
-                props.isLoggedIn ? <Home /> : <LandingPage />}
+                props.isLoggedIn ? <Home user={props.user}/> : <LandingPage />}
             />
              <Route exact path='/register' render={(routeProps) =>   
                 <Register {...routeProps} loginUser={props.loginUser}/>}
             />
               <Route exact path='/login' render={(routeProps) =>   
-                <Login {...routeProps} loginUser={props.loginUser}/>}
+                <Login {...routeProps} loginUser={props.loginUser}  home={true}/>}
             />
             <Route exact path='/about' component={About} />
             <Route exact path='/settings' component={Settings} />
             <Route exact path='/logout' render={() =>   
-                <Login loginUser={props.loginUser}/>}
+                <Login loginUser={props.loginUser} home={true}/>}
             />
             <Route exact path='/events' render={(routeProps) =>   
                 <ShowEvents {...routeProps} {...props}/>}

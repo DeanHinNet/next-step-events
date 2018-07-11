@@ -110,6 +110,12 @@ app.get('/api/eventbrite/', (req, res)=>{
         res.status(201).send(data);
     });
 });
+app.get('/api/eventbrite/featured', (req, res)=>{
+    model.eventBrite.featured((data)=>{
+        res.status(201).send(data);
+    });
+});
+
 
 //Login Routes
 app.post('/login',(req, res)=>{

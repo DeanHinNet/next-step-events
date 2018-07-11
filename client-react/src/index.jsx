@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, browserHistory} from 'react-router-dom';
+import Favicon from 'react-favicon';
+
 //import './preprocessor/style.scss';
 import Header from './components/Header.jsx';
 import Main from './components/Main.jsx';
@@ -29,6 +31,7 @@ class App extends React.Component {
     render(){
         return(
             <div className='hero is-fullheight'>
+                <Favicon url='./favicon.ico'/>
                 <Header isLoggedIn={this.state.isLoggedIn}/>
                 <Main events={this.state.events} loginUser={this.loginUser} user={this.state.user} isLoggedIn={this.state.isLoggedIn}/>
                 <Footer/>

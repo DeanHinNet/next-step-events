@@ -115,15 +115,22 @@ main {
         background-color: white;
         border: 1px solid #dcdcdc;
         padding: 0.625em; }
+        .home .home-content #events-show .event-item a {
+          font-size: 1em; }
         .home .home-content #events-show .event-item .logo img {
           display: block;
           margin: 0 auto; }
-        .home .home-content #events-show .event-item .event-link a {
-          font-weight: bold;
-          font-size: 1em; }
         .home .home-content #events-show .event-item .event-start, .home .home-content #events-show .event-item .event-end {
           display: inline-block;
           margin-right: 0.3125em; }
+  .home #user-welcome {
+    background-color: #fff;
+    vertical-align: top;
+    float: right;
+    width: 200px;
+    border: 1px solid #dcdcdc;
+    margin-top: 15px;
+    padding: 5px; }
 
 .home-landing {
   background-color: #fafafa; }
@@ -151,15 +158,18 @@ main {
       max-height: 125px; }
     .home-landing .home-content #events-show .event-link {
       max-height: 20%;
-      height: 9%;
+      height: 17%;
       overflow: hidden;
-      text-overflow: ellipsis;
-      margin-bottom: 5px; }
+      margin-bottom: 5px;
+      line-height: 1.15; }
     .home-landing .home-content #events-show .event-description {
-      height: 35%;
-      line-height: 1.2;
+      height: 29%;
+      line-height: 1;
       overflow: hidden;
       margin-bottom: 5px; }
+    .home-landing .home-content #events-show .featured {
+      box-shadow: 0 1px 3px 0 #f93943;
+      border-color: white; }
 
 .event-item {
   border: 1px solid black;

@@ -12,8 +12,9 @@ class ShowEvents extends React.Component {
         }
     }
     componentDidMount(){
-        axios.get('/api/eventbrite')
+        axios.get('/api/eventbrite/featured')
         .then((results)=>{
+            console.log('results', results);
             this.setState({
                 events: results.data
             });  
@@ -25,16 +26,35 @@ class ShowEvents extends React.Component {
     render(){
       
         var logo;
+        var type;
         console.log('rending events...');
         return (
             <div id='events-show' className='column'>
-                <h2>Upcoming Events!</h2>
                 <div id='events-entries'>
                 {this.state.events.reduce((result, event, index)=>{
                     if(event.logo != null){
                         logo = event.logo.url;
                     }
-                    if(index === 0){
+                    type = index < 3 ? 'event-item featured':'event-item';
+                    result.push(
+                        <div key={event.id+index} className={type}>
+                           <Link to={`/event/${event.id}/rooms`}> <div className='logo'><img src={logo ? logo : '/assets/event-default.jpg'}/></div>
+                            <div className='event-link'>{event.name}</div></Link>
+                            <div className='event-description'>{event.description.substring(0,200)}...</div>
+                            <div className='event-start'>{event.start_date} to {event.end_date}, {event.start_time}-{event.end_time}</div>
+                        </div>
+                    );
+                    return result;
+                }, [])}
+                </div>
+            </div>
+        )
+    }
+}
+export default ShowEvents;
+
+/*
+ if(index === 0){
                         result.push(
                             <div key={68+index} className='event-item'>
                             <Link to={`/event/46995130701/rooms`}> <div className='logo'><img src='https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F46295521%2F260405887019%2F1%2Foriginal.jpg?w=480&auto=compress&rect=0%2C0%2C9000%2C4500&s=90fa22b347047e599be54dcfd8b5ddd0'/></div>
@@ -63,19 +83,4 @@ class ShowEvents extends React.Component {
                          </div>
                         );
                     }
-                    result.push(
-                        <div key={event.id+index} className='event-item'>
-                           <Link to={`/event/${event.id}/rooms`}> <div className='logo'><img src={logo ? logo : '/assets/event-default.jpg'}/></div>
-                            <div className='event-link'>{event.name}</div></Link>
-                            <div className='event-description'>{event.description.substring(0,200)}...</div>
-                            <div className='event-start'>{event.start_date} to {event.end_date}, {event.start_time}-{event.end_time}</div>
-                        </div>
-                    );
-                    return result;
-                }, [])}
-                </div>
-            </div>
-        )
-    }
-}
-export default ShowEvents;
+*/

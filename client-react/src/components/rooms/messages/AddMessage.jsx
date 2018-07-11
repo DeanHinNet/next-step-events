@@ -5,7 +5,7 @@ class AddMessage extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            thread_id: this.props.thread_id,
+            thread_id: '',
             parent_id: '',
             content: '',
             error: ''
@@ -15,11 +15,13 @@ class AddMessage extends React.Component {
     }
     handleInput(e){
         this.setState({
+            thread_id: this.props.thread_id,
             [e.target.name]: e.target.value
         })
     }
     handleSubmit(e){
         e.preventDefault();
+        console.log('posting to messages, addMessages', this.state);
         axios.post('/api/messages', this.state)
             .then((results)=>{
                 this.props.updateThread(results.data.messages);
@@ -35,6 +37,7 @@ class AddMessage extends React.Component {
             });
     }
     render(){
+        console.log('add message props', this.props);
         return(
             <div id='message-add'>
                 <h3>Message:</h3>

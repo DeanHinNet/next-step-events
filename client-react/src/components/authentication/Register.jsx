@@ -26,9 +26,12 @@ class Register extends React.Component {
         e.preventDefault();
         axios.post('/register', this.state)
             .then((results)=>{
+                console.log('results', results);
                 if(results.status === 200){
                     //user should be logged in and redirected to the main with all the eventsn
-                    this.props.loginUser(results.data.user);
+                    this.props.loginUser({
+                        user:results.data.user,
+                        isLoggedIn: true});
                     this.setState({
                         toDashboard: true
                     });
@@ -45,7 +48,7 @@ class Register extends React.Component {
     }
     render(){
         if(this.state.toDashboard === true){
-            return <Redirect to='/events' />;
+            return <Redirect to='/' />;
         }
         return(
             <div className='column has-text-centered'>

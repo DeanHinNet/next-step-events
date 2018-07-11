@@ -81,7 +81,6 @@ class ShowRooms extends React.Component {
                                 <div className='room-name'>
                                     <Link to={`/room/${room.id}/${ room.thread_id ? room.thread_id: 0}`}>{room.name}</Link>
                                 </div>
-                                <div className='room-info'>{this.state.status ? '' : 'by'} </div>
                             </div>
                         )
                     })}
@@ -91,3 +90,7 @@ class ShowRooms extends React.Component {
     }
 }
 export default ShowRooms;
+
+/*
+  <div className='room-info'>{this.state.status ? '' : 'by'} </div>
+*/

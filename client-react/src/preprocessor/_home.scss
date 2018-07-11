@@ -62,14 +62,14 @@
                 background-color: white;
                 border: 1px solid $grey-dark;
                 padding: em(10px);
+                a {
+                    font-size: em(16px); 
+                }
                 .logo img{
                     display: block;
                     margin: 0 auto;
                 }
-                .event-link a {
-                        font-weight: bold;
-                        font-size: em(16px); 
-                }
+                
                 .event-start, .event-end {
                     display: inline-block;
                     margin-right: em(5px);
@@ -77,5 +77,14 @@
             }
             
         }
+    }
+    #user-welcome {
+        background-color: #fff;
+        vertical-align: top;
+        float: right;
+        width: 200px;
+        border: 1px solid $grey-dark;
+        margin-top: 15px;
+        padding: 5px;
     }
 }

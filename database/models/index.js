@@ -24,7 +24,41 @@ module.exports = {
                 });
             }
         },
+        featured: (callback)=>{
+            var featured = ['44730911360','46325229007','46644023530'];
+            module.exports.eventBrite.get((events)=>{
+                var result = events;
+                var batchParams = { 
+                    "batch": "[{\"method\":\"GET\", \"relative_url\":\"events/46644023530/\"},{\"method\":\"GET\", \"relative_url\":\"events/44730911360/\"},{\"method\":\"GET\", \"relative_url\":\"events/46325229007/\"}]"
+                }
+                axios.post(`https://www.eventbriteapi.com/v3/batch/?token=${credentials.event_brite_key}`, batchParams)
+                .then((data)=>{
+                    //console.log('after batch data,', data);
+                    
+                    data.data.map((event)=>{
+                        event = JSON.parse(event.body);
+                        console.log('event', event);
+                        result.unshift({   
+                            id: event.id,
+                            name: event.name.text,
+                            description: event.description.text,
+                            start_date: moment(event.start.local).format('M/D'),
+                            start_time: moment(event.start.local).format('h:mmA'),
+                            end_date: moment(event.end.local).format('M/D'),
+                            end_time: moment(event.end.local).format('h:mmA'),
+                            logo: event.logo
+                        });
+                    });
+                    console.log('result', result);
+                    callback(result);
+                })
+                .catch((err)=>{
+                    console.log('An error has occurred.', err);
+                });
+           });
+        },
         get: (callback)=>{
+            var featured = ['44730911360','46325229007','46644023530'];
             axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${credentials.event_brite_key}&location.address=new%20york%20city&categories=101`)
             .then((data)=>{
                 var results = [];
@@ -152,7 +186,7 @@ module.exports = {
             var queryStr = `SELECT * FROM rooms WHERE id=?`;
             var result = {};
             //hackathon, self-development, 
-            var featured = ['44730911360','46325229007','46644023530'];
+            
             db.query(queryStr, params.id, (err, data)=>{
                 if(err) throw err;
                 result.room = data[0];
