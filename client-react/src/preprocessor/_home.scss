@@ -62,8 +62,12 @@
                 background-color: white;
                 border: 1px solid $grey-dark;
                 padding: em(10px);
+                margin: 5px;
                 a {
                     font-size: em(16px); 
+                }
+                .event-link {
+                  font-size: 1.25em;
                 }
                 .logo img{
                     display: block;
