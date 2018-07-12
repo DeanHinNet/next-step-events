@@ -32,9 +32,9 @@
                     vertical-align: text-bottom;
                     position: relative;
                     top: 10%;
-                    width: 60%;
                     p {
                         font-size: em(28px);
+                        line-height: em(28px);
                     }
                     #search-input{
                      
@@ -42,6 +42,7 @@
                             height: em(45px);
                             width: 80%;
                             padding-left: 10px;
+                            line-height: 1;
                         }
                     }
                  
@@ -92,6 +93,7 @@
         padding: 5px;
     }
 }
+
 #loader {
     width: 200px; 
     height: 200px;

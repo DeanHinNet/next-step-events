@@ -16,7 +16,7 @@ class SearchBar extends React.Component {
                         <form id='search-bar'>
                             <p>Connect and grow</p>
                                 <div id='search-input'>
-                                    <Link to='/about'>Find out more about Next Step Events!</Link>
+                                    <Link to='/about'>Learn about Next Step Events!</Link>
                                 </div>
                         </form>
                     </div>
