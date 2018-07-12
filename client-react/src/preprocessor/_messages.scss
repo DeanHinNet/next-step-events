@@ -1,0 +1,30 @@
+.threads-display {
+    background-color: $bg;
+}
+
+#event-info li {
+    margin: 5px 0;
+}
+.message-box {
+    
+    margin: 5px;
+    margin-bottom: 0px;
+
+    border-radius: 5px;
+    .message-content {
+        background-color: $bg-content;
+    }
+    .message-stats {
+        background-color: $bg-content;
+        font-size: 10px;
+        font-weight: bold;
+        color: lightgrey;
+        padding-left: 2px;
+    }
+}
+.message-box:first-child {
+    padding-top: 5px;
+}
+.message-box:last-child {
+    padding-bottom: 5px;
+}

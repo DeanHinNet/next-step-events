@@ -1,20 +1,13 @@
 var mysql = require('mysql');
-var credentials = process.env.credentials;
-
-if(credentials === undefined) {
-    credentials = require('./../config.js');
-} else {
-    credentials = {
-        host: process.env.host,
-        user: process.env.user,
-        password: process.env.password,
-        database: process.env.database
-    }
-}
+var credentials = require('./../config.js');
+var fs = require('fs');
 
 module.exports = connection = mysql.createConnection({
     host: credentials.host,
     user: credentials.user,
     password: credentials.password,
-    database: credentials.database
+    database: credentials.database,
+    ssl: {
+        ca: fs.readFileSync(__dirname + '/../rds-combined-ca-bundle.pem')
+    }
 })

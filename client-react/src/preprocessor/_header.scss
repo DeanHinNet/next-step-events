@@ -1,0 +1,31 @@
+#header {
+    @include test(red);
+    width: 100%;
+    background-color: $red;
+    /*
+    #logo {
+        width: 30%;
+        display: inline-block;
+        color: $red;
+       
+    }
+    nav {
+        width: 70%;
+        display: inline-block;
+        background-color: $red;
+        text-align: right;
+        ul {
+            li {
+                display: inline-block;
+                margin: 10px;
+                a {
+                    color: $blue;
+                    text-decoration: none;
+                }
+                a:visited {
+                    color: $blue;
+                }
+            }
+        }
+    }*/
+}

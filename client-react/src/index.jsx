@@ -1,22 +1,45 @@
 import React from 'react';
-import ReactDOM from 'react';
+import ReactDOM from 'react-dom';
+import {BrowserRouter, browserHistory} from 'react-router-dom';
 
-import AddEvent from './components/AddEvent.jsx';
+//import './preprocessor/style.scss';
+import Header from './components/Header.jsx';
+import Main from './components/Main.jsx';
+import Footer from './components/Footer.jsx';
 
 class App extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            events: []
+            user: {
+                first_name: '',
+                username: '',
+                id: ''
+            },
+            isLoggedIn: false
         }
+        this.loginUser = this.loginUser.bind(this);
+    }
+    loginUser(data){
+        //Sets the state for 'isLoggedIn' once the user is authenticated
+        this.setState({
+            user: data.user,
+            isLoggedIn: data.isLoggedIn
+        });
     }
     render(){
         return(
-            <div>
-                <AddEvent />
+            <div className='hero is-fullheight'>
+                <Header isLoggedIn={this.state.isLoggedIn}/>
+                <Main events={this.state.events} loginUser={this.loginUser} user={this.state.user} isLoggedIn={this.state.isLoggedIn}/>
+                <Footer/>
             </div>
         )
     }
 }
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+ReactDOM.render((
+    <BrowserRouter history={browserHistory}>
+        <App />
+    </BrowserRouter>
+), document.getElementById('app'));

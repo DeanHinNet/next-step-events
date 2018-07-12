@@ -4,3 +4,8 @@ node_modules
 node-modules
 bundle.js
 package-lock.json
+.sass-cache
+API-tests
+AWS-nse
+*.pem
+deployment.md

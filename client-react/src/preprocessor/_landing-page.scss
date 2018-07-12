@@ -1,0 +1,68 @@
+.home-landing {
+    background-color: $bg;
+    #banner {
+        #banner-container {
+            background-color: $blue-light;
+            background: url('/assets/pics/bg-02.jpg');
+            background-size: cover;
+            height: em(200px);
+        }
+    }
+    .home-content {
+      
+        #events-show {
+            width: 100%;
+            //mobile
+            
+            .event-item {
+                display: inline-block;
+                height: 300px;
+                vertical-align: top;
+            }
+     
+            @media only screen and (max-width: 789px) {
+                .event-item {
+                    width: 100%;
+                }
+            }
+            
+            @media only screen and (min-width: 789px) {
+                .event-item {
+                    width: 48%;
+                }
+             }
+             @media only screen and (min-width: 1024px) {
+                .event-item {
+                    width: 32%;
+                }
+             }
+            // .event-link {
+            //     height: em(100px);
+                
+            // }
+            .logo img {
+                max-height: 125px;
+            }
+            .event-link {
+                max-height: 20%;
+                height: 17%;
+                overflow: hidden;
+                margin-bottom: 5px;
+                line-height: 1.15;
+            }
+            .event-link a {
+               
+            }
+            .event-description {
+                height: 29%;
+                line-height: 1;
+                overflow: hidden;
+                margin-bottom: 5px;
+            }
+            .featured {
+                box-shadow: 0 1px 3px 0 $red;
+                border-color: white;
+            }
+        }
+    }
+}
