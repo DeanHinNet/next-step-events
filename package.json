@@ -9,7 +9,7 @@
     "server-dev": "nodemon server/index.js",
     "scss-dev": "sass --watch --style compressed client-react/src/preprocessor:client-react/dist/assets/css",
     "build": "webpack -d -p --config webpack.config.prod.js",
-    "start": "concurrently \"npm run build\" \"forever start server/index.js\" "
+    "start": "concurrently \"npm run build\" \"forever start --minUptime 1000 --spinSleepTime 1000 server/index.js\" "
   },
   "repository": {
     "type": "git",

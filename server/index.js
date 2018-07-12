@@ -9,15 +9,17 @@ var {sessionStore} = require('./../database/models/index.js');
 var compression = require('compression');
 var app = express();
 
-app.use(compression({filter: (req, res)=>{
-    if (req.headers['x-no-compression']) {
-    // don't compress responses with this request header
-    return false
-    }
-    // fallback to standard filter function
-    return compression.filter(req, res)
-}}));
+// app.use(compression({filter: (req, res)=>{
+//     console.log('compression', req.headers['x-no-compression']);
+//     if (req.headers['x-no-compression']) {
+//     // don't compress responses with this request header
+//     return false
+//     }
+//     // fallback to standard filter function
+//     return compression.filter(req, res)
+// }}));
 
+app.use(compression());
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client-react/dist/'));
 app.use(cookieParser());
