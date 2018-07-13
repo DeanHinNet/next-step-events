@@ -21,6 +21,7 @@ class Logout extends React.Component {
         }
     }
     componentDidMount(){
+        console.log('logging user out...');
         axios.get('/logout')
         .then((results)=>{
             this.props.loginUser({
@@ -37,9 +38,10 @@ class Logout extends React.Component {
     }
     render(){
         if(this.state.toDashboard){
+            console.log('returning to dashboard');
             return <Redirect to='/' />;
         }
-        return (
+        return(
             <div>
                 {this.state.response ? this.state.response : ""}
             </div>

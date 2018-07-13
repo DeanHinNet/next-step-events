@@ -69,7 +69,7 @@ class ShowRooms extends React.Component {
         if(this.state.rooms.length != 0){
             roomsCreated = false;
         }
-        return (
+        return(
             <div id='rooms-show' className='column'>
                 <h2 className='room-event-name' data-event-id={this.state.event.id}>{this.state.event.name}</h2>
                 {this.props.isLoggedIn ? <AddRoom event={this.props.match.params} updateRooms={this.updateRooms}/>: "Please login to create a new room."}

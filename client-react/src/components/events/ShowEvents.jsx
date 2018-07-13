@@ -2,11 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 
-import AddEvent from './AddEvent.jsx';
-
 class ShowEvents extends React.Component {
-    constructor(props){
-        super(props);
+    constructor(){
+        super();
         this.state = {
             events: []
         }
@@ -14,7 +12,6 @@ class ShowEvents extends React.Component {
     componentDidMount(){
         axios.get('/api/eventbrite/featured')
         .then((results)=>{
-            console.log('results', results);
             this.setState({
                 events: results.data
             });  
@@ -24,9 +21,6 @@ class ShowEvents extends React.Component {
         })  
     }
     render(){
-      
-        console.log('updated 2002rending events...');
-        console.log('state',this.state.events.length > 0);
         if(this.state.events.length > 0){
             return (
                 <div id='events-show' className='column'>
@@ -65,7 +59,6 @@ class ShowEvents extends React.Component {
                 </div>
             </div>
           )
-         
     }
 }
 export default ShowEvents;

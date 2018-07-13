@@ -130,6 +130,16 @@ app.get('/api/eventbrite/featured', (req, res)=>{
 
 
 //Login Routes
+app.get('/login', util.checkUser, (req, res)=>{
+    res.status(200).send({
+        user: {
+            first_name: req.session.user.first_name,
+            username: req.session.user.username,
+            id: req.session.user.id
+        }
+    });
+});
+
 app.post('/login',(req, res)=>{
     model.user.login(req.body, (data)=>{
         if(data.code === 200){
@@ -158,6 +168,7 @@ app.post('/register', (req, res)=>{
 });
 
 app.get('/logout', (req, res)=>{
+    console.log('logging user out...');
     req.session.destroy((data)=>{
         res.clearCookie('user', {path: '/'});
         res.status(201).send("You have been logged out.");
@@ -165,5 +176,5 @@ app.get('/logout', (req, res)=>{
 });
 
 app.listen(process.env.PORT || 8080, ()=>{
-    console.log(`Next Step Events is running`);
+    console.log(`Next Step Events is running v8`);
 });

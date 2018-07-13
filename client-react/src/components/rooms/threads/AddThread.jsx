@@ -10,7 +10,6 @@ class AddThread extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-       
     }
     handleChange(e){
         this.setState({
@@ -27,7 +26,6 @@ class AddThread extends React.Component {
             .catch((err)=>{
                 console.log('An error has occurred.', err);
             });
-
     }
     render(){
         return(

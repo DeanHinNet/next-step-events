@@ -13,6 +13,7 @@ class ShowThread extends React.Component {
             }
         }
         this.updateThread = this.updateThread.bind(this);
+        this.deleteMessage = this.deleteMessage.bind(this);
     }
     componentDidMount(){
          if(Number(this.props.thread_id) === 0){
@@ -22,7 +23,6 @@ class ShowThread extends React.Component {
                 }
             });
          } else if(this.props.thread_id != undefined){
-             console.log('axios get props.thread_id', this.props.thread_id);
             axios.get(`/api/thread/${this.props.thread_id}`)
             .then((results)=>{
                 this.setState({
@@ -40,19 +40,22 @@ class ShowThread extends React.Component {
             messages: messages
         })
     }
+    deleteMessage(e){
+        console.log('e', e.target.dataset.id);
+    }
     render(){
-        console.log('this.state.thread.id', this.state);
-        return (
+        console.log('current logged in user', this.props);
+        return(
             <div id='thread-current'>
                 <h3>Discussion: <span id='thread-name'>{this.state.thread.description || ""}</span></h3>
                 {this.props.isLoggedIn ? <AddMessage thread_id={this.state.thread.id} updateThread={this.updateThread}/> : <Login location='room' loginUser={this.props.loginUser} message="Please login to add a message." />}
                 {this.state.messages.length === 0 ? <p>No messages yet. Please add one!</p> : ""}
                 <ul className='threads-display'>
                     {this.state.messages.map((message, index)=>{
-                        return (
+                        return(
                             <li key={message.thread_id+index} className='message-box'>
-                                <div className='message-content' >{message.content}</div>
-                                <div className='message-stats'>by {message.username}</div>
+                                <div className='message-content' dangerouslySetInnerHTML={ {__html: message.content} } ></div>
+                                <div className='message-stats'>by {message.username} {this.props.user.username === message.username ? <button onClick={this.deleteMessage}  data-id={message.id}>delete</button>: ''}</div>
                             </li>
                         )
                     })}

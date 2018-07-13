@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import ReactQuill from 'react-quill';
 
 class AddMessage extends React.Component {
     constructor(props){
@@ -18,11 +17,10 @@ class AddMessage extends React.Component {
     componentDidMount(){
   
     }
-    handleInput(value){
-        console.log('e', value);
+    handleInput(e){
         this.setState({
             thread_id: this.props.thread_id,
-            content: value
+            [e.target.name]: e.target.value
         })
     }
     handleSubmit(e, {value}){
@@ -47,7 +45,7 @@ class AddMessage extends React.Component {
                 <h3>Message:</h3>
                 <p> {this.state.error ? this.state.error : ""}</p>
                 <form onSubmit={(e)=>this.handleSubmit(e, this.state)}>
-                    <ReactQuill value={this.state.content} onChange={this.handleInput}/>
+                    <textarea id='message-input' name='content' type='textarea' value={this.state.content} onChange={this.handleInput} />
                     <input id='message-submit' type='submit' id='submit' value='Submit Message'/>
                 </form>
             </div>
@@ -55,5 +53,3 @@ class AddMessage extends React.Component {
     }
 }
 export default AddMessage;
-
-{/* <textarea id='message-input' name='content' type='textarea' value={this.state.content} onChange={this.handleInput} /> */}

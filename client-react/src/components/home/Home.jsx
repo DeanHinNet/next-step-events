@@ -3,8 +3,7 @@ import SearchBar from './SearchBar.jsx';
 import ShowEvents from './../events/ShowEvents.jsx';
 
 const Home = (props) => {
-    console.log('props', props);
-    return (
+    return(
         <div className='column home'>
             <SearchBar />
             <div className='home-content'>
@@ -16,5 +15,4 @@ const Home = (props) => {
         </div>
     )
 }
-
 export default Home;

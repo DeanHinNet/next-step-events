@@ -38,7 +38,7 @@ class ShowRoom extends React.Component {
         });
     }
     render(){
-        return (
+        return(
             <div id='room-show' className='columns is-fullheight is-vtop'>
                 <div id='room-contents' className='column is-three-quarters'>
                     <div id='event-info'>
@@ -53,7 +53,7 @@ class ShowRoom extends React.Component {
                     <h2 id='room-name'>{this.state.room.name}</h2>
                     <Switch>
                         <Route path='/room/:id/:thread_id' render={(routeProps) =>
-                            <ShowThread {...routeProps} {...this.props} key={routeProps.match.params.id+routeProps.match.params.thread_id} thread_id={routeProps.match.params.thread_id} isLoggedIn={this.props.isLoggedIn} user={this.props.user} loginUser={this.props.loginUser}/>}
+                            <ShowThread {...routeProps} key={routeProps.match.params.id+routeProps.match.params.thread_id} thread_id={routeProps.match.params.thread_id} isLoggedIn={this.props.isLoggedIn} user={this.props.user} loginUser={this.props.loginUser}/>}
                         />
                     </Switch>
                </div>
