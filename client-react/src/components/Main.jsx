@@ -34,10 +34,11 @@ const Main = (props) => {
             <Route exact path='/events' render={(routeProps) =>   
                 <ShowEvents {...routeProps}/>}
             />
+             <Route exact path='/events/add' component={AddEvent}/>
              <Route path='/events/:id' render={(routeProps) =>          
                 <ShowEvents {...routeProps}/>}
             />
-            <Route exact path='/events/add' component={AddEvent}/>
+           
             <Route exact path='/rooms' render={(routeProps) =>   
                 <ShowRooms {...routeProps} isLoggedIn={props.isLoggedIn}/>}
             />

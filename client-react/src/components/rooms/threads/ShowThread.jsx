@@ -45,10 +45,12 @@ class ShowThread extends React.Component {
     }
     render(){
         console.log('current logged in user', this.props);
+        var context = '';
+        !this.state.thread.id ? context = "No threads yet, please create one!" : context="Please login to add a message." 
         return(
             <div id='thread-current'>
                 <h3>Discussion: <span id='thread-name'>{this.state.thread.description || ""}</span></h3>
-                {this.props.isLoggedIn ? <AddMessage thread_id={this.state.thread.id} updateThread={this.updateThread}/> : <Login location='room' loginUser={this.props.loginUser} message="Please login to add a message." />}
+                {this.props.isLoggedIn ? <AddMessage thread_id={this.state.thread.id} updateThread={this.updateThread}/> : <Login location='room' loginUser={this.props.loginUser} message={context}/>}
                 {this.state.messages.length === 0 ? <p>No messages yet. Please add one!</p> : ""}
                 <ul className='threads-display'>
                     {this.state.messages.map((message, index)=>{

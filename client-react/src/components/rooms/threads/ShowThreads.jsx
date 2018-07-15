@@ -26,7 +26,7 @@ class ShowThreads extends React.Component {
                     <li id='threads-empty'>{noThreads ? "No threads yet, please add one!" : ""}</li>
                     {this.props.threads.map((thread, index)=>{
                         return <li key={this.props.room+thread.id+index}><Link to={`/room/${this.props.room}/${thread.id}`}>{thread.description}</Link>
-                        {/* <span className='thread-info'> by {thread.username}</span></li> */}
+                        {/* <span className='thread-info'> by {thread.username}</span> */}</li>
                     })}
                 </ul>
                 {isLoggedIn ? <AddThread room={this.props.room} updateThreads={this.updateThreads}/>: ""}

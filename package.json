@@ -4,7 +4,7 @@
   "description": "Next Step Events is a collaboration tool for what happens after a conference, meetup, or any gathering where like minded individuals are trying to connect and capture the details of the event.",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"npm run react-dev\" \" npm run server-dev\" \"npm run scss-dev\"",
+    "dev": "concurrently \"npm run react-dev\" \"npm run scss-dev\" \" npm run server-dev\"",
     "react-dev": "webpack -d -p --watch --config webpack.config.dev.js",
     "server-dev": "nodemon server/index.js",
     "scss-dev": "sass --watch --style compressed client-react/src/preprocessor:client-react/dist/assets/css",
