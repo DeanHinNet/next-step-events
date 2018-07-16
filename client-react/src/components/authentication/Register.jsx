@@ -26,7 +26,6 @@ class Register extends React.Component {
         e.preventDefault();
         axios.post('/register', this.state)
             .then((results)=>{
-                console.log('results', results);
                 if(results.status === 200){
                     //user should be logged in and redirected to the main with all the eventsn
                     this.props.loginUser({

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import ReactQuill from 'react-quill';
 
 class AddMessage extends React.Component {
     constructor(props){
@@ -12,16 +13,20 @@ class AddMessage extends React.Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleInput = this.handleInput.bind(this);
+
     }
-    handleInput(e){
+    componentDidMount(){
+  
+    }
+    handleInput(value){
+        console.log('e', value);
         this.setState({
             thread_id: this.props.thread_id,
-            [e.target.name]: e.target.value
+            content: value
         })
     }
-    handleSubmit(e){
+    handleSubmit(e, {value}){
         e.preventDefault();
-        console.log('posting to messages, addMessages', this.state);
         axios.post('/api/messages', this.state)
             .then((results)=>{
                 this.props.updateThread(results.data.messages);
@@ -37,13 +42,12 @@ class AddMessage extends React.Component {
             });
     }
     render(){
-        console.log('add message props', this.props);
         return(
             <div id='message-add'>
                 <h3>Message:</h3>
                 <p> {this.state.error ? this.state.error : ""}</p>
                 <form onSubmit={(e)=>this.handleSubmit(e, this.state)}>
-                    <textarea id='message-input' name='content' type='textarea' value={this.state.content} onChange={this.handleInput} />
+                    <ReactQuill value={this.state.content} onChange={this.handleInput}/>
                     <input id='message-submit' type='submit' id='submit' value='Submit Message'/>
                 </form>
             </div>
@@ -51,3 +55,5 @@ class AddMessage extends React.Component {
     }
 }
 export default AddMessage;
+
+{/* <textarea id='message-input' name='content' type='textarea' value={this.state.content} onChange={this.handleInput} /> */}

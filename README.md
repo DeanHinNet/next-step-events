@@ -8,8 +8,21 @@ Whether they're self-development seminars (Tony Robbins), hackathons, or million
 
 Experience the app: http://www.deanhin.net/next-step-events
 
+![alt text](https://raw.githubusercontent.com/DeanHinNet/next-step-events/dev/meta/Landing_Page.png)
+
 Core Tech Stack
 ---------------
 React, Node, Express, MySQL, 
+
+Getting Started
+---------------
+### Prerequisites
+### Installing
+
+Deployment
+----------
+Acknowledgments
+---------------
+
 
 

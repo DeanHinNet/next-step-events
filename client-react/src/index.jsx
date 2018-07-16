@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, browserHistory} from 'react-router-dom';
+import axios from 'axios';
 
 //import './preprocessor/style.scss';
 import Header from './components/Header.jsx';
@@ -19,6 +20,27 @@ class App extends React.Component {
             isLoggedIn: false
         }
         this.loginUser = this.loginUser.bind(this);
+    }
+    componentDidMount(){
+        console.log('component did mount checking loggin');
+        axios.get('/login')
+        .then((results)=>{
+            console.log('results', results);
+            if(results.status === 200){
+                this.loginUser({
+                    user: results.data.user,
+                    isLoggedIn: true
+                });
+            } else {
+                //send status code and failure
+                this.setState({
+                    failure: results.message
+                });
+            }
+        })
+        .catch((err)=>{
+            console.log('No user is logged in.');
+        });
     }
     loginUser(data){
         //Sets the state for 'isLoggedIn' once the user is authenticated

@@ -1,0 +1,134 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `destroys_nextstepevents` DEFAULT CHARACTER SET utf8 ;
+USE `destroys_nextstepevents` ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `destroys_nextstepevents`.`users` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `created_at` DATETIME NOT NULL,
+  `updated_at` DATETIME NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`rooms`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `destroys_nextstepevents`.`rooms` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  `created_at` DATETIME NULL,
+  `updated_at` DATETIME NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`events`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `destroys_nextstepevents`.`events` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  `start_date` DATETIME NULL,
+  `end_date` DATETIME NULL,
+  `description` VARCHAR(45) NULL,
+  `created_at` DATETIME NULL,
+  `updated_at` DATETIME NULL,
+  `user_id` INT NOT NULL,
+  `rooms_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_events_users_idx` (`user_id` ASC),
+  INDEX `fk_events_rooms1_idx` (`rooms_id` ASC),
+  CONSTRAINT `fk_events_users`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `destroys_nextstepevents`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_events_rooms1`
+    FOREIGN KEY (`rooms_id`)
+    REFERENCES `destroys_nextstepevents`.`rooms` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`threads`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `destroys_nextstepevents`.`threads` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `description` VARCHAR(45) NULL,
+  `created_at` DATETIME NULL,
+  `update_at` DATETIME NULL,
+  `rooms_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_threads_rooms1_idx` (`rooms_id` ASC),
+  CONSTRAINT `fk_threads_rooms1`
+    FOREIGN KEY (`rooms_id`)
+    REFERENCES `destroys_nextstepevents`.`rooms` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`messages`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `destroys_nextstepevents`.`messages` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `messagescol` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`messages`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `destroys_nextstepevents`.`messages` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `messagescol` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`events_has_users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `destroys_nextstepevents`.`events_has_users` (
+  `events_id` INT NOT NULL,
+  `users_id` INT NOT NULL,
+  PRIMARY KEY (`events_id`, `users_id`),
+  INDEX `fk_events_has_users_users1_idx` (`users_id` ASC),
+  INDEX `fk_events_has_users_events1_idx` (`events_id` ASC),
+  CONSTRAINT `fk_events_has_users_events1`
+    FOREIGN KEY (`events_id`)
+    REFERENCES `destroys_nextstepevents`.`events` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_events_has_users_users1`
+    FOREIGN KEY (`users_id`)
+    REFERENCES `destroys_nextstepevents`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
