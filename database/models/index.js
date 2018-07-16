@@ -1,6 +1,6 @@
 var db = require('./../../database/index.js');
 var axios = require('axios');
-var credentials = require('./../../config.js');;
+var credentials = require('./../../config.js');
 var bcrypt = require('bcryptjs');
 const saltRounds = 6;
 var session = require('express-session');
@@ -37,7 +37,6 @@ module.exports = {
                     
                     data.data.map((event)=>{
                         event = JSON.parse(event.body);
-                        console.log('event', event);
                         result.unshift({   
                             id: event.id,
                             name: event.name.text,
@@ -50,7 +49,6 @@ module.exports = {
                             featured: true
                         });
                     });
-                    console.log('result', result);
                     callback(result);
                 })
                 .catch((err)=>{
@@ -67,8 +65,6 @@ module.exports = {
                 //get only info I need to reduce load on request
                 //2018-07-21T19:00:00
                 data.data.events.slice(0, 12).map((event)=>{
-                    console.log('moment', moment(event.start.local).format('M/D'));
-                    
                     entry = {
                         id: event.id,
                         name: event.name.text,

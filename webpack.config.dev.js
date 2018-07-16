@@ -1,6 +1,8 @@
 var path = require('path');
 var SRC_DIR = path.join(__dirname, '/client-react/src');
 var DIST_DIR = path.join(__dirname, '/client-react/dist/');
+var webpack = require('webpack');
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
     entry: `${SRC_DIR}/index.jsx`,

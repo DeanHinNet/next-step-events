@@ -24,12 +24,19 @@
                 .event-item {
                     width: 100%;
                 }
+                #search-bar {
+                    width: 100%;
+                    background-color: red;
+                }
             }
             
             @media only screen and (min-width: 789px) {
                 .event-item {
                     width: 48%;
                 }
+                #search-bar {
+                    width: 60%;
+                  }
              }
              @media only screen and (min-width: 1024px) {
                 .event-item {

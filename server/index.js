@@ -6,8 +6,20 @@ var model = require('./../database/models/index.js');
 var cookieParser = require('cookie-parser');
 var routes = require('./routes');
 var {sessionStore} = require('./../database/models/index.js');
+var compression = require('compression');
 var app = express();
 
+// app.use(compression({filter: (req, res)=>{
+//     console.log('compression', req.headers['x-no-compression']);
+//     if (req.headers['x-no-compression']) {
+//     // don't compress responses with this request header
+//     return false
+//     }
+//     // fallback to standard filter function
+//     return compression.filter(req, res)
+// }}));
+
+app.use(compression());
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client-react/dist/'));
 app.use(cookieParser());
@@ -118,6 +130,16 @@ app.get('/api/eventbrite/featured', (req, res)=>{
 
 
 //Login Routes
+app.get('/login', util.checkUser, (req, res)=>{
+    res.status(200).send({
+        user: {
+            first_name: req.session.user.first_name,
+            username: req.session.user.username,
+            id: req.session.user.id
+        }
+    });
+});
+
 app.post('/login',(req, res)=>{
     model.user.login(req.body, (data)=>{
         if(data.code === 200){
@@ -146,6 +168,7 @@ app.post('/register', (req, res)=>{
 });
 
 app.get('/logout', (req, res)=>{
+    console.log('logging user out...');
     req.session.destroy((data)=>{
         res.clearCookie('user', {path: '/'});
         res.status(201).send("You have been logged out.");
@@ -153,5 +176,5 @@ app.get('/logout', (req, res)=>{
 });
 
 app.listen(process.env.PORT || 8080, ()=>{
-    console.log(`Next Step Events is running`);
+    console.log(`Next Step Events is running v8`);
 });

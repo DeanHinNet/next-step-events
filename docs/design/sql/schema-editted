@@ -1,0 +1,24 @@
+CREATE TABLE IF NOT EXISTS `destroys_nextstepevents`.`events` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  `start_date` DATETIME NULL,
+  `end_date` DATETIME NULL,
+  `description` VARCHAR(45) NULL,
+  `created_at` DATETIME NULL,
+  `updated_at` DATETIME NULL,
+  `user_id` INT NOT NULL,
+  `rooms_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_events_users_idx` (`user_id` ASC),
+  INDEX `fk_events_rooms1_idx` (`rooms_id` ASC),
+  CONSTRAINT `fk_events_users`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `mydb`.`users` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_events_rooms1`
+    FOREIGN KEY (`rooms_id`)
+    REFERENCES `mydb`.`rooms` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
