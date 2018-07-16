@@ -14,3 +14,9 @@ credits.md
 deployment.md
 npm-debug.log
 vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.log
