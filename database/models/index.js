@@ -263,10 +263,6 @@ module.exports = {
             params.user_id = userId;
             params.created_at = 'NOW()';
             params.updated_at = 'NOW()';
-            console.log('updated Params', updatedParams);
-
-            console.log('thread post query', queryStr);
-            console.log('params', params);
             db.query(queryStr, params, (err, data)=>{
                 if(err) throw err;
                 queryStr = `SELECT * FROM threads WHERE room_id=?`;
