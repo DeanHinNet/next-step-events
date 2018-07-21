@@ -1,11 +1,11 @@
+var credentials = require('./../../../config.js');
 var db = require('./../../database/index.js');
 var axios = require('axios');
-var credentials = require('./../../config.js');
 var bcrypt = require('bcryptjs');
-const saltRounds = 6;
 var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 var moment = require('moment');
+const saltRounds = 6;
 
 db.connect();
 

@@ -1,5 +1,5 @@
 var mysql = require('mysql');
-var credentials = require('./../config.js');
+var credentials = require('./../../config.js');
 var fs = require('fs');
 
 module.exports = connection = mysql.createConnection({

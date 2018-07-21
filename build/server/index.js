@@ -4,34 +4,24 @@ var bodyParser = require('body-parser');
 var util = require('./utility.js');
 var model = require('./../database/models/index.js');
 var cookieParser = require('cookie-parser');
-var routes = require('./routes');
-var {sessionStore} = require('./../database/models/index.js');
 var compression = require('compression');
+var port = process.env.PORT || 8080;
+
 var app = express();
 
-// app.use(compression({filter: (req, res)=>{
-//     console.log('compression', req.headers['x-no-compression']);
-//     if (req.headers['x-no-compression']) {
-//     // don't compress responses with this request header
-//     return false
-//     }
-//     // fallback to standard filter function
-//     return compression.filter(req, res)
-// }}));
+app.use(compression({filter: util.shouldCompress}));
 
-app.use(compression());
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client-react/dist/'));
 app.use(cookieParser());
 app.use(session({
     key: 'user',
     secret: 'this is only the beginnning',
-    store: sessionStore,
+    store: model.sessionStore,
     resave: false,
     saveUninitialized: true
 }));
 
-app.use('/', routes);
 app.use((req, res, next)=>{
     if(req.cookies.users_id && !req.session.user){
         res.clearCookie('user_id');
@@ -50,8 +40,18 @@ app.route('/api/events')
             res.status(201).send(data);
         });
     });
-
-
+//GET for a single event
+app.get('/api/events/:id', (req, res)=>{
+    model.event.get(req.params, (data)=>{
+         res.status(201).send(data);
+    });
+ });
+//GETS the info for all the rooms of a particular event
+app.get('/api/event/:id/rooms', (req, res)=>{
+    model.event.rooms.get(req.params, (data)=>{
+        res.status(201).send(data);
+    });
+})
 app.route('/api/rooms')
     .get((req, res)=>{
         //Gets a list of all the rooms
@@ -66,18 +66,7 @@ app.route('/api/rooms')
         });
     });
 
-//GET for a single event
-app.get('/api/events/:id', (req, res)=>{
-   model.event.get(req.params, (data)=>{
-        res.status(201).send(data);
-   });
-});
-//GETS the info for all the rooms of a particular event
-app.get('/api/event/:id/rooms', (req, res)=>{
-    model.event.rooms.get(req.params, (data)=>{
-        res.status(201).send(data);
-    });
-})
+
 
 //Returns the functionality for a particular room 
 app.get('/api/room/:id', (req, res)=>{
@@ -175,6 +164,6 @@ app.get('/logout', (req, res)=>{
     });
 });
 
-app.listen(process.env.PORT || 8080, ()=>{
-    console.log(`Next Step Events is running v8`);
+app.listen(port, ()=>{
+    console.log(`Next Step Events is running ${port}`);
 });
