@@ -3,6 +3,7 @@ node_modules
 bundle.js
 package-lock.json
 vscode
+.vscode/
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
