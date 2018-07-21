@@ -313,6 +313,13 @@ module.exports = {
         }
     },
     user: {
+        events: (params, callback)=>{
+            var queryStr = `SELECT * FROM events WHERE user_id=?`;
+            db.query(queryStr, params.id, (err, data)=>{
+                if(err) throw err;
+                callback(data);
+            });
+        },
         login: (params, callback)=>{
             //check if user is in the database
             //if yes, check if the password matches

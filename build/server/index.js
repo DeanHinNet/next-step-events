@@ -29,7 +29,15 @@ app.use((req, res, next)=>{
     next();
 });
 
+//External APIS
+app.get('/api/eventbrite/featured', (req, res)=>{
+    model.eventBrite.featured((data)=>{
+        res.status(201).send(data);
+    });
+});
+
 app.route('/api/events')
+    //GET all non-external events.
     .get((req, res)=>{
         model.events.get((data)=>{
             res.status(201).send(data);
@@ -65,9 +73,6 @@ app.route('/api/rooms')
             res.status(201).send(data);
         });
     });
-
-
-
 //Returns the functionality for a particular room 
 app.get('/api/room/:id', (req, res)=>{
     model.room.get(req.params,(data)=>{
@@ -105,64 +110,60 @@ app.get('/api/messages/room/:id/', (req, res)=>{
     });
 });
 
-//External APIS
-app.get('/api/eventbrite/', (req, res)=>{
-    model.eventBrite.get((data)=>{
-        res.status(201).send(data);
-    });
-});
-app.get('/api/eventbrite/featured', (req, res)=>{
-    model.eventBrite.featured((data)=>{
-        res.status(201).send(data);
-    });
-});
+
 
 
 //Login Routes
-app.get('/login', util.checkUser, (req, res)=>{
-    res.status(200).send({
-        user: {
-            first_name: req.session.user.first_name,
-            username: req.session.user.username,
-            id: req.session.user.id
-        }
+app.route('/login')
+    .post((req, res)=>{
+        model.user.login(req.body, (data)=>{
+            if(data.code === 200){
+                console.log('creating user session', data.user);
+                util.createSession(req, res, data.user);
+                res.status(data.code).send(data);
+                //the user has been checked, the session has been created and the cookie has been delivered to the user's browser
+            } else {
+                //if not, sendback error message
+                res.status(data.code).send(data.success);
+            }
+        });
+    })
+    .delete((req, res)=>{
+        console.log('logging user out...');
+        req.session.destroy((data)=>{
+            res.clearCookie('user', {path: '/'});
+            res.status(201).send("You have been logged out.");
+        });
     });
-});
+app.route('/api/user')
+    .get(util.checkUser, (req, res)=>{
+        res.status(203).send({
+            user: {
+                first_name: req.session.user.first_name,
+                username: req.session.user.username,
+                id: req.session.user.id
+            }
+        });
+    })
+    .post((req, res)=>{
+        model.user.register(req.body, (data)=>{
+            if(data.code === 200){
+                util.createSession(req, res, data.user);
+                res.status(data.code).send(data);
+                //the user has been checked, the session has been created and the cookie has been delivered to the user's browser
+            } else {
+                //if not, sendback error message
+                res.status(data.code).send(data);
+            }
+        });
+    });
+app.route('/api/user/events')
+    .get((req, res)=>{
+        model.user.events(req.session.user, (data)=>{
+            res.status(202).send(data);
+        });
+    });
 
-app.post('/login',(req, res)=>{
-    model.user.login(req.body, (data)=>{
-        if(data.code === 200){
-            console.log('creating user session', data.user);
-            util.createSession(req, res, data.user);
-            res.status(data.code).send(data);
-            //the user has been checked, the session has been created and the cookie has been delivered to the user's browser
-        } else {
-            //if not, sendback error message
-            res.status(data.code).send(data.success);
-        }
-    });
-});
-
-app.post('/register', (req, res)=>{
-    model.user.register(req.body, (data)=>{
-        if(data.code === 200){
-            util.createSession(req, res, data.user);
-            res.status(data.code).send(data);
-            //the user has been checked, the session has been created and the cookie has been delivered to the user's browser
-        } else {
-            //if not, sendback error message
-            res.status(data.code).send(data);
-        }
-    });
-});
-
-app.get('/logout', (req, res)=>{
-    console.log('logging user out...');
-    req.session.destroy((data)=>{
-        res.clearCookie('user', {path: '/'});
-        res.status(201).send("You have been logged out.");
-    });
-});
 
 app.listen(port, ()=>{
     console.log(`Next Step Events is running ${port}`);
