@@ -1,11 +1,8 @@
 const chai = require('chai');
 const expect = chai.expect;
-let chaiHttp = require('chai-http');
-const model = require('./../database/models/index.js');
+const chaiHttp = require('chai-http');
+const model = require('./../build/database/models/index.js');
 const address = 'http://localhost:8080';
-// const nock = require('nock');
-// const ebResponse = require('./eventbriteApiTestData.js');
-// const ebExpectedResults = require('./eventbriteExpectedResults.js');
 
 chai.use(chaiHttp);
 
@@ -59,44 +56,3 @@ describe('Authentication, database models check.', ()=>{
          });
     });
 });
-
-   // before(done =>{
-
-    // });
-
-    // after(()=>{
-
-    // });
-
-    // it('returns a message', done =>{
-    //     expect().to.equal();
-    //     done();
-    // })
-
-   // describe('Get EventBrite events', () => {
-        //     beforeEach(()=>{
-        //         nock('https://www.eventbriteapi.com')
-        //         .filteringPath(function(path){
-        //             return '/v3/events/search/';
-        //         })
-        //         .get('/v3/events/search/')
-        //         .reply(200, ebResponse);
-        //     });
-        //     it('Get all events', (done) => {
-        //         model.eventBrite.get((result)=>{
-        //             expect().to.equal();
-        //             done();
-        //         });
-        //     });
-        // // }); 
-
-        // describe('Rooms list of rooms ', () => {
-        //     it('Gets list of rooms', (done)=>{
-        //        chai.request('http://localhost:8080')
-        //        .get('/api/rooms')
-        //        .end((err, res)=>{
-        //            expect(res.status).to.equal(201);
-        //            done();
-        //        });
-        //     });
-        // }); 

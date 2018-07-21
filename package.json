@@ -8,7 +8,7 @@
     "testj-init": "./node_modules/jasmine/bin/jasmine.js init",
     "test": "mocha spec/**.spec.js",
     "dev": "concurrently \"npm run react-dev\" \"npm run scss-dev\" \" npm run server-dev\"",
-    "react-dev": "webpack -d -p --watch --config webpack.config.dev.js",
+    "react-dev": "webpack -d -p --watch --config webpack.config.prod.js",
     "server-dev": "nodemon build/server/index.js",
     "scss-dev": "sass --watch --style compressed build/client-react/src/preprocessor:build/client-react/dist/assets/css",
     "build": "webpack -d -p --config webpack.config.prod.js",
