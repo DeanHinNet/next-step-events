@@ -15,6 +15,6 @@ module.exports = connection = mysql.createConnection({
 //     password: credentials.password,
 //     database: credentials.database,
 //     ssl: {
-//         ca: fs.readFileSync(__dirname + '/../build/rds-combined-ca-bundle.pem')
+//         ca: fs.readFileSync(__dirname + '/../build/database/rds-combined-ca-bundle.pem')
 //     }
 // })
