@@ -14,15 +14,4 @@ Core Tech Stack
 ---------------
 React, Node, Express, MySQL, 
 
-Getting Started
----------------
-### Prerequisites
-### Installing
-
-Deployment
-----------
-Acknowledgments
----------------
-
-
 

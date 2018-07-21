@@ -22,7 +22,7 @@ class Logout extends React.Component {
     }
     componentDidMount(){
         console.log('logging user out...');
-        axios.get('/logout')
+        axios.delete('/login')
         .then((results)=>{
             this.props.loginUser({
                 user: '',

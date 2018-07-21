@@ -20,6 +20,7 @@ class ShowRooms extends React.Component {
         if(Object.keys(this.props.match.params).length > 0){
             axios.get(`/api/event/${this.props.match.params.id}/rooms`)
             .then((results)=>{
+                console.log('getting rooms', results);
                 if(results.data.rooms.length === 0){
                     this.setState({
                         rooms: [{

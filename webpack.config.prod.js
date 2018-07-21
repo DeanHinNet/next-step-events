@@ -1,6 +1,6 @@
 var path = require('path');
-var SRC_DIR = path.join(__dirname, '/client-react/src');
-var DIST_DIR = path.join(__dirname, '/client-react/dist/');
+var SRC_DIR = path.join(__dirname, '/build/client-react/src');
+var DIST_DIR = path.join(__dirname, '/build/client-react/dist/');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {

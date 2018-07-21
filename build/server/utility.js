@@ -1,5 +1,5 @@
 var request = require('request');
-
+var compression = require('compression');
 var isLoggedIn = (req)=>{
     return req.session ? !!req.session.user : false;
 }
@@ -18,3 +18,12 @@ exports.createSession = (req, res, user)=>{
         username: user.username
     }
 }
+exports.shouldCompress = (req, res) => {
+    if (req.headers['x-no-compression']) {
+      // don't compress responses with this request header
+      return false;
+    }
+  
+    // fallback to standard filter function
+    return compression.filter(req, res);
+  }
