@@ -21,21 +21,18 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
-
 app.use((req, res, next)=>{
     if(req.cookies.users_id && !req.session.user){
         res.clearCookie('user_id');
     }
     next();
 });
-
 //External APIS
 app.get('/api/eventbrite/featured', (req, res)=>{
     model.eventBrite.featured((data)=>{
         res.status(201).send(data);
     });
 });
-
 app.route('/api/events')
     //GET all non-external events.
     .get((req, res)=>{
@@ -79,7 +76,6 @@ app.get('/api/room/:id', (req, res)=>{
         res.status(201).send(data);
     });
 });
-
 //Bundled get, returns the information for that thread along with all the messages in the thread
 app.get('/api/thread/:id', (req, res)=>{
     model.thread.get(req.params, (data)=>{
@@ -92,7 +88,6 @@ app.post('/api/thread', util.checkUser, (req, res)=>{
         res.status(201).send(data);
     });
 });
-
 app.post('/api/messages', util.checkUser, (req, res)=>{
     console.log('server posting');
     model.messages.post(req.body, req.session.user.id, (data)=>{
@@ -102,17 +97,11 @@ app.post('/api/messages', util.checkUser, (req, res)=>{
         res.status(data.code).send(data);
     });
 });
-
-
 app.get('/api/messages/room/:id/', (req, res)=>{
     model.messages.get(req.params, (data)=>{
         res.status(201).send(data);
     });
 });
-
-
-
-
 //Login Routes
 app.route('/login')
     .post((req, res)=>{
@@ -129,7 +118,6 @@ app.route('/login')
         });
     })
     .delete((req, res)=>{
-        console.log('logging user out...');
         req.session.destroy((data)=>{
             res.clearCookie('user', {path: '/'});
             res.status(201).send("You have been logged out.");
@@ -163,8 +151,6 @@ app.route('/api/user/events')
             res.status(202).send(data);
         });
     });
-
-
 app.listen(port, ()=>{
     console.log(`Next Step Events is running ${port}`);
 });

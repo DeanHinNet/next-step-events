@@ -15,11 +15,7 @@ class AddMessage extends React.Component {
         this.handleInput = this.handleInput.bind(this);
 
     }
-    componentDidMount(){
-  
-    }
     handleInput(value){
-        console.log('e', value);
         this.setState({
             thread_id: this.props.thread_id,
             content: value

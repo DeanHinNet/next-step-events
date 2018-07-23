@@ -22,10 +22,8 @@ class App extends React.Component {
         this.loginUser = this.loginUser.bind(this);
     }
     componentDidMount(){
-        console.log('component did mount checking loggin');
         axios.get('/login')
         .then((results)=>{
-            console.log('results', results);
             if(results.status === 200){
                 this.loginUser({
                     user: results.data.user,
