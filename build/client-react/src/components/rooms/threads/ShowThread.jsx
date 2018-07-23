@@ -44,7 +44,6 @@ class ShowThread extends React.Component {
         console.log('e', e.target.dataset.id);
     }
     render(){
-        console.log('current logged in user', this.props);
         var context = '';
         !this.state.thread.id ? context = "No threads yet, please create one!" : context="Please login to add a message." 
         return(

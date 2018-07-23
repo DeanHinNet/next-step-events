@@ -1,0 +1,11 @@
+.about-page {
+    margin: 0 auto;
+}
+
+.about-inner {
+    width: 70%;
+    margin: 0 auto;
+}
+.about-page p{
+    margin: 15px;
+}

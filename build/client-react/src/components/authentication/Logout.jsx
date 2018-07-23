@@ -21,7 +21,6 @@ class Logout extends React.Component {
         }
     }
     componentDidMount(){
-        console.log('logging user out...');
         axios.delete('/login')
         .then((results)=>{
             this.props.loginUser({
@@ -38,7 +37,6 @@ class Logout extends React.Component {
     }
     render(){
         if(this.state.toDashboard){
-            console.log('returning to dashboard');
             return <Redirect to='/' />;
         }
         return(

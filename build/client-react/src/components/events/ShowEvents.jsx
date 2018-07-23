@@ -31,7 +31,7 @@ class ShowEvents extends React.Component {
                             <Link to={`/event/${event.id}/rooms`}> <div className='logo'><img src={event.logo.url}/></div>
                                 <div className='event-link'>{event.name}</div></Link>
                                 <div className='event-description'>{event.description.substring(0,200)}...</div>
-                                <div className='event-start'>{event.start_date} to {event.end_date}, {event.start_time}-{event.end_time}</div>
+                                <div className='event-start'>{event.start_date} to {event.end_date},{event.start_time}-{event.end_time}</div>
                             </div>
                         )
                     })}

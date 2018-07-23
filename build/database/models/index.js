@@ -33,8 +33,6 @@ module.exports = {
                 }
                 axios.post(`https://www.eventbriteapi.com/v3/batch/?token=${credentials.event_brite_key}`, batchParams)
                 .then((data)=>{
-                    //console.log('after batch data,', data);
-                    
                     data.data.map((event)=>{
                         event = JSON.parse(event.body);
                         result.unshift({   
@@ -63,7 +61,6 @@ module.exports = {
                 var results = [];
                 var entry = {};
                 //get only info I need to reduce load on request
-                //2018-07-21T19:00:00
                 data.data.events.slice(0, 12).map((event)=>{
                     entry = {
                         id: event.id,
@@ -88,7 +85,6 @@ module.exports = {
         get: (callback) => {
             var queryStr = `SELECT * FROM events`;
             db.query(queryStr, (err, data)=>{
-        
                 if(err) throw err;
                 callback(data);
             });
@@ -111,7 +107,6 @@ module.exports = {
     event: {
         get: (params, callback) => {
             var queryStr = `SELECT * FROM events WHERE id=${params.id}`;
-            
             db.query(queryStr, (err, data)=>{
                 if(err) throw err;
                 callback(err, data);
@@ -127,10 +122,8 @@ module.exports = {
                 db.query(queryStr, (err, data)=>{
                     if(err) throw err;
                     result.rooms = data;
-                    
                     module.exports.event.get(params, (err, data)=>{
                         if(err) throw err;
-                      
                         //when no event in the database is found, search eventbrite for the event with id, otherwise return event from database
                         if(data.length === 0){
                             module.exports.eventBrite.event.get(params,(data)=>{
@@ -182,8 +175,6 @@ module.exports = {
         get: (params, callback)=>{
             var queryStr = `SELECT * FROM rooms WHERE id=?`;
             var result = {};
-            //hackathon, self-development, 
-            
             db.query(queryStr, params.id, (err, data)=>{
                 if(err) throw err;
                 result.room = data[0];
@@ -251,14 +242,12 @@ module.exports = {
             });
         },
         post: (params, userId, callback)=>{
-            console.log('creating new thread...',params);
             var queryStr = `INSERT INTO threads SET ?`;
             var today = new Date();
             var updatedParams = {
                 user_id: userId,
                 created_at: today,
-                updated_at: today,
-
+                updated_at: today
             }
             params.user_id = userId;
             params.created_at = 'NOW()';
@@ -266,7 +255,6 @@ module.exports = {
             db.query(queryStr, params, (err, data)=>{
                 if(err) throw err;
                 queryStr = `SELECT * FROM threads WHERE room_id=?`;
-                console.log('getting new threads');            
                 db.query(queryStr, params.room_id, (err, data)=>{
                     if(err) throw err;
                    callback(data);
@@ -303,12 +291,10 @@ module.exports = {
                     result = {
                         messages: data.messages,
                         message: 'You message has been added.',
-                        code: 201,
-
+                        code: 201
                     }
                     callback(result);
                 })
-                
             })
         }
     },
@@ -358,7 +344,6 @@ module.exports = {
                 created_at: today,
                 updated_at: today
             };
-
             //check if email already exists;
             db.query(queryStr, user.email, (err, data)=>{
                 if(err) throw err;
@@ -380,11 +365,6 @@ module.exports = {
                     callback({'code': 204, 'message': 'Email already exists!'});
                 }
             });
-
-           
         }
     }
-   
 }
-
-
