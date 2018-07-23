@@ -1,6 +1,6 @@
 var path = require('path');
-var SRC_DIR = path.join(__dirname, '/client-react/src');
-var DIST_DIR = path.join(__dirname, '/client-react/dist/');
+var SRC_DIR = path.join(__dirname, '/build/client-react/src');
+var DIST_DIR = path.join(__dirname, '/build/client-react/dist/');
 var webpack = require('webpack');
 var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
@@ -30,7 +30,7 @@ module.exports = {
                 }, {
                     loader: 'sass-loader',
                     options: {
-                        includePaths: ['/client-react/dist/assets']
+                        includePaths: ['/build/client-react/dist/assets']
                     }
                 }]
             }
