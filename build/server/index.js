@@ -29,45 +29,46 @@ app.use((req, res, next)=>{
 });
 //External APIS
 app.get('/api/eventbrite/featured', (req, res)=>{
+    console.log('accessing featured events')
     model.eventBrite.featured((data)=>{
-        res.status(201).send(data);
+        res.status(201).send(data)
     });
 });
 app.route('/api/events')
     //GET all non-external events.
     .get((req, res)=>{
         model.events.get((data)=>{
-            res.status(201).send(data);
+            res.status(201).send(data)
         });
     })
     .post(util.checkUser,(req, res)=>{
         model.events.post(req.body, req.session.user.id, (data)=>{
-            res.status(201).send(data);
+            res.status(201).send(data)
         });
     });
 //GET for a single event
 app.get('/api/events/:id', (req, res)=>{
     model.event.get(req.params, (data)=>{
-         res.status(201).send(data);
+         res.status(201).send(data)
     });
  });
 //GETS the info for all the rooms of a particular event
 app.get('/api/event/:id/rooms', (req, res)=>{
     model.event.rooms.get(req.params, (data)=>{
-        res.status(201).send(data);
+        res.status(201).send(data)
     });
 })
 app.route('/api/rooms')
     .get((req, res)=>{
         //Gets a list of all the rooms
         model.rooms.get((data)=>{
-            res.status(201).send(data);
+            res.status(201).send(data)
         });
     })
     .post(util.checkUser, (req, res)=>{
         //Creates a new room in the collection of rooms
         model.rooms.post(req.body, req.session.user.id, (data)=>{
-            res.status(201).send(data);
+            res.status(201).send(data)
         });
     });
 //Returns the functionality for a particular room 
@@ -104,7 +105,13 @@ app.get('/api/messages/room/:id/', (req, res)=>{
 });
 //Login Routes
 app.route('/login')
-    .post((req, res)=>{
+    .get((req, res) => {
+        console.log("Getting Login status");
+        console.log(req.cookies.users_id);
+        console.log(!req.session.user)
+        res.status(201).send();
+    })
+    .post((req, res) => {
         model.user.login(req.body, (data)=>{
             if(data.code === 200){
                 console.log('creating user session', data.user);

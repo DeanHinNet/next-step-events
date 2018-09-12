@@ -12,7 +12,7 @@
     "server-dev": "nodemon build/server/index.js",
     "scss-dev": "sass --watch --style compressed build/client-react/src/preprocessor:build/client-react/dist/assets/css",
     "build": "webpack -d -p --config webpack.config.prod.js",
-    "start": "concurrently \"npm run build\" \"forever start --minUptime 1000 --spinSleepTime 1000 server/index.js\" "
+    "start": "concurrently \"npm run build\" \"forever start --minUptime 1000 --spinSleepTime 1000 build/server/index.js\" "
   },
   "repository": {
     "type": "git",
