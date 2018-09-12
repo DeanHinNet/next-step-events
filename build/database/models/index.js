@@ -6,8 +6,13 @@ var session = require('express-session');
 var MySQLStore = require('express-mysql-session')(session);
 var moment = require('moment');
 const saltRounds = 6;
+var request = require('request')
 
 db.connect();
+
+const instance = axios.create()
+instance.defaults.headers.common["User-Agent"] = "unit-test"
+global.axios = instance
 
 module.exports = {
     sessionStore: new MySQLStore({}, db),
@@ -26,11 +31,18 @@ module.exports = {
         },
         featured: (callback)=>{
             var featured = ['44730911360','46325229007','46644023530'];
+            console.log("API Call to Eventbrite")
             module.exports.eventBrite.get((events)=>{
                 var result = events;
                 var batchParams = { 
                     "batch": "[{\"method\":\"GET\", \"relative_url\":\"events/46644023530/\"},{\"method\":\"GET\", \"relative_url\":\"events/44730911360/\"},{\"method\":\"GET\", \"relative_url\":\"events/46325229007/\"}]"
                 }
+                // var batchParams = { 
+                //     "batch": "[{\"method\":\"GET\", \"relative_url\":\"events/48742107957/\"},{\"method\":\"GET\", \"relative_url\":\"events/47472909751/\"},{\"method\":\"GET\", \"relative_url\":\"events/47785817667/\"}]"
+                // }
+
+                console.log(`https://www.eventbriteapi.com/v3/batch/?token=${credentials.event_brite_key}`,batchParams)
+               
                 axios.post(`https://www.eventbriteapi.com/v3/batch/?token=${credentials.event_brite_key}`, batchParams)
                 .then((data)=>{
                     data.data.map((event)=>{
@@ -56,8 +68,17 @@ module.exports = {
         },
         get: (callback)=>{
             var featured = ['44730911360','46325229007','46644023530'];
-            axios.get(`https://www.eventbriteapi.com/v3/events/search/?token=${credentials.event_brite_key}&location.address=new%20york%20city&categories=101`)
-            .then((data)=>{
+            var config = {
+                headers: {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:51.0) Gecko/20100101 Firefox/51.0'}
+            }
+            console.log("Eventbrite GET")
+            console.log(`https://www.eventbriteapi.com/v3/events/search/?token=${credentials.event_brite_key}&location.address=new%20york%20city&categories=101`, config)
+
+            axios({
+                method: 'get',
+                url: `https://www.eventbriteapi.com/v3/events/search/?token=T75AHG6BKEKXEK6MQQID&location.address=new%20york%20city&categories=101`,
+                headers: {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:51.0) Gecko/20100101 Firefox/51.0'}  
+            }).then((data)=>{
                 var results = [];
                 var entry = {};
                 //get only info I need to reduce load on request
@@ -79,6 +100,32 @@ module.exports = {
             .catch((err)=>{
                 console.log(err);
             });
+
+            // axios.get('https://www.eventbriteapi.com/v3/events/search/?token=T75AHG6BKEKXEK6MQQID&location.address=new%20york%20city&categories=101', data, config)
+            // .then((data)=>{
+            //     console.log('after get')
+            //     var results = [];
+            //     var entry = {};
+            //     //get only info I need to reduce load on request
+            //     data.data.events.slice(0, 12).map((event)=>{
+            //         entry = {
+            //             id: event.id,
+            //             name: event.name.text,
+            //             description: event.description.text,
+            //             start_date: moment(event.start.local).format('M/D'),
+            //             start_time: moment(event.start.local).format('h:mmA'),
+            //             end_date: moment(event.end.local).format('M/D'),
+            //             end_time: moment(event.end.local).format('h:mmA'),
+            //             logo: event.logo
+            //         }
+            //         results.push(entry);
+            //     });
+            //     callback(results);
+            // })
+            // .catch((err)=>{
+            //     console.log('error getting from eventbrite')
+            //     console.log(err);
+            // });
         }
     },
     events: {

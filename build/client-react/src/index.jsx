@@ -22,23 +22,23 @@ class App extends React.Component {
         this.loginUser = this.loginUser.bind(this);
     }
     componentDidMount(){
-        axios.get('/login')
-        .then((results)=>{
-            if(results.status === 200){
-                this.loginUser({
-                    user: results.data.user,
-                    isLoggedIn: true
-                });
-            } else {
-                //send status code and failure
-                this.setState({
-                    failure: results.message
-                });
-            }
-        })
-        .catch((err)=>{
-            console.log('No user is logged in.');
-        });
+        // axios.get('/login')
+        // .then((results)=>{
+        //     if(results.status === 200){
+        //         this.loginUser({
+        //             user: results.data.user,
+        //             isLoggedIn: true
+        //         });
+        //     } else {
+        //         //send status code and failure
+        //         this.setState({
+        //             failure: results.message
+        //         });
+        //     }
+        // })
+        // .catch((err)=>{
+        //     console.log('No user is logged in.');
+        // });
     }
     loginUser(data){
         //Sets the state for 'isLoggedIn' once the user is authenticated

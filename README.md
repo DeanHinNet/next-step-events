@@ -6,12 +6,12 @@ Users will be able to share what they've learn, insights, and just overall exper
 
 Whether they're self-development seminars (Tony Robbins), hackathons, or million dollar seminars, there's often more information than can truly be absorbed in such a short period of time. Next Step Events allows users to reinforce, re-live, and ultimately cultivate what they've learned with others who attended the event!
 
-Experience the app: http://www.deanhin.net/next-step-events
+Experience the app: http://www.deanhin.net/next-step-events/app
 
 ![alt text](https://raw.githubusercontent.com/DeanHinNet/next-step-events/dev/meta/Landing_Page.png)
 
 Core Tech Stack
 ---------------
-React, Node, Express, MySQL, 
+React, Node, Express, MySQL
 
 
