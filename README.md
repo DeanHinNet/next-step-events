@@ -1,4 +1,4 @@
-# Next
+# Next Step Events
 
 ### Connect and continue the discussion, growth, and activities after your events, seminars, and conferences.
 
@@ -8,10 +8,8 @@ Whether they're self-development seminars (Tony Robbins), hackathons, or million
 
 Experience the app: http://www.deanhin.net/next-step-events/app
 
-![alt text](https://raw.githubusercontent.com/DeanHinNet/next-step-events/dev/meta/Landing_Page.png)
-
 Core Tech Stack
 ---------------
-React, Node, Express, MySQL
+React, Node, Express, MySQL, React Router
 
 
